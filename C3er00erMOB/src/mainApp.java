@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 
 public class mainApp {
@@ -8,13 +9,13 @@ public class mainApp {
 		System.out.println("2. Admin");
 		int choice=sc.nextInt();
 		switch(choice) {
-			case 1:
-				System.out.println("BLah");
-				break;
-			case 2:
-				System.out.println("Entering Admin mode...........");
-				adminApp.startAdmin();
-				break;
+		case 1:
+			System.out.println("BLah");
+			break;
+		case 2:
+			System.out.println("Entering Admin mode...........");
+			adminApp.startAdmin();
+			break;
 		}
 		sc.close();
 	}
