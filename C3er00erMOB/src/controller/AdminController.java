@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 
@@ -38,8 +39,8 @@ public class AdminController {
 	public void makeAdminUser(String username, String password, int AccessLevel) {
 		Admin a=new Admin();
 		a.username=username;
-		String salt=SecurityFunc.getNextSalt().toString();
-		a.password=SecurityFunc.hash(password.toCharArray(),salt.getBytes()).toString();
+		String salt=Base64.getEncoder().encodeToString(SecurityFunc.getNextSalt());
+		a.password=SecurityFunc.hash(password.toCharArray(),Base64.getDecoder().decode(salt));
 		a.salt=salt;
 		a.AccessLevel=AccessLevel;
 		printUserDetails(a);
