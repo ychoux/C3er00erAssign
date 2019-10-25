@@ -25,7 +25,7 @@ public class AdminController {
 			while ((line = br.readLine()) != null) {
 				String[] user = line.split(",");
 				// Debug line
-				System.out.println("Username: "+user[0]+" Password: "+user[1]+" Salt: "+user[2]);
+				// System.out.println("Username: "+user[0]+" Password: "+user[1]+" Salt: "+user[2]);
 				a=new Admin(user[0],user[1],user[2],Integer.parseInt(user[3]));
 				adminList.add(a);
 			}
