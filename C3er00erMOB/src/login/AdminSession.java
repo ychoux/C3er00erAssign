@@ -9,6 +9,9 @@ import entity.Admin;
 
 public class AdminSession {
 	
+	private String username="";
+	private AccessLevel accesslevel=AccessLevel.NOACCESS;
+	
 	public static AdminSession createSession(String username,String password) {
 		AdminSession session = null;
 		try {
@@ -40,14 +43,50 @@ public class AdminSession {
 			NoSuchUserException up = new NoSuchUserException();
 			throw up;
 		}
+		// Debugging Text
 		System.out.println("Hash: "+(SecurityFunc.hash(password.toCharArray(), Base64.getDecoder().decode(adminuser.salt))));
+		//
+		
 		if((SecurityFunc.hash(password.toCharArray(), Base64.getDecoder().decode(adminuser.salt))).equals(adminuser.password)) {
-			System.out.println("Correct Password lah!");
+			
+			switch(adminuser.AccessLevel) {
+			case 1:
+				this.setAccesslevel(AccessLevel.ADMIN);
+				break;
+			case 2:
+				this.setAccesslevel(AccessLevel.SUPERADMIN);
+				break;
+			default:
+				this.setAccesslevel(AccessLevel.NOACCESS);
+			}
+			this.setUsername(adminuser.username);
+			
+			
 		}else {
 			WrongPasswordException away = new WrongPasswordException();
 			throw away;
 		}
 		
+	}
+
+
+	public String getUsername() {
+		return username;
+	}
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
+	public AccessLevel getAccesslevel() {
+		return accesslevel;
+	}
+
+
+	public void setAccesslevel(AccessLevel accesslevel) {
+		this.accesslevel = accesslevel;
 	}
 	
 }
