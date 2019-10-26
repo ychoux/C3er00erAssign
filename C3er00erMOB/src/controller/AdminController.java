@@ -80,6 +80,19 @@ public class AdminController {
 		}
 
 	}
+	
+	public void lockAdminUser(String username) {
+		List<Admin> adminList=getAdminUsers();
+		for(Admin a : adminList) {
+			if(a.username.equals(username)) {
+				// Set to NOACCESS 
+				a.AccessLevel=0;
+				
+			}
+		}
+		// update csv file
+		updateAdminCSV(adminList);
+	}
 
 	public Admin getAdminUser(String username) {
 		List<Admin> adminList=getAdminUsers();

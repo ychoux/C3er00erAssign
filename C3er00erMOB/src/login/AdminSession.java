@@ -22,7 +22,7 @@ public class AdminSession {
 			System.out.println("Wrong password entered!");
 			return null;
 		}
-		System.out.println("No errors logging in, successful!");
+		System.out.println("Welcome back! "+username);
 		return session;
 	}
 
@@ -43,7 +43,7 @@ public class AdminSession {
 			throw up;
 		}
 		// Debugging Text
-		System.out.println("Hash: "+(SecurityFunc.hash(password.toCharArray(), Base64.getDecoder().decode(adminuser.salt))));
+		// System.out.println("Hash: "+(SecurityFunc.hash(password.toCharArray(), Base64.getDecoder().decode(adminuser.salt))));
 		//
 
 		if((SecurityFunc.hash(password.toCharArray(), Base64.getDecoder().decode(adminuser.salt))).equals(adminuser.password)) {
