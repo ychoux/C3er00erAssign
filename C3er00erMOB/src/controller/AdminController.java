@@ -98,7 +98,6 @@ public class AdminController {
 		List<Admin> adminList=getAdminUsers();
 		
 		
-		
 		updateAdminCSV(adminList);
 	}
 
