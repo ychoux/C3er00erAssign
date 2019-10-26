@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 import controller.AdminController;
 import login.AdminSession;
+import view.AdminView;
 
 
 public class adminApp {
@@ -29,7 +30,7 @@ public class adminApp {
 				case 2:
 					break;
 				case 3:
-					admSess.userSettings(aCon);
+					AdminView.userSettings(admSess,aCon);
 					break;
 				}
 			}			
