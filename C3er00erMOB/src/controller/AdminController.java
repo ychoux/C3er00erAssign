@@ -93,6 +93,14 @@ public class AdminController {
 		// update csv file
 		updateAdminCSV(adminList);
 	}
+	
+	public void deleteAdminUser(String username) {
+		List<Admin> adminList=getAdminUsers();
+		
+		
+		
+		updateAdminCSV(adminList);
+	}
 
 	public Admin getAdminUser(String username) {
 		List<Admin> adminList=getAdminUsers();

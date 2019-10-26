@@ -17,6 +17,7 @@ public class AdminView {
 		System.out.println("1. Change Password");
 		System.out.println("2. Create user");
 		System.out.println("3. Delete user");
+		System.out.println("4. Unlock user");
 		int choice = sc.nextInt();
 		switch(choice) {
 		case 1:
@@ -40,7 +41,7 @@ public class AdminView {
 							// update admin user password & salt
 							adtmp.password = newPassword;
 							adtmp.salt = newSalt;
-							
+
 							List<Admin> adminList=aCon.getAdminUsers();
 							for(Admin a : adminList) {
 								if(a.username.equals(admSess.getUsername())) {
@@ -74,7 +75,7 @@ public class AdminView {
 				System.out.println("Enter password");
 				String password=sc.next();
 				Admin adtmp=aCon.makeAdminUser(uname, password, accesslevel);
-				
+
 				List<Admin> adminList=aCon.getAdminUsers();
 				adminList.add(adtmp);
 				aCon.updateAdminCSV(adminList);
@@ -86,6 +87,26 @@ public class AdminView {
 				break;
 			}
 		case 3:
+			if(admSess.getAccesslevel() == AccessLevel.SUPERADMIN) {
+				List<Admin> adminList=aCon.getAdminUsers();
+				for(Admin a : adminList) {
+					aCon.printUserDetails(a);
+				}
+				System.out.println("Choose user to remove: ");
+				String removeUsername = sc.next();
+				System.out.println("Are you sure? (Y/N)");
+				char cfm = sc.next().charAt(0);
+				if(cfm == 'Y' || cfm == 'y'){
+					aCon.deleteAdminUser(removeUsername);
+					System.out.println("User has been removed.");
+				}else {
+					System.out.println("Task abort..........");
+				}
+			}else {
+				System.out.println("No permission");
+			}
+			break;
+		case 4:
 			if(admSess.getAccesslevel() == AccessLevel.SUPERADMIN) {
 				
 			}else {
