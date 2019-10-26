@@ -69,6 +69,8 @@ public class AdminSession {
 
 	}
 
+
+	
 	private boolean authenticatePassword(String password,Admin adtmp) {
 		if((SecurityFunc.hash(password.toCharArray(), Base64.getDecoder().decode(adtmp.salt))).equals(adtmp.password)) {
 			return true;
@@ -112,6 +114,7 @@ public class AdminSession {
 								if(a.username.equals(this.getUsername())) {
 									a.password = newPassword;
 									a.salt = newSalt;
+									break;
 								}
 							}
 
@@ -131,8 +134,31 @@ public class AdminSession {
 				}
 			}
 		case 2:
-			break;
+			if(this.accesslevel == AccessLevel.ADMIN ||this.accesslevel == AccessLevel.SUPERADMIN) {
+				System.out.println("Enter username: ");
+				String uname=sc.next();
+				System.out.println("Enter accesslevel(0-2)");
+				int accesslevel=sc.nextInt();
+				System.out.println("Enter password");
+				String password=sc.next();
+				Admin adtmp=aCon.makeAdminUser(uname, password, accesslevel);
+				
+				List<Admin> adminList=aCon.getAdminUsers();
+				adminList.add(adtmp);
+				aCon.updateAdminCSV(adminList);
+				System.out.println("User created!");
+				break;
+			}
+			else {
+				System.out.println("No permission");
+				break;
+			}
 		case 3:
+			if(this.accesslevel == AccessLevel.SUPERADMIN) {
+				
+			}else {
+				System.out.println("No permission");
+			}
 			break;
 		}
 

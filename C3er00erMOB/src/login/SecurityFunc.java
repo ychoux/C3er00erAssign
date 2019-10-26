@@ -13,12 +13,12 @@ import javax.crypto.spec.PBEKeySpec;
 public class SecurityFunc {
 	public static byte[] getNextSalt() {
 		Random RANDOM = new SecureRandom();
-		byte[] salt = new byte[16];
+		byte[] salt = new byte[32];
 		RANDOM.nextBytes(salt);
 		return salt;
 	}
 	public static String hash(char[] password, byte[] salt) {
-		PBEKeySpec spec = new PBEKeySpec(password, salt, 10000, 256);
+		PBEKeySpec spec = new PBEKeySpec(password, salt, 10000, 512);
 		Arrays.fill(password, Character.MIN_VALUE);
 		try {
 			SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");

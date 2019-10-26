@@ -43,6 +43,7 @@ public class AdminController {
 		return adminList;
 	}
 
+	
 	public void updateAdminCSV(List<Admin> adminList) {
 		FileWriter csvWriter;
 		try {
@@ -91,7 +92,7 @@ public class AdminController {
 		return null;
 	}
 
-	public void makeAdminUser(String username, String password, int AccessLevel) {
+	public Admin makeAdminUser(String username, String password, int AccessLevel) {
 		Admin a=new Admin();
 		a.username=username;
 		String salt=Base64.getEncoder().encodeToString(SecurityFunc.getNextSalt());
@@ -99,6 +100,7 @@ public class AdminController {
 		a.salt=salt;
 		a.AccessLevel=AccessLevel;
 		printUserDetails(a);
+		return a;
 	}
 
 
