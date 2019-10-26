@@ -2,6 +2,7 @@ package controller;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -15,25 +16,79 @@ public class AdminController {
 
 	private static String ADMINFILE="src/data/admin.csv";
 
+	public AdminController() {
+
+	}
+
 	public List<Admin> getAdminUsers(){
 		List<Admin> adminList = new ArrayList<>();
 		BufferedReader br = null;
 		String line = "";
-		Admin a;
+		Admin admintmp;
 		try {
 			br = new BufferedReader(new FileReader(ADMINFILE));
 			while ((line = br.readLine()) != null) {
 				String[] user = line.split(",");
-				// Debug line
-				// System.out.println("Username: "+user[0]+" Password: "+user[1]+" Salt: "+user[2]);
-				a=new Admin(user[0],user[1],user[2],Integer.parseInt(user[3]));
-				adminList.add(a);
+				if(!user[0].equals("Name")) {
+					// Debug line
+					// System.out.println("Username: "+user[0]+" Password: "+user[1]+" Salt: "+user[2]);
+					admintmp=new Admin(user[0],user[1],user[2],Integer.parseInt(user[3]));
+					adminList.add(admintmp);
+				}
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return adminList;
+	}
+
+	public void updateAdminCSV(List<Admin> adminList) {
+		FileWriter csvWriter;
+		try {
+			csvWriter = new FileWriter(ADMINFILE);
+			csvWriter.append("Name");
+			csvWriter.append(",");
+			csvWriter.append("Password");
+			csvWriter.append(",");
+			csvWriter.append("Salt");
+			csvWriter.append(",");
+			csvWriter.append("AccessLevel");
+			csvWriter.append("\n");
+
+			for (Admin admtmp : adminList) {
+				StringBuilder sb = new StringBuilder();
+				sb.append(admtmp.username);
+				sb.append(',');
+				sb.append(admtmp.password);
+				sb.append(',');
+				sb.append(admtmp.salt);
+				sb.append(',');
+				sb.append(Integer.toString(admtmp.AccessLevel));
+				sb.append(',');
+				sb.append('\n');
+				csvWriter.append(sb.toString());
+			}
+
+			csvWriter.flush();
+			csvWriter.close();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public Admin getAdminUser(String username) {
+		List<Admin> adminList=getAdminUsers();
+		for(Admin a : adminList) {
+			if(a.username.equals(username)) {
+				return a;
+			}
+		}
+
+		return null;
 	}
 
 	public void makeAdminUser(String username, String password, int AccessLevel) {
@@ -45,8 +100,8 @@ public class AdminController {
 		a.AccessLevel=AccessLevel;
 		printUserDetails(a);
 	}
-	
-	
+
+
 	// Debug
 	public void printUserDetails(Admin a) {
 		System.out.println("Username: "+a.username);
