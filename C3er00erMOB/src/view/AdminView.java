@@ -115,6 +115,5 @@ public class AdminView {
 			break;
 		}
 
-		sc.close();
 	}
 }
