@@ -1,4 +1,4 @@
-package assignment;
+package controller;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package assignment;
+import controller.PrintMovieList;
 
 public class MovieListApp {
 

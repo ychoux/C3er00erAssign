@@ -1,4 +1,4 @@
-package assignment;
+package entity;
 
 public class Movie {
 	
