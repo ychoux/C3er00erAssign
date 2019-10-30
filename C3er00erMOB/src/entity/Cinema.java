@@ -52,6 +52,11 @@ public class Cinema implements Comparable<Cinema> {
 	}
 	
 	@Override
+	public String toString() {
+		return this.cineplex_name + " " + this.cinemaID;
+	}
+	
+	@Override
 	public int compareTo(Cinema c) {
 		int i = this.cineplex_name.compareTo(c.cineplex_name);
 		if (i != 0)

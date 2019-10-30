@@ -106,7 +106,12 @@ public class CineplexManager {
 	 * @return				The Cineplex object correspond to the name parameter passed in
 	 */
 	public Cineplex getCineplex(String cineplex_name) {
-		return this.cineplexes.get(cineplex_name.toUpperCase());
+		try {
+			return this.cineplexes.get(cineplex_name.toUpperCase());
+		} 
+		catch (NullPointerException e) {
+			return null;
+		}
 	}
 	
 	/**

@@ -53,7 +53,12 @@ public class Cineplex {
 	}
 	
 	public Cinema getCinema(String cinemaID) {
-		return this.cinemas.get(cinemaID.toUpperCase());
+		try {
+			return this.cinemas.get(cinemaID.toUpperCase());
+		} 
+		catch (NullPointerException e) {
+			return null;
+		}
 	}
 
 }

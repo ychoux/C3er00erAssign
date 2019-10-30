@@ -101,6 +101,15 @@ public class SlotManager {
 	}
 	
 	/**
+	 * The function to get the DateTimeFormatter object
+	 * @return	The DateTimeFormatter object
+	 */
+	public DateTimeFormatter getFormatter() {
+		return formatter;
+	}
+
+	
+	/**
 	 * The function used to add an available slot
 	 * @param slotID		The ID of the slot, a String
 	 * @param showtime		The showtime of the slot, a LocalDateTime object
