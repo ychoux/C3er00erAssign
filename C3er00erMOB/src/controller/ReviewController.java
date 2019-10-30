@@ -6,9 +6,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import entity.Movie;
-import entity.Review;
-
 public class ReviewController {
 	static String REVIEWFILE = "src/data/review.csv";
 	String cvsSplitBy = ",";
@@ -41,6 +38,26 @@ public class ReviewController {
 
 		ReviewController file = new ReviewController();
 		List<Review> rList = file.getReviewList();
+		String SplitBy = ";";
+		for(Review r: rList)
+		{
+			count =0;
+			totalrating =0;
+			String[] rating = r.getRating().split(SplitBy);
+			for(String ratings: rating)
+			{
+				rates = Double.parseDouble(ratings);
+				totalrating += rates;
+				count++;
+			}
+			totalrating /= count;
+			r.setOverallRating(totalrating);
+		}
+		updateReviewCSV(rList);
+	}
+	public static void updateOverallRating(List<Review> rList) {
+		double rates, totalrating;
+		int count;
 		String SplitBy = ";";
 		for(Review r: rList)
 		{
