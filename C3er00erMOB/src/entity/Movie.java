@@ -1,5 +1,6 @@
 package entity;
 
+
 public class Movie {
 	
 	private String movieTitle; // name
