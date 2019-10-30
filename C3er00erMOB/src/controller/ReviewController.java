@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import entity.Movie;
+import entity.Review;
+
 public class ReviewController {
 	static String REVIEWFILE = "src/data/review.csv";
 	String cvsSplitBy = ",";
