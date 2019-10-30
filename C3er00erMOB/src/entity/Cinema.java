@@ -3,7 +3,7 @@ package entity;
 public class Cinema implements Comparable<Cinema> {
 
 	public static enum CinemaType {STANDARD_2D, STANDARD_3D, DELUXE, IMAX, LUXURY}
-	private static final String seating_plan_directory = "C3er00erMOB/src/data/seating plans/";
+	private static final String seating_plan_directory = "src/data/seating plans/";
 	
 	private String cinemaID;
 	private String cineplex_name;

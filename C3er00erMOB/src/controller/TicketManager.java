@@ -40,7 +40,7 @@ public class TicketManager {
 	/**
 	 * The path to the CSV file that stores all the cineplexes and cinema
 	 */
-	private static final String TICKETSPATH = "C3er00erMOB/src/data/tickets.csv";
+	private static final String TICKETSPATH = "src/data/tickets.csv";
 	
 	/**
 	 * The private constructor of the class
