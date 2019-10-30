@@ -11,6 +11,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 
+import Control.SlotManager;
 import entity.Slot;
 import entity.Ticket;
 
@@ -65,7 +66,7 @@ public class TicketManager {
 					this.tickets.put(ticketID, new Ticket(ticketID, price, SlotManager.getInstance().getSlot(slotID), seats));					
 				}
 				catch (ArrayIndexOutOfBoundsException e) {
-					System.out.println("Unable to retrieve slot information!");
+					System.out.println("Unable to retrieve ticket information!");
 				}
 				
 			}
@@ -75,7 +76,7 @@ public class TicketManager {
 			
 		} 
 		catch (IOException e) {
-			System.out.println("Unable to retrieve slot information!");
+			System.out.println("Unable to retrieve ticket information!");
 		}
 		
 	}
@@ -97,7 +98,8 @@ public class TicketManager {
 	 * @return			A boolean variable indication whether the operation is successful or not
 	 * 					Return false if seats passed in contains booked seats or has no seats
 	 */
-	public boolean addTicket(double price, Slot slot, List<String> seats) {
+	public boolean addTicket(double price, String slotID, List<String> seats) {
+		Slot slot = SlotManager.getInstance().getSlot(slotID.toUpperCase());
 		for (String s: seats) {
 			if (slot.getBookings().getBookedSeatsID().contains(s))
 				return false;
@@ -162,6 +164,19 @@ public class TicketManager {
 	}
 	
 	/**
+	 * The function to print ticket details
+	 */
+	public void printTicketDetails(String ticketID) {
+		Ticket ticket = this.tickets.get(ticketID.toUpperCase());
+		System.out.println("Ticket ID: " + ticket.getTicketID());
+		System.out.println("Movie Name: " + ticket.getSlot().getMovie_name());
+		System.out.println("Showtime: " + ticket.getSlot().getShowtime().format(SlotManager.getInstance().getFormatter()));
+		System.out.printf("Duration: %d hours %d minutes\n", ticket.getSlot().getDuration().toHoursPart(), ticket.getSlot().getDuration().toMinutesPart());
+		System.out.println("Cinema: " + ticket.getSlot().getCinema().toString());
+		System.out.println("Seats: " + ticket.getSeats());
+	}
+	
+	/**
 	 * The function to save back all tickets to the CSV file
 	 * @return	A boolean variable that indicates whether the operation is successful or not
 	 */
@@ -214,6 +229,9 @@ public class TicketManager {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		String[] seats = {"E12", "E14", "E13", "E15", "F7", "F8", "F9"};
+		TicketManager.getInstance().addTicket(7.6, "m1s6", Arrays.asList(seats));
+		
 		System.out.println(TicketManager.getInstance().tickets);
 	}
 

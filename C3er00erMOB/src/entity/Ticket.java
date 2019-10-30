@@ -2,8 +2,6 @@ package entity;
 
 import java.util.List;
 
-import controller.SlotManager;
-
 public class Ticket {
 
 	public enum TicketType {ADULT, CHILD, STUDENT, SENIOR_CITIZEN, DISABLED};
@@ -34,15 +32,6 @@ public class Ticket {
 	
 	public List<String> getSeats() {
 		return this.seats;
-	}
-	
-	public void printTicketDetails() {
-		System.out.println("Ticket ID: " + this.ticketID);
-		System.out.println("Movie Name: " + this.slot.getMovie_name());
-		System.out.println("Showtime: " + this.slot.getShowtime().format(SlotManager.getInstance().getFormatter()));
-		System.out.printf("Duration: %d hours %d minutes\n", this.slot.getDuration().toHoursPart(), this.slot.getDuration().toMinutesPart());
-		System.out.println("Cinema: " + this.slot.getCinema().toString());
-		System.out.println("Seats: " + this.seats);
 	}
 	
 }
