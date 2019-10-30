@@ -2,6 +2,8 @@ package controller;
 
 import java.util.List;
 
+import entity.Movie;
+
 public class PrintMovieList {
 
 	public static void printMovieList(){

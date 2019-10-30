@@ -11,7 +11,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 
-import Control.SlotManager;
+import controller.SlotManager;
 import entity.Slot;
 import entity.Ticket;
 
@@ -40,7 +40,7 @@ public class TicketManager {
 	/**
 	 * The path to the CSV file that stores all the cineplexes and cinema
 	 */
-	private static final String TICKETSPATH = "src/data/tickets.csv";
+	private static final String TICKETSPATH = "C3er00erMOB/src/data/tickets.csv";
 	
 	/**
 	 * The private constructor of the class
@@ -105,6 +105,7 @@ public class TicketManager {
 				return false;
 		}
 		seats.replaceAll(String::toUpperCase);
+		Collections.sort(seats);
 		try {
 			String ticketID = slot.getSlotID() + seats.get(0);
 			Ticket t = new Ticket(ticketID, price, slot, seats);
@@ -168,6 +169,10 @@ public class TicketManager {
 	 */
 	public void printTicketDetails(String ticketID) {
 		Ticket ticket = this.tickets.get(ticketID.toUpperCase());
+		if (ticket == null) {
+			System.out.println("Ticket ID not found!");
+			return;
+		}
 		System.out.println("Ticket ID: " + ticket.getTicketID());
 		System.out.println("Movie Name: " + ticket.getSlot().getMovie_name());
 		System.out.println("Showtime: " + ticket.getSlot().getShowtime().format(SlotManager.getInstance().getFormatter()));
@@ -229,10 +234,9 @@ public class TicketManager {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String[] seats = {"E12", "E14", "E13", "E15", "F7", "F8", "F9"};
+		String[] seats = {"D12", "D14"};
 		TicketManager.getInstance().addTicket(7.6, "m1s6", Arrays.asList(seats));
-		
-		System.out.println(TicketManager.getInstance().tickets);
+		TicketManager.getInstance().printTicketDetails("m1s6D12");
 	}
 
 }
