@@ -21,7 +21,7 @@ public class BookingController {
 
     public List<Slot>  viewAvailableSlot(String title) {
         List<Slot> result;
-        result = SlotManager.getInstance().getMovieSlots("m1s2",title);
+        result = SlotManager.getInstance().getMovieSlots(title);
         for (Slot s : result) {
             System.out.println((result.indexOf(s) + 1) + ". " + s.getCinema().getCineplex_name() + " "
                     + s.getShowtime().toLocalDate() + " " + s.getShowtime().toLocalTime() + s.getSlotID());

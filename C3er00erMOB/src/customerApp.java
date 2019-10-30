@@ -1,6 +1,7 @@
 import controller.BookingController;
 import controller.CusMovController;
 import controller.CustomerController;
+import controller.TicketManager;
 import entity.MovieDetail;
 import entity.SeatBookings;
 import entity.Slot;
