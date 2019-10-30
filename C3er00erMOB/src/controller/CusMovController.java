@@ -48,7 +48,6 @@ public class CusMovController {
         System.out.println("Director: "+ m.getDirector());
     }
 
-
 }
 
 
