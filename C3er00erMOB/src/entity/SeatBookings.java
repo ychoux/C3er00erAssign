@@ -111,6 +111,7 @@ public class SeatBookings {
 		for (Seat s: Collections.list(this.bookings.elements()))
 			if (!s.isavailable())
 				seats.add(s.getID());
+		Collections.sort(seats);
 		return seats;
 	}
 	
@@ -119,6 +120,7 @@ public class SeatBookings {
 		for (Seat s: Collections.list(this.bookings.elements()))
 			if (s.isavailable())
 				seats.add(s.getID());
+		Collections.sort(seats);
 		return seats;
 	}
 	
