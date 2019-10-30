@@ -234,9 +234,7 @@ public class TicketManager {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String[] seats = {"D12", "D14"};
-		TicketManager.getInstance().addTicket(7.6, "m1s6", Arrays.asList(seats));
-		TicketManager.getInstance().printTicketDetails("m1s6D12");
+		
 	}
 
 }

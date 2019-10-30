@@ -345,8 +345,8 @@ public class SlotManager {
 //		SlotManager.getInstance().addSlot("M2S3", LocalDateTime.parse("27-10-2019 10:00AM", SlotManager.getInstance().formatter), Duration.parse("PT2H30M"), "M2", CineplexManager.getInstance().getCineplex("star @ bugis").getCinema("e"));
 //		SlotManager.getInstance().addSlot("M2S4", LocalDateTime.parse("28-10-2019 05:30PM", SlotManager.getInstance().formatter), Duration.parse("PT2H30M"), "M2", CineplexManager.getInstance().getCineplex("star @ bugis").getCinema("a"));
 		
-		String[] seats = {"D11", "G12", "G13", "D10", "D12", "F10", "F11", "F12", "F13"};
- 		SlotManager.getInstance().getSlot("m1s6").getBookings().occupySeats(seats);
+//		String[] seats = {"D11", "G12", "G13", "D10", "D12", "F10", "F11", "F12", "F13"};
+// 		SlotManager.getInstance().getSlot("m1s6").getBookings().occupySeats(seats);
 		
  		for (Slot s: SlotManager.getInstance().slots) {
 			System.out.print(s.getSlotID() + "\t");
