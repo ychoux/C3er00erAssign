@@ -241,7 +241,7 @@ public class TicketManager {
 //		TicketManager.getInstance().addTicket(25, "m1s6", Arrays.asList("F11", "F12", "F13", "F14", "F15"));
 //		TicketManager.getInstance().addTicket(6, "m1s1", Arrays.asList("F13"));
 //		TicketManager.getInstance().addTicket(11, "m1s2", Arrays.asList("E13", "E14"));
-		TicketManager.getInstance().addTicket(10, "m1s3", Arrays.asList("C14", "C15"));
+//		TicketManager.getInstance().addTicket(10, "m1s3", Arrays.asList("C14", "C15"));
 		
 		for (Ticket t: Collections.list(TicketManager.getInstance().tickets.elements())) {
 			TicketManager.getInstance().printTicketDetails(t.getTicketID());
