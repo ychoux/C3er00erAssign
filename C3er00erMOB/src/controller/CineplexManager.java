@@ -196,7 +196,7 @@ public class CineplexManager {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		CineplexManager.getInstance().getCineplex("star @ jurong east").getCinema("a").getSeating_plan().printSeatingPlan();
+		CineplexManager.getInstance().getCineplex("star @ jurong east").getCinema("je1").getSeating_plan().printSeatingPlan();
 		
 	}
 	

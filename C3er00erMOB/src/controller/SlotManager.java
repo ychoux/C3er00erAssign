@@ -379,23 +379,26 @@ public class SlotManager {
 	 */
 	public static void main(String[] args) {
 
-//		SlotManager.getInstance().addSlot("M1S4", LocalDateTime.parse("27-10-2019 04:30PM", SlotManager.getInstance().formatter), Duration.parse("PT2H4M"), "M1", CineplexManager.getInstance().getCineplex("star @ bugis").getCinema("b"));
-//		SlotManager.getInstance().addSlot("M1S5", LocalDateTime.parse("27-10-2019 07:00PM", SlotManager.getInstance().formatter), Duration.parse("PT2H4M"), "M1", CineplexManager.getInstance().getCineplex("star @ bugis").getCinema("e"));
-//		SlotManager.getInstance().addSlot("M1S6", LocalDateTime.parse("28-10-2019 12:00PM", SlotManager.getInstance().formatter), Duration.parse("PT2H4M"), "M1", CineplexManager.getInstance().getCineplex("star @ bugis").getCinema("b"));
-//		SlotManager.getInstance().addSlot("M2S3", LocalDateTime.parse("27-10-2019 10:00AM", SlotManager.getInstance().formatter), Duration.parse("PT2H30M"), "M2", CineplexManager.getInstance().getCineplex("star @ bugis").getCinema("e"));
-//		SlotManager.getInstance().addSlot("M2S4", LocalDateTime.parse("28-10-2019 05:30PM", SlotManager.getInstance().formatter), Duration.parse("PT2H30M"), "M2", CineplexManager.getInstance().getCineplex("star @ bugis").getCinema("a"));
-		
-//		String[] seats = {"D11", "G12", "G13", "D10", "D12", "F10", "F11", "F12", "F13"};
-// 		SlotManager.getInstance().getSlot("m1s6").getBookings().occupySeats(seats);
+//		SlotManager.getInstance().addSlot("JOK0001", LocalDateTime.parse("27-10-2019 04:30PM", SlotManager.getInstance().formatter), Duration.parse("PT2H4M"), "Joker", CineplexManager.getInstance().getCineplex("star @ bugis").getCinema("bu2"));
+//		SlotManager.getInstance().addSlot("JOK0002", LocalDateTime.parse("27-10-2019 07:00PM", SlotManager.getInstance().formatter), Duration.parse("PT2H4M"), "Joker", CineplexManager.getInstance().getCineplex("star @ bugis").getCinema("bu5"));
+//		SlotManager.getInstance().addSlot("JOK0003", LocalDateTime.parse("27-10-2019 12:00PM", SlotManager.getInstance().formatter), Duration.parse("PT2H4M"), "Joker", CineplexManager.getInstance().getCineplex("star @ bugis").getCinema("bu2"));
+//		SlotManager.getInstance().addSlot("TOY0001", LocalDateTime.parse("27-10-2019 10:00AM", SlotManager.getInstance().formatter), Duration.parse("PT2H30M"), "Toy Story 4", CineplexManager.getInstance().getCineplex("star @ ang mo kio").getCinema("am5"));
+//		SlotManager.getInstance().addSlot("TOY0002", LocalDateTime.parse("27-10-2019 05:30PM", SlotManager.getInstance().formatter), Duration.parse("PT2H30M"), "Toy Story 4", CineplexManager.getInstance().getCineplex("star @ bugis").getCinema("bu1"));
+//		SlotManager.getInstance().addSlot("MAL0001", LocalDateTime.parse("27-10-2019 04:30PM", SlotManager.getInstance().formatter), Duration.parse("PT2H40M"), "Maleficent: Mistress of Evil", CineplexManager.getInstance().getCineplex("star @ ang mo kio").getCinema("am2"));
+//		SlotManager.getInstance().addSlot("MAL0002", LocalDateTime.parse("27-10-2019 07:00PM", SlotManager.getInstance().formatter), Duration.parse("PT2H40M"), "Maleficent: Mistress of Evil", CineplexManager.getInstance().getCineplex("star @ ang mo kio").getCinema("am5"));
+//		SlotManager.getInstance().addSlot("MAL0003", LocalDateTime.parse("27-10-2019 12:00PM", SlotManager.getInstance().formatter), Duration.parse("PT2H40M"), "Maleficent: Mistress of Evil", CineplexManager.getInstance().getCineplex("star @ jurong east").getCinema("je2"));
+//		SlotManager.getInstance().addSlot("TER0001", LocalDateTime.parse("27-10-2019 10:00AM", SlotManager.getInstance().formatter), Duration.parse("PT2H15M"), "Terminator: Dark Fate", CineplexManager.getInstance().getCineplex("star @ bugis").getCinema("bu5"));
+//		SlotManager.getInstance().addSlot("TER0002", LocalDateTime.parse("27-10-2019 05:30PM", SlotManager.getInstance().formatter), Duration.parse("PT2H15M"), "Terminator: Dark Fate", CineplexManager.getInstance().getCineplex("star @ ang mo kio").getCinema("am1"));
+//		SlotManager.getInstance().addSlot("TER0003", LocalDateTime.parse("27-10-2019 05:30PM", SlotManager.getInstance().formatter), Duration.parse("PT2H15M"), "Terminator: Dark Fate", CineplexManager.getInstance().getCineplex("star @ jurong east").getCinema("je1"));
 		
  		for (Slot s: SlotManager.getInstance().slots) {
 			System.out.print(s.getSlotID() + "\t");
 			System.out.print(s.getShowtime().format(SlotManager.getInstance().formatter) + "\t");
 			System.out.print(s.getEndtime().format(SlotManager.getInstance().formatter) + "\t");
-			System.out.print(s.getMovie_name() + "\t");
-			System.out.print(s.getCinema().getCineplex_name() + "\t");
+			System.out.printf("%-25s\t", s.getMovie_name());
+			System.out.printf("%-20s\t", s.getCinema().getCineplex_name());
 			System.out.print(s.getCinema().getCinemaID() + "\t");
-			System.out.print(s.getCinema().getCinema_type() + "\t");
+			System.out.printf("%-11s\t", s.getCinema().getCinema_type());
 			System.out.print(s.getBookings().getBookedSeatsID());
 			System.out.println();
 		}
