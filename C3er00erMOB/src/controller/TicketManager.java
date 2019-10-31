@@ -93,6 +93,14 @@ public class TicketManager {
 	
 	/**
 	 * The function to add a new ticket
+	 * Automatically generate a ticket ID using the format: XXXXXXyyyyMMddHHmmss where:
+	 * 		- XXXXXX is the slot ID
+	 * 		- yyyy is the year
+	 * 		- MM is the month
+	 * 		- dd is the day
+	 * 		- HH is the hour
+	 * 		- mm is the minute
+	 * 		- ss is the second
 	 * Automatically change the availability of seats to not available after adding the ticket
 	 * @param price		The price of ticket, in double
 	 * @param slot		The slot
@@ -114,7 +122,7 @@ public class TicketManager {
 		
 		seats.replaceAll(String::toUpperCase);
 		Collections.sort(seats);
-		String ticketID = slot.getCinema().getCinemaID() + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
+		String ticketID = slot.getSlotID() + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
 		
 		if (this.tickets.get(ticketID) != null)
 			return false;
