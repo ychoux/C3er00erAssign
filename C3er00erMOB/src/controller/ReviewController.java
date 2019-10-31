@@ -34,7 +34,25 @@ public class ReviewController {
 	}
 	return reviewList;
 	}
-	
+	public static void userReview(List<Review> rList, int id, String rating, String review) {
+		String ratingtmp, reviewtmp;
+		for(Review r: rList) {
+			if(r.getId() == id) {
+				ratingtmp = r.getRating();
+				System.out.println(" rating be4: "+ratingtmp);
+				ratingtmp = ratingtmp+";"+rating;
+				System.out.println(" rating after: "+ratingtmp);
+				reviewtmp = r.getReview();
+				reviewtmp = reviewtmp+";"+review;
+				r.setRating(ratingtmp);
+				r.setReview(reviewtmp);
+				break;
+			}
+		}
+		updateOverallRating(rList);
+		updateReviewCSV(rList);
+		updateMovieListRating(rList);
+	}
 	public static void updateOverallRating() {
 		double rates, totalrating;
 		int count;
@@ -75,12 +93,28 @@ public class ReviewController {
 			}
 			totalrating /= count;
 			r.setOverallRating(totalrating);
+			
 		}
 		updateReviewCSV(rList);
 	}
 	public static void updateMovieListRating() {
 		ReviewController file = new ReviewController();
 		List<Review> rList = file.getReviewList();
+		MovieListController mfile = new MovieListController();
+		List<Movie> mList = mfile.getMovieList();
+		for(Movie m: mList) {
+			for(Review r: rList)
+			{
+				if(m.getId() == r.getId()) {
+					m.setOverallRating(r.getOverallRating());
+					break;
+				}
+			}
+		}
+		MovieListController.updateMovieListCSV(mList);
+		
+	}
+	public static void updateMovieListRating(List<Review> rList) {
 		MovieListController mfile = new MovieListController();
 		List<Movie> mList = mfile.getMovieList();
 		for(Movie m: mList) {
