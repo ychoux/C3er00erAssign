@@ -26,10 +26,8 @@ public class UserInputReview {
 				System.out.println("Give Rating");
 				sc.nextLine();
 				rating = sc.nextLine();
-				System.out.println(" rating: "+rating);
 				System.out.println("Give Review");
 				review = sc.nextLine();
-				System.out.println(" review: "+review);
 				ReviewController.userReview(rList, r.getId(), rating, review);
 				break;
 			}
