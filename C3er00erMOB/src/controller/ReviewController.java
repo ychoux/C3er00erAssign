@@ -39,9 +39,7 @@ public class ReviewController {
 		for(Review r: rList) {
 			if(r.getId() == id) {
 				ratingtmp = r.getRating();
-				System.out.println(" rating be4: "+ratingtmp);
 				ratingtmp = ratingtmp+";"+rating;
-				System.out.println(" rating after: "+ratingtmp);
 				reviewtmp = r.getReview();
 				reviewtmp = reviewtmp+";"+review;
 				r.setRating(ratingtmp);
