@@ -6,6 +6,8 @@ import entity.MovieDetail;
 import entity.SeatBookings;
 import entity.Slot;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -36,9 +38,17 @@ public class customerApp {
                     int ch2 = sc.nextInt();
                     Slot slot = result.get(ch2-1);
                     BookingController.getInstance().planofcineplex(slot);
-                    System.out.println("Enter the seat you want to book");
-                    String seats = sc.next();
-                    SeatBookings sb = new SeatBookings(slot.getCinema().getSeating_plan(),seats);
+                    System.out.println("Enter the number seat you want to book");
+                    int no_of_tic = sc.nextInt();
+                    List<String> seats = new ArrayList<>();
+                    System.out.println("Enter the seats you want to book");
+                    String[] seat;
+                    seat = sc.next().split(" ");
+                    for (String s : seat){
+                        seats.add(s); }
+
+
+                    TicketManager.getInstance().addTicket(18, slot.getSlotID(), seats);
                 }
             }
             else {

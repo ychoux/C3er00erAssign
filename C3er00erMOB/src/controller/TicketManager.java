@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -99,32 +97,25 @@ public class TicketManager {
 	 * @param seats		The seats booked, a list of seat IDs
 	 * @return			A boolean variable indication whether the operation is successful or not
 	 * 					Return false if seats passed in contains booked seats or has no seats
-	 * 					Return false if ticket ID already exists
 	 */
 	public boolean addTicket(double price, String slotID, List<String> seats) {
-		
-		if (seats.isEmpty())
-			return false;
-		
 		Slot slot = SlotManager.getInstance().getSlot(slotID.toUpperCase());
 		for (String s: seats) {
 			if (slot.getBookings().getBookedSeatsID().contains(s))
 				return false;
 		}
-		
 		seats.replaceAll(String::toUpperCase);
 		Collections.sort(seats);
-		String ticketID = slot.getCinema().getCinemaID() + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
-		
-		if (this.tickets.get(ticketID) != null)
+		try {
+			String ticketID = slot.getSlotID() + seats.get(0);
+			Ticket t = new Ticket(ticketID, price, slot, seats);
+			this.tickets.put(ticketID, t);
+			slot.getBookings().occupySeats(seats);
+			return true;
+		} 
+		catch (IndexOutOfBoundsException e) {
 			return false;
-		
-		if (!slot.getBookings().occupySeats(seats))
-			return false;
-		
-		Ticket t = new Ticket(ticketID, price, slot, seats);
-		this.tickets.put(ticketID, t);
-		return true;
+		}
 	}
 	
 	/**
@@ -184,7 +175,7 @@ public class TicketManager {
 		}
 		System.out.println("Ticket ID: " + ticket.getTicketID());
 		System.out.println("Movie Name: " + ticket.getSlot().getMovie_name());
-		System.out.println("Showtime: " + ticket.getSlot().getShowtime().format(SlotManager.getInstance().getFormatter()));
+		//System.out.println("Showtime: " + ticket.getSlot().getShowtime().format(SlotManager.getInstance().getFormatter()));
 		System.out.printf("Duration: %d hours %d minutes\n", ticket.getSlot().getDuration().toHoursPart(), ticket.getSlot().getDuration().toMinutesPart());
 		System.out.println("Cinema: " + ticket.getSlot().getCinema().toString());
 		System.out.println("Seats: " + ticket.getSeats());
@@ -243,14 +234,14 @@ public class TicketManager {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		TicketManager.getInstance().addTicket(18, "TOY0001", Arrays.asList("E03", "E04", "E05"));
-		TicketManager.getInstance().addTicket(10, "JOK0003", Arrays.asList("D13", "D14"));
-		TicketManager.getInstance().addTicket(12, "JOK0002", Arrays.asList("F07", "F06"));
-		TicketManager.getInstance().addTicket(30, "MAL0001", Arrays.asList("E01", "E02", "E03", "E04", "E05"));
-		TicketManager.getInstance().addTicket(25, "TER0001", Arrays.asList("F01", "F02", "F03", "F04", "F05"));
-		TicketManager.getInstance().addTicket(6, "TOY0001", Arrays.asList("F03"));
-		TicketManager.getInstance().addTicket(11, "JOK0003", Arrays.asList("E13", "E14"));
-		TicketManager.getInstance().addTicket(10, "JOK0002", Arrays.asList("C04", "C05"));
+//		TicketManager.getInstance().addTicket(18, "m1s1", Arrays.asList("E13", "E14", "E15"));
+//		TicketManager.getInstance().addTicket(10, "m1s2", Arrays.asList("D13", "D14"));
+//		TicketManager.getInstance().addTicket(12, "m1s3", Arrays.asList("F17", "F18"));
+//		TicketManager.getInstance().addTicket(30, "m1s5", Arrays.asList("E01", "E02", "E03", "E04", "E05"));
+//		TicketManager.getInstance().addTicket(25, "m1s6", Arrays.asList("F11", "F12", "F13", "F14", "F15"));
+//		TicketManager.getInstance().addTicket(6, "m1s1", Arrays.asList("F13"));
+//		TicketManager.getInstance().addTicket(11, "m1s2", Arrays.asList("E13", "E14"));
+//		TicketManager.getInstance().addTicket(10, "m1s3", Arrays.asList("C14", "C15"));
 		
 		for (Ticket t: Collections.list(TicketManager.getInstance().tickets.elements())) {
 			TicketManager.getInstance().printTicketDetails(t.getTicketID());

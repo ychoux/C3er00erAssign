@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CusMovController {
 
-    private static String MOVIEFILE = "src/data/movie.csv";
+    private static String MOVIEFILE = "/src/data/movie.csv";
 
 
     public static  List<MovieDetail> movieCSVRead() {

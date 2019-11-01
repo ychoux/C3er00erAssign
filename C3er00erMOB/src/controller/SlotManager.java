@@ -41,12 +41,12 @@ public class SlotManager {
 	/**
 	 * The path to the CSV that stores all the slots
 	 */
-	private static final String SLOTSPATH = "src/data/slots.csv";
+	private static final String SLOTSPATH = "/src/data/slots.csv";
 	
 	/**
 	 * The DateTimeFormatter object that specifies how LocalDateTime object is formatted to string and vice versa
 	 */
-	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mma");
+	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 	
 	/**
 	 * The private constructor of the class
@@ -294,7 +294,20 @@ public class SlotManager {
 		return result;
 		
 	}
-	
+
+    public List<Slot> getMovieSlots(String movie) {
+
+        movie = movie.toUpperCase();
+        List<Slot> result = new ArrayList<Slot>();
+        for (Slot s: this.slots) {
+            if (s.getMovie_name().toUpperCase().compareTo(movie) == 0) {
+                result.add(s);
+            }
+        }
+        result.sort(Comparator.comparing(Slot::getShowtime));
+        return result;
+
+    }
 	/**
 	 * The function to filter all slots that plays a specific movie at a specific cineplex at a specific date
 	 * @param cineplex_name		The name of the cineplex
