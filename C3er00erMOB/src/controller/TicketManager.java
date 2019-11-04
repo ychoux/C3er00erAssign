@@ -115,7 +115,7 @@ public class TicketManager {
 	 * 					Return false if ticket ID already exists
 	 * 					Return false if number seats is not equal to number of ticket types
 	 */
-	public String addTicket(double price, String slotID, List<String> seats, List<TicketType> types) {
+	public String addTicket(String slotID, List<String> seats, List<TicketType> types) {
 		
 		if (seats.isEmpty())
 			return null;
@@ -138,6 +138,11 @@ public class TicketManager {
 		
 		if (!slot.getBookings().occupySeats(seats))
 			return null;
+		
+		double price = 0;
+		for (TicketType type: types) {
+			price += PriceManager.getInstance().calculatePrice(type, slot);
+		}
 		
 		Ticket t = new Ticket(ticketID, price, slot, seats, types);
 		this.tickets.put(ticketID, t);
@@ -271,14 +276,14 @@ public class TicketManager {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		TicketManager.getInstance().addTicket(18, "TOY0001", Arrays.asList("E03", "E04", "E05"), Arrays.asList(TicketType.ADULT, TicketType.ADULT, TicketType.ADULT));
-		TicketManager.getInstance().addTicket(10, "JOK0003", Arrays.asList("D13", "D14"), Arrays.asList(TicketType.ADULT, TicketType.ADULT));
-		TicketManager.getInstance().addTicket(12, "JOK0002", Arrays.asList("F07", "F06"), Arrays.asList(TicketType.ADULT, TicketType.ADULT));
-		TicketManager.getInstance().addTicket(30, "MAL0001", Arrays.asList("E01", "E02", "E03", "E04", "E05"), Arrays.asList(TicketType.STUDENT, TicketType.STUDENT, TicketType.STUDENT, TicketType.STUDENT, TicketType.STUDENT));
-		TicketManager.getInstance().addTicket(25, "TER0001", Arrays.asList("F01", "F02", "F03", "F04", "F05"), Arrays.asList(TicketType.ADULT, TicketType.ADULT, TicketType.CHILD, TicketType.CHILD, TicketType.CHILD));
-		TicketManager.getInstance().addTicket(6, "TOY0001", Arrays.asList("F03"), Arrays.asList(TicketType.ADULT));
-		TicketManager.getInstance().addTicket(11, "JOK0003", Arrays.asList("E13", "E14"), Arrays.asList(TicketType.ADULT, TicketType.ADULT));
-		TicketManager.getInstance().addTicket(10, "JOK0002", Arrays.asList("C04", "C05"), Arrays.asList(TicketType.STUDENT, TicketType.STUDENT));
+		TicketManager.getInstance().addTicket("TOY0001", Arrays.asList("E03", "E04", "E05"), Arrays.asList(TicketType.ADULT, TicketType.ADULT, TicketType.ADULT));
+		TicketManager.getInstance().addTicket("JOK0003", Arrays.asList("D13", "D14"), Arrays.asList(TicketType.ADULT, TicketType.ADULT));
+		TicketManager.getInstance().addTicket("JOK0002", Arrays.asList("F07", "F06"), Arrays.asList(TicketType.ADULT, TicketType.ADULT));
+		TicketManager.getInstance().addTicket("MAL0001", Arrays.asList("E01", "E02", "E03", "E04", "E05"), Arrays.asList(TicketType.STUDENT, TicketType.STUDENT, TicketType.STUDENT, TicketType.STUDENT, TicketType.STUDENT));
+		TicketManager.getInstance().addTicket("TER0001", Arrays.asList("F01", "F02", "F03", "F04", "F05"), Arrays.asList(TicketType.ADULT, TicketType.ADULT, TicketType.CHILD, TicketType.CHILD, TicketType.CHILD));
+		TicketManager.getInstance().addTicket("TOY0001", Arrays.asList("F03"), Arrays.asList(TicketType.ADULT));
+		TicketManager.getInstance().addTicket("JOK0003", Arrays.asList("E13", "E14"), Arrays.asList(TicketType.ADULT, TicketType.ADULT));
+		TicketManager.getInstance().addTicket("JOK0002", Arrays.asList("C04", "C05"), Arrays.asList(TicketType.STUDENT, TicketType.STUDENT));
 		
 		for (Ticket t: Collections.list(TicketManager.getInstance().tickets.elements())) {
 			TicketManager.getInstance().printTicketDetails(t.getTicketID());

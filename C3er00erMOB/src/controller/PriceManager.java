@@ -37,7 +37,7 @@ public class PriceManager {
 	/**
 	 * The path to the CSV file that stores all the public holidays
 	 */
-	private static final String HOLIDAYPATH = "src/data/ph.csv";
+	private static final String HOLIDAYPATH = "src/data/PH.csv";
 	
 	/**
 	 * The path to the CSV file that stores all the ticket price rate
