@@ -218,6 +218,7 @@ public class TicketManager {
 				System.out.print(occurence + " " + type + " ");
 		}
 		System.out.println();
+		System.out.println("Total Price: " + ticket.getPrice());
 		
 	}
 	
