@@ -5,7 +5,6 @@ import controller.PrintMovieList;
 import controller.ReviewController;
 import entity.Movie;
 import entity.Review;
-import view.UserInputReview;
 
 public class MovieListApp {
 
@@ -20,7 +19,10 @@ public class MovieListApp {
 		ReviewController.updateMovieListRating();
 		PrintMovieList.printMovieList(2); // movie.getid()
 		//ReviewController.userReview(rList, 2, "5", "Good movie"); //ReviewController.userReview(rList, movieid, user rating, user review);
-		UserInputReview.userInputReview(rList, mList);
+		//UserInputReview.userInputReview(rList, mList);
+		//MovieListController.delMovieList(mList, 0); // this will remove the whole selected movielist
+		//MovieListController.addMovieList(mList, "red cliff", "synopsis", "director", "cast", "genre", null, null, 4, 5.5);
 	}
+	
 
 }

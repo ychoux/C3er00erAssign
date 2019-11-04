@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +25,9 @@ public class MovieListController {
 			br = new BufferedReader(new FileReader(MOVIEFILE));
 			while((line = br.readLine()) !=null ) {
 				String[] moviecsv = line.split(cvsSplitBy);
-				if(!moviecsv[0].equals("ID")) {
-					
-					movietmp = new Movie(Integer.parseInt(moviecsv[0]),moviecsv[1],moviecsv[2],moviecsv[3],moviecsv[4],
-					              moviecsv[5],moviecsv[6],Integer.parseInt(moviecsv[7]),Double.parseDouble(moviecsv[8]));
+				if(!moviecsv[0].equals("NAME")) {
+					movietmp = new Movie(moviecsv[0],moviecsv[1],moviecsv[2],moviecsv[3],moviecsv[4],Duration.parse(moviecsv[5]),
+							moviecsv[6],Integer.parseInt(moviecsv[7]),Double.parseDouble(moviecsv[8]));
 					movieList.add(movietmp);
 				}
 			}
@@ -35,50 +36,66 @@ public class MovieListController {
 		}
 		return movieList;
     }
+    //(String movieTitle, String synopsis, String director, String cast, String genre, Duration time,String status, int sales,double overallRating)
+
+
+    public static void addMovieList(List<Movie> mList, String name, String synopsis,String director, String cast, String genre, 
+    		Duration time, String status, int sale, double rating ) {
+    	Movie movietmp;
+    	movietmp = new Movie(name,synopsis,director,cast,genre, time,status,sale,rating);
+    	mList.add(movietmp);
+    	updateMovieListCSV(mList);
+    }
+    
+    public static void delMovieList(List<Movie> mList,int id) {
+    	mList.remove(id);
+    	updateMovieListCSV(mList);
+    }
     public static void updateMovieListCSV(List<Movie> mList) {
 		FileWriter csvWriter;
+		String cvsSplitBy = ",";
 		try {
 			csvWriter = new FileWriter(MOVIEFILE);
-			csvWriter.append("ID");
-			csvWriter.append(",");
-			csvWriter.append("Name");
-			csvWriter.append(",");
+			csvWriter.append("NAME");
+			csvWriter.append(cvsSplitBy);
 			csvWriter.append("SYNOPSIS");
-			csvWriter.append(",");
+			csvWriter.append(cvsSplitBy);
 			csvWriter.append("DIRECTOR");
-			csvWriter.append(",");
+			csvWriter.append(cvsSplitBy);
 			csvWriter.append("CAST");
-			csvWriter.append(",");
+			csvWriter.append(cvsSplitBy);
 			csvWriter.append("GENRE");
-			csvWriter.append(",");
+			csvWriter.append(cvsSplitBy);
+			csvWriter.append("TIME");
+			csvWriter.append(cvsSplitBy);
 			csvWriter.append("STATUS");
-			csvWriter.append(",");
+			csvWriter.append(cvsSplitBy);
 			csvWriter.append("SALES");
-			csvWriter.append(",");
+			csvWriter.append(cvsSplitBy);
 			csvWriter.append("RATING");
 			csvWriter.append("\n");
 			
-			//ID	NAME	SYNOPSIS	DIRECTOR	CAST	GENRE	STATUS	SALES	RATING
+			//	NAME	SYNOPSIS	DIRECTOR	CAST	GENRE	TIME 	STATUS		SALES		RATING
 
 
 			for (Movie movietmp : mList) {
 				StringBuilder sb = new StringBuilder();
-				sb.append(Integer.toString(movietmp.getId()));
-				sb.append(',');
 				sb.append(movietmp.getMovieTitle());
-				sb.append(',');
+				sb.append(cvsSplitBy);
 				sb.append(movietmp.getSynopsis());
-				sb.append(',');
+				sb.append(cvsSplitBy);
 				sb.append(movietmp.getDirector());
-				sb.append(',');
+				sb.append(cvsSplitBy);
 				sb.append(movietmp.getCast());
-				sb.append(',');
+				sb.append(cvsSplitBy);
 				sb.append(movietmp.getGenre());
-				sb.append(',');
+				sb.append(cvsSplitBy);
+				sb.append(movietmp.getTime());
+				sb.append(cvsSplitBy);
 				sb.append(movietmp.getStatus());
-				sb.append(',');
+				sb.append(cvsSplitBy);
 				sb.append(movietmp.getSales());
-				sb.append(',');
+				sb.append(cvsSplitBy);
 				sb.append(movietmp.getOverallRating());
 				sb.append('\n');
 				csvWriter.append(sb.toString());

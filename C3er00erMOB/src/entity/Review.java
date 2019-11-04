@@ -1,25 +1,26 @@
 package entity;
 
 public class Review {
-	private int id;
+	private String movieTitle;
 	private String rating;
 	private double overallRating;
 	private String review;
 	public Review() {
 		
 	}
-	public Review(int id, String rating, double overallRating, String review) {
+	public Review(String movieTitle, String rating, double overallRating, String review) {
 		super();
-		this.id = id;
+		this.movieTitle = movieTitle;
 		this.rating = rating;
 		this.overallRating = overallRating;
 		this.review = review;
 	}
-	public int getId() {
-		return id;
+
+	public String getMovieTitle() {
+		return movieTitle;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setMovieTitle(String name) {
+		this.movieTitle = name;
 	}
 	public String getRating() {
 		return rating;
