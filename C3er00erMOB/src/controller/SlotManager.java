@@ -176,6 +176,14 @@ public class SlotManager {
 	}
 	
 	/**
+	 * The function that returns all slots
+	 * @return	A list of all slotss
+	 */
+	public List<Slot> getAllSlots() {
+		return this.slots;
+	}
+	
+	/**
 	 * The function to get a slot based on its slot ID
 	 * @param slotID	The slot ID
 	 * @return			The Slot object correspond to the slot ID passed in

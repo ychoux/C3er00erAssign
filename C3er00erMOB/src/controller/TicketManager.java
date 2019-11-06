@@ -12,10 +12,12 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import controller.SlotManager;
 import entity.Slot;
 import entity.Ticket;
+import entity.Ticket.TicketType;
 
 /**
  * The class that manages all tickets and create ticket IDs
@@ -65,7 +67,8 @@ public class TicketManager {
 					double price = Double.parseDouble(row[1]);
 					String slotID = row[2].toUpperCase();
 					List<String> seats = Arrays.asList(row[3].split("\\+"));
-					this.tickets.put(ticketID, new Ticket(ticketID, price, SlotManager.getInstance().getSlot(slotID), seats));					
+					List<TicketType> types = Arrays.asList(row[4].split("\\+")).stream().map(TicketType::valueOf).collect(Collectors.toList());;
+					this.tickets.put(ticketID, new Ticket(ticketID, price, SlotManager.getInstance().getSlot(slotID), seats, types));					
 				}
 				catch (ArrayIndexOutOfBoundsException e) {
 					System.out.println("Unable to retrieve ticket information!");
@@ -105,19 +108,25 @@ public class TicketManager {
 	 * @param price		The price of ticket, in double
 	 * @param slot		The slot
 	 * @param seats		The seats booked, a list of seat IDs
+	 * @param types		The type of tickets, a list of TicketType
+	 * 					If 3 adult tickets are booked, the list should be [ADULT, ADULT, ADULT]
 	 * @return			A boolean variable indication whether the operation is successful or not
 	 * 					Return false if seats passed in contains booked seats or has no seats
 	 * 					Return false if ticket ID already exists
+	 * 					Return false if number seats is not equal to number of ticket types
 	 */
-	public boolean addTicket(double price, String slotID, List<String> seats) {
+	public String addTicket(String slotID, List<String> seats, List<TicketType> types) {
 		
 		if (seats.isEmpty())
-			return false;
+			return null;
+		
+		if (seats.size() != types.size())
+			return null;
 		
 		Slot slot = SlotManager.getInstance().getSlot(slotID.toUpperCase());
 		for (String s: seats) {
 			if (slot.getBookings().getBookedSeatsID().contains(s))
-				return false;
+				return null;
 		}
 		
 		seats.replaceAll(String::toUpperCase);
@@ -125,14 +134,19 @@ public class TicketManager {
 		String ticketID = slot.getSlotID() + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
 		
 		if (this.tickets.get(ticketID) != null)
-			return false;
+			return null;
 		
 		if (!slot.getBookings().occupySeats(seats))
-			return false;
+			return null;
 		
-		Ticket t = new Ticket(ticketID, price, slot, seats);
+		double price = 0;
+		for (TicketType type: types) {
+			price += PriceManager.getInstance().calculatePrice(type, slot);
+		}
+		
+		Ticket t = new Ticket(ticketID, price, slot, seats, types);
 		this.tickets.put(ticketID, t);
-		return true;
+		return ticketID;
 	}
 	
 	/**
@@ -196,6 +210,16 @@ public class TicketManager {
 		System.out.printf("Duration: %d hours %d minutes\n", ticket.getSlot().getDuration().toHoursPart(), ticket.getSlot().getDuration().toMinutesPart());
 		System.out.println("Cinema: " + ticket.getSlot().getCinema().toString());
 		System.out.println("Seats: " + ticket.getSeats());
+		
+		System.out.print("Tickets: ");
+		for (TicketType type: TicketType.values()) {
+			int occurence = Collections.frequency(ticket.getType(), type);
+			if (occurence > 0)
+				System.out.print(occurence + " " + type + " ");
+		}
+		System.out.println();
+		System.out.println("Total Price: " + ticket.getPrice());
+		
 	}
 	
 	/**
@@ -219,6 +243,8 @@ public class TicketManager {
         		sb.append(t.getSlot().getSlotID());
         		sb.append(',');
         		sb.append(String.join("+", t.getSeats()));
+        		sb.append("+,");
+        		sb.append(String.join("+", t.getTypeString()));
         		sb.append("+\n");
             	csvWriter.append(sb.toString());
             }
@@ -251,14 +277,14 @@ public class TicketManager {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		TicketManager.getInstance().addTicket(18, "TOY0001", Arrays.asList("E03", "E04", "E05"));
-		TicketManager.getInstance().addTicket(10, "JOK0003", Arrays.asList("D13", "D14"));
-		TicketManager.getInstance().addTicket(12, "JOK0002", Arrays.asList("F07", "F06"));
-		TicketManager.getInstance().addTicket(30, "MAL0001", Arrays.asList("E01", "E02", "E03", "E04", "E05"));
-		TicketManager.getInstance().addTicket(25, "TER0001", Arrays.asList("F01", "F02", "F03", "F04", "F05"));
-		TicketManager.getInstance().addTicket(6, "TOY0001", Arrays.asList("F03"));
-		TicketManager.getInstance().addTicket(11, "JOK0003", Arrays.asList("E13", "E14"));
-		TicketManager.getInstance().addTicket(10, "JOK0002", Arrays.asList("C04", "C05"));
+		TicketManager.getInstance().addTicket("TOY0001", Arrays.asList("E03", "E04", "E05"), Arrays.asList(TicketType.ADULT, TicketType.ADULT, TicketType.ADULT));
+		TicketManager.getInstance().addTicket("JOK0003", Arrays.asList("D13", "D14"), Arrays.asList(TicketType.ADULT, TicketType.ADULT));
+		TicketManager.getInstance().addTicket("JOK0002", Arrays.asList("F07", "F06"), Arrays.asList(TicketType.ADULT, TicketType.ADULT));
+		TicketManager.getInstance().addTicket("MAL0001", Arrays.asList("E01", "E02", "E03", "E04", "E05"), Arrays.asList(TicketType.STUDENT, TicketType.STUDENT, TicketType.STUDENT, TicketType.STUDENT, TicketType.STUDENT));
+		TicketManager.getInstance().addTicket("TER0001", Arrays.asList("F01", "F02", "F03", "F04", "F05"), Arrays.asList(TicketType.ADULT, TicketType.ADULT, TicketType.CHILD, TicketType.CHILD, TicketType.CHILD));
+		TicketManager.getInstance().addTicket("TOY0001", Arrays.asList("F03"), Arrays.asList(TicketType.ADULT));
+		TicketManager.getInstance().addTicket("JOK0003", Arrays.asList("E13", "E14"), Arrays.asList(TicketType.ADULT, TicketType.ADULT));
+		TicketManager.getInstance().addTicket("JOK0002", Arrays.asList("C04", "C05"), Arrays.asList(TicketType.STUDENT, TicketType.STUDENT));
 		
 		for (Ticket t: Collections.list(TicketManager.getInstance().tickets.elements())) {
 			TicketManager.getInstance().printTicketDetails(t.getTicketID());
