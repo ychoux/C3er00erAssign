@@ -7,17 +7,17 @@ public class Movie {
 	private String synopsis; 
 	private String director;
 	private String cast;
-	private String status;
 	private String genre;
 	private Duration time;
 	private double overallRating;
 	private int sales;
+	private MovieStatus status;
 	
 	public Movie() {
 		
 	}
 	public Movie(String movieTitle, String synopsis, String director, String cast, String genre, Duration time
-			,String status, int sales,double overallRating) {
+			,MovieStatus status, int sales,double overallRating) {
 		this.movieTitle = movieTitle;
 		this.synopsis = synopsis;
 		this.director = director;
@@ -52,7 +52,7 @@ public class Movie {
 	public void setSales(int sales) {
 		this.sales = sales;
 	}
-	public void setStatus(String status) {
+	public void setStatus(MovieStatus status) {
 		this.status = status;
 	}
 	public void setGenre(String genre) {
@@ -76,7 +76,7 @@ public class Movie {
 	public int getSales() {
 		return sales;
 	}
-	public String getStatus() {
+	public MovieStatus getStatus() {
 		return status;
 	}
 	public String getGenre() {
