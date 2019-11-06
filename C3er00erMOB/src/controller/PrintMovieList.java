@@ -1,6 +1,7 @@
 package controller;
 
 
+import java.time.Duration;
 import java.util.List;
 
 import entity.Movie;
@@ -11,6 +12,7 @@ public class PrintMovieList {
 		// TODO Auto-generated method stub
 		MovieListController file = new MovieListController();
 		List<Movie> aList = file.getMovieList();
+
 		String SplitBy = ";";
 		for(Movie m : aList) {
 			String[] cast = m.getCast().split(SplitBy);
@@ -29,6 +31,7 @@ public class PrintMovieList {
 				System.out.print("["+genres+"] ");
 			}
 			System.out.println(" ");
+			System.out.printf("Duration: %d Hours %d Minutes \n", m.getTime().toHoursPart(), m.getTime().toMinutesPart());
 			System.out.println("Status: "+m.getStatus());
 			System.out.println("Sales: "+m.getSales());
 			System.out.printf("Rating: %.2f\n",m.getOverallRating());
@@ -37,12 +40,13 @@ public class PrintMovieList {
 		}
 		
 	}
+	
 	public static void printMovieList(int id) {
 		MovieListController file = new MovieListController();
 		List<Movie> aList = file.getMovieList();
 		String SplitBy = ";";
 		for(Movie m : aList) {
-			if(m.getId() == id) {
+			if( aList.get(id).getMovieTitle().equals(m.getMovieTitle())) {
 				String[] cast = m.getCast().split(SplitBy);
 				String[] genre = m.getGenre().split(SplitBy);
 				System.out.println("Movie: "+m.getMovieTitle());
@@ -59,6 +63,7 @@ public class PrintMovieList {
 					System.out.print("["+genres+"] ");
 				}
 				System.out.println(" ");
+				System.out.printf("Duration: %d Hours %d Minutes \n", m.getTime().toHoursPart(), m.getTime().toMinutesPart());
 				System.out.println("Status: "+m.getStatus());
 				System.out.println("Sales: "+m.getSales());
 				System.out.printf("Rating: %.2f\n",m.getOverallRating());

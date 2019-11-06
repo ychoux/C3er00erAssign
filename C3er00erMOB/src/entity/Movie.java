@@ -1,5 +1,5 @@
 package entity;
-
+import java.time.Duration;
 
 public class Movie {
 	
@@ -9,30 +9,30 @@ public class Movie {
 	private String cast;
 	private String status;
 	private String genre;
-	private int id;
+	private Duration time;
 	private double overallRating;
 	private int sales;
 	
 	public Movie() {
 		
 	}
-	public Movie(int id,String movieTitle, String synopsis, String director, String cast, String genre,String status, 
-			int sales,double overallRating) {
-		this.id = id;
+	public Movie(String movieTitle, String synopsis, String director, String cast, String genre, Duration time
+			,String status, int sales,double overallRating) {
 		this.movieTitle = movieTitle;
 		this.synopsis = synopsis;
 		this.director = director;
 		this.cast = cast;
 		this.genre = genre;
+		this.time = time;
 		this.status = status;
 		this.sales = sales;
 		this.overallRating = overallRating;
 	}
-	public int getId() {
-		return id;
+	public Duration getTime() {
+		return time;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setTime(Duration time) {
+		this.time = time;
 	}
 	public void setMovieTitle(String movieTitle) {
 		this.movieTitle = movieTitle;

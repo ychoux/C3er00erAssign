@@ -22,10 +22,9 @@ public class ReviewController {
 		br = new BufferedReader(new FileReader(REVIEWFILE));
 		while((line = br.readLine()) !=null) {
 			String[] reviewcsv = line.split(cvsSplitBy);
-			if(!reviewcsv[0].equals("ID")) {
+			if(!reviewcsv[0].equals("NAME")) {
 				//int id, string rating, double overallRating, String review
-				reviewtmp = new Review(Integer.parseInt(reviewcsv[0]),reviewcsv[1],
-						Double.parseDouble(reviewcsv[2]),reviewcsv[3]);
+				reviewtmp = new Review(reviewcsv[0],reviewcsv[1],Double.parseDouble(reviewcsv[2]),reviewcsv[3]);
 				reviewList.add(reviewtmp);
 			}
 		}
@@ -34,10 +33,10 @@ public class ReviewController {
 	}
 	return reviewList;
 	}
-	public static void userReview(List<Review> rList, int id, String rating, String review) {
+	public static void userReview(List<Review> rList, String name, String rating, String review) {
 		String ratingtmp, reviewtmp;
 		for(Review r: rList) {
-			if(r.getId() == id) {
+			if(r.getMovieTitle().equals(name)) {
 				ratingtmp = r.getRating();
 				ratingtmp = ratingtmp+";"+rating;
 				reviewtmp = r.getReview();
@@ -103,7 +102,7 @@ public class ReviewController {
 		for(Movie m: mList) {
 			for(Review r: rList)
 			{
-				if(m.getId() == r.getId()) {
+				if(m.getMovieTitle() == r.getMovieTitle()) {
 					m.setOverallRating(r.getOverallRating());
 					break;
 				}
@@ -118,7 +117,7 @@ public class ReviewController {
 		for(Movie m: mList) {
 			for(Review r: rList)
 			{
-				if(m.getId() == r.getId()) {
+				if(m.getMovieTitle().equals(r.getMovieTitle())) {
 					m.setOverallRating(r.getOverallRating());
 					break;
 				}
@@ -130,27 +129,29 @@ public class ReviewController {
 	
 	public static void updateReviewCSV(List<Review> rList) {
 		FileWriter csvWriter;
+		String SplitBy = ",";
+
 		try {
 			csvWriter = new FileWriter(REVIEWFILE);
-			csvWriter.append("ID");
-			csvWriter.append(",");
+			csvWriter.append("NAME");
+			csvWriter.append(SplitBy);
 			csvWriter.append("RATING");
-			csvWriter.append(",");
+			csvWriter.append(SplitBy);
 			csvWriter.append("OVERALLRATING");
-			csvWriter.append(",");
+			csvWriter.append(SplitBy);
 			csvWriter.append("REVIEW");
 			csvWriter.append("\n");
 
 			for (Review reviewtmp : rList) {
 				StringBuilder sb = new StringBuilder();
-				sb.append(Integer.toString(reviewtmp.getId()));
-				sb.append(',');
+				sb.append(reviewtmp.getMovieTitle());
+				sb.append(SplitBy);
 				sb.append(reviewtmp.getRating());
-				sb.append(',');
+				sb.append(SplitBy);
 				sb.append(reviewtmp.getOverallRating());
-				sb.append(',');
+				sb.append(SplitBy);
 				sb.append(reviewtmp.getReview());
-				sb.append(',');
+				sb.append(SplitBy);
 				sb.append('\n');
 				csvWriter.append(sb.toString());
 			}
