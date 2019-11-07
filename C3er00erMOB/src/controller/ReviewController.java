@@ -11,8 +11,13 @@ import entity.Review;
 
 public class ReviewController {
 	static String REVIEWFILE = "src/data/review.csv";
-	String cvsSplitBy = ",";
+	static String cvsSplitBy = ",";
+	static String SplitBy =";";
 	
+	
+	/* 
+	 * This function is to get data from review csv file into review objects 
+	 */
 	public List<Review>getReviewList(){
 	List<Review>reviewList = new ArrayList<>();
 	BufferedReader br = null;
@@ -23,7 +28,8 @@ public class ReviewController {
 		while((line = br.readLine()) !=null) {
 			String[] reviewcsv = line.split(cvsSplitBy);
 			if(!reviewcsv[0].equals("NAME")) {
-				//int id, string rating, double overallRating, String review
+				//string name, string rating, double overallRating, String review
+				//NAME	RATING	OVERALLRATING	REVIEW
 				reviewtmp = new Review(reviewcsv[0],reviewcsv[1],Double.parseDouble(reviewcsv[2]),reviewcsv[3]);
 				reviewList.add(reviewtmp);
 			}
@@ -33,23 +39,62 @@ public class ReviewController {
 	}
 	return reviewList;
 	}
+	
+	/* 
+	 * This function is to allow user to add their reviews
+	 * updateMovieListRating , updateOverallRating and updateReviewCSV is called to ensure that
+	 * the rating in review csv and overall rating in both movielist and review csv is updated
+	 */
+	
 	public static void userReview(List<Review> rList, String name, String rating, String review) {
 		String ratingtmp, reviewtmp;
 		for(Review r: rList) {
 			if(r.getMovieTitle().equals(name)) {
 				ratingtmp = r.getRating();
-				ratingtmp = ratingtmp+";"+rating;
+				ratingtmp = ratingtmp+SplitBy+rating;
 				reviewtmp = r.getReview();
-				reviewtmp = reviewtmp+";"+review;
+				reviewtmp = reviewtmp+SplitBy+review;
 				r.setRating(ratingtmp);
 				r.setReview(reviewtmp);
 				break;
 			}
 		}
 		updateOverallRating(rList);
-		updateReviewCSV(rList);
 		updateMovieListRating(rList);
+		updateReviewCSV(rList);
 	}
+	
+	/* 
+	 * This function is to allow staff to delete review from review csv
+	 * updateReviewCSV is called to ensure csv updated
+	 */
+	
+	public static void delReviewList(List<Review> rList, int id) {
+		rList.remove(id);
+		updateReviewCSV(rList);
+	}
+	
+	/* 
+	 * This function is to allow staff to add movie title into review csv so userReview will be able to work
+	 * updateReviewCSV is called to ensure csv updated
+	 */
+	
+	public static void addReviewList(List<Review> rList, String name) {
+		Review reviewtmp;
+		reviewtmp = new Review();
+		reviewtmp.setMovieTitle(name);
+		reviewtmp.setRating("");
+		reviewtmp.setReview("");
+		rList.add(reviewtmp);
+		updateReviewCSV(rList);
+	}
+	
+	/* 
+	 * This function is a hard update on csv overallrating, only used the rating in the csv file
+	 * if less than 2 rating overall rating will be 0
+	 * updateReviewCSV is called to ensure csv updated
+	 */
+	
 	public static void updateOverallRating() {
 		double rates, totalrating;
 		int count;
@@ -64,15 +109,31 @@ public class ReviewController {
 			String[] rating = r.getRating().split(SplitBy);
 			for(String ratings: rating)
 			{
-				rates = Double.parseDouble(ratings);
-				totalrating += rates;
-				count++;
+				if(ratings.equals("null")) {
+					totalrating +=0;
+				}
+				else {
+					rates = Double.parseDouble(ratings);
+					totalrating += rates;
+					count++;
+				}
 			}
-			totalrating /= count;
-			r.setOverallRating(totalrating);
+			if(count>=2) {
+				totalrating /= count;
+				r.setOverallRating(totalrating);
+			}
+			else {
+				r.setOverallRating(0.0);
+			}
 		}
 		updateReviewCSV(rList);
 	}
+	
+	/* 
+	 * This function is to allow update on overall rating in review csv, rating is get from review objects
+	 * if less than 2 rating overall rating will be 0
+	 * updateReviewCSV is called to ensure csv updated
+	 */
 	public static void updateOverallRating(List<Review> rList) {
 		double rates, totalrating;
 		int count;
@@ -84,16 +145,32 @@ public class ReviewController {
 			String[] rating = r.getRating().split(SplitBy);
 			for(String ratings: rating)
 			{
-				rates = Double.parseDouble(ratings);
-				totalrating += rates;
-				count++;
+				if(ratings.equals("null")) {
+					totalrating +=0;
+				}
+				else {
+					rates = Double.parseDouble(ratings);
+					totalrating += rates;
+					count++;
+				}
+				
 			}
-			totalrating /= count;
-			r.setOverallRating(totalrating);
-			
+			if(count>=2) {
+				totalrating /= count;
+				r.setOverallRating(totalrating);
+			}
+			else {
+				r.setOverallRating(0.0);
+			}
 		}
 		updateReviewCSV(rList);
 	}
+	
+	/* 
+	 * This function is a hard update on movielist overall rating, rating is taken strange from review csv
+	 * updateMovieListCSV is called to ensure csv updated
+	 */
+	
 	public static void updateMovieListRating() {
 		ReviewController file = new ReviewController();
 		List<Review> rList = file.getReviewList();
@@ -111,6 +188,12 @@ public class ReviewController {
 		MovieListController.updateMovieListCSV(mList);
 		
 	}
+	
+	/* 
+	 * This function is to allow update on movielist csv directly from review objects
+	 * updateMovieListCSV is called to ensure csv updated
+	 */
+	
 	public static void updateMovieListRating(List<Review> rList) {
 		MovieListController mfile = new MovieListController();
 		List<Movie> mList = mfile.getMovieList();
@@ -126,6 +209,31 @@ public class ReviewController {
 		MovieListController.updateMovieListCSV(mList);
 		
 	}
+	
+	/* 
+	 * This function is to allow live update on movielist csv and movielist object of overall rating from review objects
+	 * updateMovieListCSV is called to ensure csv updated
+	 */
+	
+	public static void updateMovieListRating(List<Movie> mList, List<Review> rList) {
+		for(Movie m: mList) {
+			for(Review r: rList)
+			{
+				if(m.getMovieTitle().equals(r.getMovieTitle())) {
+					m.setOverallRating(r.getOverallRating());
+					break;
+				}
+			}
+		}
+		MovieListController.updateMovieListCSV(mList);
+		
+	}
+	
+	
+	/* 
+	 * This function is to allow update on review csv
+	 */
+	
 	
 	public static void updateReviewCSV(List<Review> rList) {
 		FileWriter csvWriter;
