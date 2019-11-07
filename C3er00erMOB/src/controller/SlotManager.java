@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import entity.Cinema;
 import entity.Slot;
@@ -72,9 +73,9 @@ public class SlotManager {
 					String cineplex_name = row[4].toUpperCase();
 					String cinemaID = row[5].toUpperCase();
 					List<String> booked_seats = Arrays.asList(row[6].split("\\+"));
-					this.addSlot(slotID, showtime, duration, movie_name, 
-							CineplexManager.getInstance().getCineplex(cineplex_name).getCinema(cinemaID), 
-							booked_seats);					
+					this.slots.add(new Slot(slotID, showtime, duration, movie_name, 
+							CineplexManager.getInstance().getCineplex(cineplex_name).getCinema(cinemaID)));
+					this.getSlot(slotID).getBookings().occupySeats(booked_seats);				
 				}
 				catch (ArrayIndexOutOfBoundsException e) {
 					System.out.println("Unable to retrieve slot information!");
@@ -174,6 +175,22 @@ public class SlotManager {
 		this.slots.remove(slot);
 		this.saveToCSV();
 		return slot;
+	}
+	
+	/**
+	 * The function to remove multiple slots
+	 * @param slotID	The List of slot IDs
+	 */
+	public void removeSlots(List<String> slotIDs) {
+		slotIDs.replaceAll(String::toUpperCase);
+		for (String slotID: slotIDs) {
+			try {
+				this.slots.remove(this.getSlot(slotID));
+			} 
+			catch (NullPointerException e) {
+			}
+		}
+		this.saveToCSV();
 	}
 
 	/**

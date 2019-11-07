@@ -161,8 +161,10 @@ public class TicketManager {
 		try {
 			Ticket t = this.tickets.remove(ticketID);
 			Slot s = t.getSlot();
-			s.getBookings().freeSeats(t.getSeats());
-			SlotManager.getInstance().saveToCSV();
+			if (s != null) {
+				s.getBookings().freeSeats(t.getSeats());
+				SlotManager.getInstance().saveToCSV();
+			}
 			this.saveToCSV();
 			return t;
 		} 

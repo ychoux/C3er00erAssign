@@ -148,7 +148,7 @@ public class CineplexManager {
 	 * The function to save back all cineplexes and cinemas to the CSV file
 	 * @return	A boolean variable that indicates whether the operation is successful or not
 	 */
-	private boolean saveToCSV() {
+	public boolean saveToCSV() {
 		
 		try {
 			
