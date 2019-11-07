@@ -29,6 +29,7 @@ public class SeatingPlan {
 			
 		}
 		catch (IOException e) {
+			e.printStackTrace();
 			System.out.println("Seating plan not found, unable to create seating plan!");
 		}
 		
