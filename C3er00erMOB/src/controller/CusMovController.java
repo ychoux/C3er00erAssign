@@ -1,6 +1,7 @@
 package controller;
 
 import entity.Movie;
+import entity.MovieStatus;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -31,7 +32,7 @@ public class CusMovController {
                 try {
                     row = line.split(",");
                     this.movieDetailList.add(new Movie(row[0], row[1], row[2], row[3],
-                            row[4], Duration.parse(row[5]), row[6], Integer.parseInt(row[7]), Double.parseDouble(row[8])));
+                            row[4], Duration.parse(row[5]), MovieStatus.valueOf(row[6]), Integer.parseInt(row[7]), Double.parseDouble(row[8])));
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("Unable to retrieve ticket information!");
                 }
