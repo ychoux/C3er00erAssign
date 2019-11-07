@@ -242,25 +242,6 @@ public class SlotManager {
 	}
 	
 	/**
-	 * The function to filter all slots that plays a specific movie
-	 * @param movie				The movie name
-	 * @return					All slots that plays the specific movie
-	 */
-	public List<Slot> getMovieSlots(String movie) {
-		
-		movie = movie.toUpperCase();
-		List<Slot> result = new ArrayList<Slot>();		
-		for (Slot s: this.slots) {
-			if (s.getMovie_name().toUpperCase().compareTo(movie) == 0) {
-				result.add(s);
-			}
-		}
-		result.sort(Comparator.comparing(Slot::getShowtime));
-		return result;
-		
-	}
-	
-	/**
 	 * The function to filter all slots that plays a specific movie at a specific date
 	 * @param movie				The movie name
 	 * @param date				The date, a LocalDate object
@@ -302,20 +283,26 @@ public class SlotManager {
 		return result;
 		
 	}
-
-    public List<Slot> getMovieSlots(String movie) {
-
-        movie = movie.toUpperCase();
-        List<Slot> result = new ArrayList<Slot>();
-        for (Slot s: this.slots) {
-            if (s.getMovie_name().toUpperCase().compareTo(movie) == 0) {
-                result.add(s);
-            }
-        }
-        result.sort(Comparator.comparing(Slot::getShowtime));
-        return result;
-
-    }
+	
+	/**
+	 * The function to filter all slots that plays a specific movie
+	 * @param movie				The movie name
+	 * @return					All slots that plays the specific movie
+	 */
+	public List<Slot> getMovieSlots(String movie) {
+		
+		movie = movie.toUpperCase();
+		List<Slot> result = new ArrayList<Slot>();		
+		for (Slot s: this.slots) {
+			if (s.getMovie_name().toUpperCase().compareTo(movie) == 0) {
+				result.add(s);
+			}
+		}
+		result.sort(Comparator.comparing(Slot::getShowtime));
+		return result;
+		
+	}
+	
 	/**
 	 * The function to filter all slots that plays a specific movie at a specific cineplex at a specific date
 	 * @param cineplex_name		The name of the cineplex
