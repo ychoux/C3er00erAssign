@@ -1,11 +1,14 @@
 package entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Customer {
 
     private String name;
     private String email;
     private int phone;
-    private String ticket; //to be changed to ticket class
+    private List<String> ticket = new ArrayList<>(); //to be changed to ticket class
 
 
     public Customer() {
@@ -37,15 +40,19 @@ public class Customer {
         this.phone = phone;
     }
 
-    public String getTicket() {
+    public List<String> getTicket() {
         return ticket;
     }
 
-    public Customer(String name, String email, int phone, String ticket ) {
+    public void setTicket(List<String> ticket) {
+        this.ticket = ticket;
+    }
+
+    public Customer(String name, String email, int phone, List<String> ticket ) {
         this.name = name;
         this.email = email;
         this.phone = phone;
-        this.ticket = ticket;
+        this.ticket = new ArrayList<>(ticket);
     }
 
 }

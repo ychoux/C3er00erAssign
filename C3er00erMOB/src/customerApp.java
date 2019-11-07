@@ -1,13 +1,9 @@
 import controller.BookingController;
 import controller.CusMovController;
 import controller.CustomerController;
-import controller.TicketManager;
-import entity.MovieDetail;
-import entity.SeatBookings;
-import entity.Slot;
+import controller.ReviewController;
+import entity.Movie;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,43 +11,31 @@ import java.util.Scanner;
 public class customerApp {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        List<MovieDetail> movieDetailList;
-        movieDetailList =  CusMovController.movieCSVRead();
+        List<Movie> movieDetailList;
+        movieDetailList =  CusMovController.getInstance().movieCSVRead();
         while(true) {
-            System.out.println("\nChoose \n " +
+            System.out.println("\nChoose\n " +
                     "1. View user's detail\n" +
-                    " 2. List Movie");
+                    " 2. List Movie\n" +
+                    " 3. Movie review or rating");
+
             int choice = sc.nextInt();
-            if (choice == 1) {
-                new CustomerController();
-            } else if (choice == 2) {
-                CusMovController.listMovie(movieDetailList);
-                System.out.println("\nEnter the number of movie to see description: (others to quit)");
-                int ch = sc.nextInt();
-                CusMovController.viewMovieDetails(movieDetailList.get(ch - 1));
-                System.out.println("Enter 1 to show the slots available");
-                int ch1 = sc.nextInt();
-                if(ch1==1){
-                    List<Slot> result;
-                    result = BookingController.getInstance().viewAvailableSlot(movieDetailList.get(ch1 - 1).getTitle());
-                    System.out.println("Choose the slot you are interested in");
-                    int ch2 = sc.nextInt();
-                    Slot slot = result.get(ch2-1);
-                    BookingController.getInstance().planofcineplex(slot);
-                    System.out.println("Enter the number seat you want to book");
-                    int no_of_tic = sc.nextInt();
-                    List<String> seats = new ArrayList<>();
-                    System.out.println("Enter the seats you want to book");
-                    String[] seat;
-                    seat = sc.next().split(" ");
-                    for (String s : seat){
-                        seats.add(s); }
+            switch (choice) {
 
-
-                    TicketManager.getInstance().addTicket(18, slot.getSlotID(), seats);
+                case 1 :
+                {
+                    CustomerController.getInstance().print();
+                    break;
                 }
-            }
-            else {
+
+                case 2:{
+                    BookingController.getInstance().booking_flow(movieDetailList);
+                    break;}
+
+                case  3:{
+                    ReviewController rc ;
+                }
+
             }
         }
     }
