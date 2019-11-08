@@ -52,6 +52,7 @@ public class CustomerController {
         if (Tic_id == null)
             return;
         customer.getTicket().add(Tic_id);
+        this.saveToCSV();
     }
 
     public void print(){
@@ -118,7 +119,7 @@ public class CustomerController {
     }
 
     public static void main(String[] args) {
-        CustomerController.getInstance().addTic("JOK000120191106220743");
+        //CustomerController.getInstance().addTic("JOK000120191106220743");
         CustomerController.getInstance().print();
     }
 }

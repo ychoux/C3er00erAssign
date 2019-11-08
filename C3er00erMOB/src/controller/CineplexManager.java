@@ -123,6 +123,7 @@ public class CineplexManager {
 	public boolean addCineplex(String cineplex_name) {
 		if (this.cineplexes.get(cineplex_name.toUpperCase()) == null) {
 			this.cineplexes.put(cineplex_name.toUpperCase(), new Cineplex(cineplex_name));
+			this.saveToCSV();
 			return true;
 		}
 		return false;
@@ -139,6 +140,7 @@ public class CineplexManager {
 		if (c != null) {
 			this.cineplexes.remove(cineplex_name.toUpperCase());
 		}
+		this.saveToCSV();
 		return c;
 	}
 	
@@ -146,7 +148,7 @@ public class CineplexManager {
 	 * The function to save back all cineplexes and cinemas to the CSV file
 	 * @return	A boolean variable that indicates whether the operation is successful or not
 	 */
-	private boolean saveToCSV() {
+	public boolean saveToCSV() {
 		
 		try {
 			
@@ -197,7 +199,7 @@ public class CineplexManager {
 	 */
 	public static void main(String[] args) {
 		CineplexManager.getInstance().getCineplex("star @ jurong east").getCinema("je1").getSeating_plan().printSeatingPlan();
-		
+		//System.out.println(CineplexManager.getInstance().getCineplex("star @ jurong east").getCinema("je1"));
 	}
 	
 }

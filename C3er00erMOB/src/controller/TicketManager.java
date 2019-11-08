@@ -146,6 +146,8 @@ public class TicketManager {
 		
 		Ticket t = new Ticket(ticketID, price, slot, seats, types);
 		this.tickets.put(ticketID, t);
+		this.saveToCSV();
+		SlotManager.getInstance().saveToCSV();
 		return ticketID;
 	}
 	
@@ -158,6 +160,12 @@ public class TicketManager {
 		ticketID = ticketID.toUpperCase();
 		try {
 			Ticket t = this.tickets.remove(ticketID);
+			Slot s = t.getSlot();
+			if (s != null) {
+				s.getBookings().freeSeats(t.getSeats());
+				SlotManager.getInstance().saveToCSV();
+			}
+			this.saveToCSV();
 			return t;
 		} 
 		catch (NullPointerException e) {
