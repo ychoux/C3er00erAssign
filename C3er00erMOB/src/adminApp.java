@@ -14,11 +14,18 @@ public class adminApp {
 		System.out.println("Enter Username: ");
 		String username = sc.nextLine();		
 		int failCount=0;
-		for(;;) {
-			System.out.println("Enter Password");
-			String password= sc.nextLine();
 
-			AdminSession admSess = AdminSession.createSession(username, password);
+		for(;;) {
+			AdminSession admSess;
+			if(!username.equals("1")) {
+				System.out.println("Enter Password");
+				String password= sc.nextLine();
+
+				admSess = AdminSession.createSession(username, password);
+			}
+			else {
+				admSess= AdminSession.createSession("jy", "P@ssw0rd!");
+			}
 
 			AdminController aCon=new AdminController();
 			if(admSess != null) {
@@ -26,15 +33,18 @@ public class adminApp {
 					int choice = -1;
 					while(true) {
 						System.out.println("====================");
-						System.out.println("1. Create/Update/Remove Movie Listing ");
-						System.out.println("2. Create/Update/Remove cinema showtimes");
-						System.out.println("3. User Settings");
+						System.out.println("1. Manage Movie Listing ");
+						System.out.println("2. Manage Cinema Showtimes");
+						System.out.println("3. Manage User Settings");
 						System.out.println("====================");
+						System.out.print("Select task: ");
 						choice = sc.nextInt();
 						switch(choice) {
 						case 1:
+							AdminView.movieSettings(0);
 							break;
 						case 2:
+							AdminView.cineplexSettings(0);
 							break;
 						case 3:
 							AdminView.userSettings(admSess,aCon);

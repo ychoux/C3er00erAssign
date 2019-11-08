@@ -127,8 +127,10 @@ public class SlotManager {
 			return false;
 		
 		for (Slot s: this.getCinemaSlots(cinema.getCineplex_name(), cinema.getCinemaID(), showtime.toLocalDate())) {
-			if (checkClash(s.getShowtime(), s.getShowtime().plus(s.getDuration()), showtime, showtime.plus(duration)))
+			if (checkClash(s.getShowtime(), s.getShowtime().plus(s.getDuration()), showtime, showtime.plus(duration))) {
+				System.out.println("Duplicate time slot! Try again.");
 				return false;
+			}	
 		}
 		slots.add(new Slot(slotID.toUpperCase(), showtime, duration, movie_name, cinema));
 		slots.sort(Comparator.comparing(Slot::getCinema).thenComparing(Slot::getShowtime));

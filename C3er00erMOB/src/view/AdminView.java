@@ -4,7 +4,7 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Scanner;
 
-import controller.AdminController;
+import controller.*;
 import entity.Admin;
 import login.AccessLevel;
 import login.AdminSession;
@@ -109,7 +109,7 @@ public class AdminView {
 			break;
 		case 4:
 			if(admSess.getAccesslevel() == AccessLevel.SUPERADMIN) {
-				
+
 			}else {
 				System.out.println("No permission");
 			}
@@ -136,8 +136,103 @@ public class AdminView {
 				if(pick == -1){
 					break;
 				}
-			break;
+				break;
 			}
 		}
 	}
+
+	public static void reviewSettings(int choice) {
+		int option;
+		Scanner sc = new Scanner (System.in);
+		if(choice == 0) {
+			System.out.println("====================");
+			System.out.println("1. Show Reviews");
+			System.out.println("2. Delete Reviews");
+			System.out.println("3. Back");
+			System.out.println("====================");
+			System.out.print("Select task: ");
+			option = sc.nextInt();
+			if(!(option >=1 && option <=3)) {
+				System.out.println("Invalid Choice! Try again.");
+				cineplexSettings(0);
+			}
+		}else {
+			option=choice;
+		}
+		
+		switch(option) {
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			return;
+		}
+	}
+	
+	public static void movieSettings(int choice) {
+		int option;
+		Scanner sc = new Scanner (System.in);
+		if(choice == 0) {
+			System.out.println("====================");
+			System.out.println("1. Create Movie");
+			System.out.println("2. Remove Movie");
+			System.out.println("3. Manage Reviews");
+			System.out.println("3. Back");
+			System.out.println("====================");
+			System.out.print("Select task: ");
+			option = sc.nextInt();
+			if(!(option >=1 && option <=3)) {
+				System.out.println("Invalid Choice! Try again.");
+				cineplexSettings(0);
+			}
+		}else {
+			option=choice;
+		}
+
+		MovieListController mlCon=new MovieListController();
+		ReviewController rCon = new ReviewController();
+		switch(option) {
+		case 1:
+			StaffMovieListController.staffAddMovie(mlCon.getMovieList(),rCon.getReviewList());
+			break;
+		case 2:
+			StaffMovieListController.staffDelMovie(mlCon.getMovieList(),rCon.getReviewList());
+			break;
+		case 3:
+			reviewSettings(0);
+			break;
+		case 4:
+			return;
+		}
+	}
+
+	public static void cineplexSettings(int choice) {
+		int option;
+		Scanner sc = new Scanner(System.in);
+		if(choice == 0) {
+			System.out.println("====================");
+			System.out.println("1. Create ShowTime");
+			System.out.println("2. Back");
+			System.out.println("====================");
+			System.out.print("Select task: ");
+			option = sc.nextInt();
+			if(!(option >=1 && option <=3)) {
+				System.out.println("Invalid Choice! Try again.");
+				cineplexSettings(0);
+			}
+		}else {
+			option=choice;
+		}
+		StaffSlotController ssCon = new StaffSlotController();
+		MovieListController mlCon=new MovieListController();
+		switch(option) {
+		case 1:
+			ssCon.staffAddSlot(mlCon.getMovieList());
+			break;
+		case 2:
+			return;
+		}
+	}
+
 }
