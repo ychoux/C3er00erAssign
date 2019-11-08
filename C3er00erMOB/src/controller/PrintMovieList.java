@@ -70,6 +70,25 @@ public class PrintMovieList {
 		}
 	}
 	
+	public static void printAllReview(List<Review> rList) {
+		for(Review r: rList) {
+			String review;
+			String reviewtmp = r.getReview();
+			review = reviewtmp.replaceAll(SplitByColon, cvsSplitBy);
+			String[] reviews = review.split(SplitBy);
+			System.out.println("Reviews");
+			count =1;
+			for(String rev: reviews) {
+				if(rev.equals("null")) {
+					
+				}
+				else {
+					System.out.println(count+". "+rev);
+					count++;
+				}
+			}
+		}
+	}
 	/*
 	 *  This function is to print out reviews from the seleted movie title
 	 *  id is object position

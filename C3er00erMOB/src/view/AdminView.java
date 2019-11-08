@@ -163,10 +163,11 @@ public class AdminView {
 		List<Review> rList = rCon.getReviewList();
 		switch(option) {
 		case 1:
+			
 			for(Review r : rList) {
 				System.out.print(r.getMovieTitle()+" ");
 				System.out.print(r.getRating()+" ");
-				System.out.print(r.getOverallRating()+" ");
+				System.out.print(r.getOverallRating()+" "); //System.out.printf("%.1f ",r.getOverallRating());
 				System.out.println(r.getReview()+" ");
 				System.out.println();
 			}
