@@ -147,7 +147,7 @@ public class AdminView {
 		if(choice == 0) {
 			System.out.println("====================");
 			System.out.println("1. Show Reviews");
-			System.out.println("2. Delete Reviews");
+			System.out.println("2. View Analytics");
 			System.out.println("3. Back");
 			System.out.println("====================");
 			System.out.print("Select task: ");
@@ -172,6 +172,8 @@ public class AdminView {
 			}
 			break;
 		case 2:
+			System.out.println("Top 5 Movies");
+			
 			break;
 		case 3:
 			return;
