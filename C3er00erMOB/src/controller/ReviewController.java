@@ -83,8 +83,6 @@ public class ReviewController {
 		Review reviewtmp;
 		reviewtmp = new Review();
 		reviewtmp.setMovieTitle(name);
-		reviewtmp.setRating("");
-		reviewtmp.setReview("");
 		rList.add(reviewtmp);
 		updateReviewCSV(rList);
 	}
@@ -106,17 +104,21 @@ public class ReviewController {
 		{
 			count =0;
 			totalrating =0;
-			String[] rating = r.getRating().split(SplitBy);
-			for(String ratings: rating)
-			{
-				if(ratings.equals("null")) {
-					totalrating +=0;
+			try {
+				String[] rating = r.getRating().split(SplitBy);
+				for(String ratings: rating)
+				{
+					if(ratings.equals("null")) {
+						totalrating +=0;
+					}
+					else {
+						rates = Double.parseDouble(ratings);
+						totalrating += rates;
+						count++;
+					}
 				}
-				else {
-					rates = Double.parseDouble(ratings);
-					totalrating += rates;
-					count++;
-				}
+			}
+			catch(NullPointerException e) {
 			}
 			if(count>=2) {
 				totalrating /= count;
@@ -142,18 +144,22 @@ public class ReviewController {
 		{
 			count =0;
 			totalrating =0;
-			String[] rating = r.getRating().split(SplitBy);
-			for(String ratings: rating)
-			{
-				if(ratings.equals("null")) {
-					totalrating +=0;
+			try {
+				String[] rating = r.getRating().split(SplitBy);
+				for(String ratings: rating)
+				{
+					if(ratings.equals("null")) {
+						totalrating +=0;
+					}
+					else {
+						rates = Double.parseDouble(ratings);
+						totalrating += rates;
+						count++;
+					}
+					
 				}
-				else {
-					rates = Double.parseDouble(ratings);
-					totalrating += rates;
-					count++;
-				}
-				
+			}
+			catch(NullPointerException e) {
 			}
 			if(count>=2) {
 				totalrating /= count;

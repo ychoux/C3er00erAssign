@@ -11,7 +11,7 @@ public class PrintMovieList {
 	static String SplitBy = ";";
 	static String cvsSplitBy = ",";
 	static String SplitByColon = ":";
-	
+	static int count;
 	/*
 	 *  This function is to print out all the movies 
 	 */
@@ -82,13 +82,15 @@ public class PrintMovieList {
 				String reviewtmp = r.getReview();
 				review = reviewtmp.replaceAll(SplitByColon, cvsSplitBy);
 				String[] reviews = review.split(SplitBy);
-				System.out.println("Reviews");
+				System.out.println(r.getMovieTitle()+" Reviews");
+				count = 1;
 				for(String rev: reviews) {
 					if(rev.equals("null")) {
 						
 					}
 					else {
-						System.out.println(rev);
+						System.out.println(count+". "+rev);
+						count++;
 					}
 				}
 				
@@ -110,12 +112,14 @@ public class PrintMovieList {
 				review = reviewtmp.replaceAll(SplitByColon, cvsSplitBy);
 				String[] reviews = review.split(SplitBy);
 				System.out.println("Reviews");
+				count =1;
 				for(String rev: reviews) {
 					if(rev.equals("null")) {
 						
 					}
 					else {
-						System.out.println(rev);
+						System.out.println(count+". "+rev);
+						count++;
 					}
 				}
 			}

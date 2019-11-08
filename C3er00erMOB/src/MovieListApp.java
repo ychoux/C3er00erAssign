@@ -1,6 +1,7 @@
 import controller.MovieListController;
 import controller.PrintMovieList;
 import controller.ReviewController;
+import controller.StaffMovieListController;
 import entity.Movie;
 import entity.Review;
 import view.UserInput;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public class MovieListApp {
 
-	public static void review_cus() {
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ReviewController file = new ReviewController();
 		List<Review> rList = file.getReviewList();
@@ -63,11 +64,12 @@ public class MovieListApp {
 		 *  // this function is to print selected review by object name is called by userinputReview
 		 * PrintMovieList.printReview(rList, name);
 		 */
-		
+		StaffMovieListController.staffDelMovie(mList, rList);
+		StaffMovieListController.staffAddMovie(mList, rList);
 		ReviewController.updateOverallRating(rList);
 		ReviewController.updateMovieListRating(mList, rList);
 		PrintMovieList.printMovieList(mList,2); // movie.getid()
-		ReviewController.userReview(rList, "this movie", "5", "Good movie"); //ReviewController.userReview(rList, movieid, user rating, user review);
+		//ReviewController.userReview(rList, "this movie", "5", "Good movie"); //ReviewController.userReview(rList, movieid, user rating, user review);
 		//MovieListController.delMovieList(mList, 0); // this will remove the whole selected movielist
 		//MovieListController.addMovieList(mList, "red cliff", "synopsis", "director", "cast", "genre", null, null, 4, 5.5);
 		//
