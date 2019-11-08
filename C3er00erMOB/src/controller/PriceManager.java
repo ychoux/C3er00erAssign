@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
@@ -16,6 +17,7 @@ import java.util.List;
 import entity.Cinema.CinemaType;
 import entity.Slot;
 import entity.Ticket.TicketType;
+
 
 public class PriceManager {
 	
@@ -112,6 +114,38 @@ public class PriceManager {
 		if (this.PublicHolidays.contains(date))
 			return true;
 		return false;
+	}
+	
+	/**
+	 * The function used to add public holiday
+	 * @param date	A LocalDate object
+	 * @return		A boolean variable that indicates whether the operation is successful or not
+	 * 				Returns false if the date existed before
+	 */
+	public boolean addPublicHoliday(LocalDate date) {
+		if (!this.PublicHolidays.contains(date)) {
+			this.PublicHolidays.add(date);
+			this.saveToCSV();
+			return true;
+		}
+		else return false;
+	}
+	
+	/**
+	 * The function used to add public holiday
+	 * @param date	A String object, should be in the format of dd-MM-yyyy
+	 * @return		A boolean variable that indicates whether the operation is successful or not
+	 * 				Returns false if the date existed before or the date format is wrong
+	 */
+	public boolean addPublicHoliday(String date) {
+		LocalDate ldate;
+		try {
+			ldate = LocalDate.parse(date, this.formatter);
+		}
+		catch (DateTimeParseException e) {
+			return false;
+		}
+		return addPublicHoliday(ldate);
 	}
 	
 	/**
