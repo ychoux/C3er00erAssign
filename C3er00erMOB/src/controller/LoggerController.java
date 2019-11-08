@@ -26,31 +26,52 @@ public class LoggerController {
 	}
 
 	void LogNormalEntry(String username,String description, int logLvl) {
-		Log normLog = new Log(username,description,logLvl);
-
-
+		Log normLog = new Log(username,description,0);
+		this.UpdateLogCSV(normLog);
 	}
 
 	void LogSecurityEntry(String username,String description, Logger logLvl) {
-
+		Log secLog = new Log(username,description,0);
+		this.UpdateLogCSV(secLog);
 	}
 
 	void LogChangeEntry(String username,String description, Logger logLvl) {
-
+		Log changeLog = new Log(username,description,0);
+		this.UpdateLogCSV(changeLog);
 	}
 
 	void LogErrorEntry(String username,String description, Logger logLvl) {
-
+		Log errLog = new Log(username,description,0);
+		this.UpdateLogCSV(errLog);
 	}
 
 	public List<Log> getLogList(){
-		return null;
+		List<Log> logList = new ArrayList<>();
+		BufferedReader br = null;
+		String line = "";
+		Log tmpLog;
+		try {
+			br = new BufferedReader(new FileReader(LOGFILE));
+			while ((line = br.readLine()) != null) {
+				String[] log = line.split(",");
+				if(!log[0].equals("username")) {
+					tmpLog=new Log(log[0],log[1],Integer.parseInt(log[2]));
+					logList.add(tmpLog);
+				}
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return logList;
 	}
 
 	public List<Log> getLogList(int logLvl){
 		return null;
 	}
-	public void UpdateLogCSV(List<Log> logList) {
+	public void UpdateLogCSV(Log newLog) {
+		List<Log> logList = this.getLogList();
+		logList.add(newLog);
 		FileWriter csvWriter;
 		try {
 			csvWriter = new FileWriter(LOGFILE);
