@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import controller.*;
-import entity.Admin;
+import entity.*;
 import login.AccessLevel;
 import login.AdminSession;
 import login.SecurityFunc;
@@ -159,9 +159,17 @@ public class AdminView {
 		}else {
 			option=choice;
 		}
-		
+		ReviewController rCon = new ReviewController();
+		List<Review> rList = rCon.getReviewList();
 		switch(option) {
 		case 1:
+			for(Review r : rList) {
+				System.out.print(r.getMovieTitle()+" ");
+				System.out.print(r.getRating()+" ");
+				System.out.print(r.getOverallRating()+" ");
+				System.out.println(r.getReview()+" ");
+				System.out.println();
+			}
 			break;
 		case 2:
 			break;
