@@ -1,7 +1,6 @@
 import controller.BookingController;
 import controller.CusMovController;
 import controller.CustomerController;
-import controller.ReviewController;
 import entity.Movie;
 
 import java.util.List;
@@ -17,7 +16,8 @@ public class customerApp {
             System.out.println("\nChoose\n " +
                     "1. View user's detail\n" +
                     " 2. List Movie\n" +
-                    " 3. Movie review or rating");
+                    " 3. Movie review or rating\n"+
+                    " 4. View Review");
 
             int choice = sc.nextInt();
             switch (choice) {
@@ -33,7 +33,11 @@ public class customerApp {
                     break;}
 
                 case  3:{
-                    ReviewController rc ;
+                    MovieListApp.review_cus();
+                    break;
+                }
+                case 4:{
+
                 }
 
             }

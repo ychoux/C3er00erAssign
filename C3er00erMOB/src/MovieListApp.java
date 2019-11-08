@@ -1,16 +1,15 @@
-import java.util.List;
-
 import controller.MovieListController;
 import controller.PrintMovieList;
 import controller.ReviewController;
-import controller.StaffMovieListController;
 import entity.Movie;
 import entity.Review;
 import view.UserInput;
 
+import java.util.List;
+
 public class MovieListApp {
 
-	public static void main(String[] args) {
+	public static void review_cus() {
 		// TODO Auto-generated method stub
 		ReviewController file = new ReviewController();
 		List<Review> rList = file.getReviewList();
