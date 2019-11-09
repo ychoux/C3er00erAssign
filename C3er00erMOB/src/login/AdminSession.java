@@ -6,6 +6,11 @@ import java.util.List;
 import controller.AdminController;
 import entity.Admin;
 
+/**
+ * A class for all actions related to the AdminSession
+ * @author 
+ *
+ */
 public class AdminSession {
 
 	private String username="";
@@ -13,11 +18,11 @@ public class AdminSession {
 
 	/**
 	 *	This function helps to create a session
-	 *	@param username to be authenticated
-	 *	@param password to be authenticated
-	 * 	@return returns either a valid or not valid session depending if its authenticated
-	 * 	@exception if the user does not exist
-	 *  @exception if the password entered is wrong
+	 *	@param username 	A name to be authenticated
+	 *	@param password 	A password to be authenticated
+	 * 	@return 			A boolean variable to check for a valid or not valid session depending if its authenticated
+	 * 	@exception 			An exception if the user does not exist
+	 *  @exception 			An exception if the password entered is wrong
 	 */
 	public static AdminSession createSession(String username,String password) {
 		AdminSession session = null;
@@ -37,11 +42,11 @@ public class AdminSession {
 
 	/**
 	 *	This function helps to authenticate the session
-	 *	@param username to be authenticated
-	 *	@param password to be authenticated
-	 * 	@return returns either a valid or not valid session depending if its authenticated
-	 * 	@exception if the user does not exist
-	 *  @exception if the password entered is wrong
+	 *	@param username 				A name to be authenticated
+	 *	@param password 				A password to be authenticated
+	 * 	@return			 				A boolean variable to check for a valid or not valid session depending if its authenticated
+	 * 	@throws NoSuchUserException		An exception if the user does not exist
+	 *  @throws WrongPasswordException	An exception if the password entered is wrong
 	 */
 	AdminSession(String username,String password) throws NoSuchUserException,WrongPasswordException{
 		AdminController acon=new AdminController();
@@ -86,9 +91,9 @@ public class AdminSession {
 	
 	/**
 	 *	This function helps the password entered
-	 *	@param password entered
-	 *  @param user obj that was retrieved when user name was valid
-	 *  @return	to see if the password is correct
+	 *	@param password 	The password that is entered
+	 *  @param adtmp		A user object that was retrieved when user name was valid
+	 *  @return				A boolean variable to see if the password is correct
 	 */
 	public boolean authenticatePassword(String password,Admin adtmp) {
 		if((SecurityFunc.hash(password.toCharArray(), Base64.getDecoder().decode(adtmp.salt))).equals(adtmp.password)) {
@@ -98,21 +103,38 @@ public class AdminSession {
 		}
 	}
 
+	
+	/**
+	 * This function returns the username
+	 * @return	A string representing the name of the user
+	 */
 	public String getUsername() {
 		return username;
 	}
 
 
+	/**
+	 * This function sets the username
+	 * @param username 	The username of the user 
+	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
 
+	/**
+	 * This function gets the access level of the user
+	 * @return	The access level of the user
+	 */
 	public AccessLevel getAccesslevel() {
 		return accesslevel;
 	}
 
 
+	/**
+	 * This function sets the access level of the user
+	 * @param accesslevel 	The access level of the user
+	 */
 	public void setAccesslevel(AccessLevel accesslevel) {
 		this.accesslevel = accesslevel;
 	}

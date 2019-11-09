@@ -6,7 +6,15 @@ import login.AccessLevel;
 import login.AdminSession;
 import view.AdminView;
 
+/**
+ * The class to authenticate the admin/superadmin
+ * @author 
+ *
+ */
 public class adminApp {
+	/**
+	 * This function authenticate the admin/superadmin and select the necessary actions
+	 */
 	public static void startAdmin() {
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);

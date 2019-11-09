@@ -21,23 +21,22 @@ public class LoggerController {
 	 */
 	private static String LOGFILE="src/data/log.csv";
 
-
 	private LoggerController() {
 
 	}
 	
 	/**
 	 * The function to get the instance of LoggerController object
-	 * @return a LoggerController object
+	 * @return 	a LoggerController object
 	 */
 	public static LoggerController getInstance() {
         return INSTANCE;
     }
 
 	/**
-	 * The funcion is used to generate a normal log entry
-	 * @param user that triggered this log event
-	 * @param description of what happen
+	 * The function is used to generate a normal log entry
+	 * @param username		User that triggered this log event
+	 * @param description 	Description of what happen
 	 */
 	public void LogNormalEntry(String username,String description) {
 		Log normLog = new Log(username,description,0);
@@ -45,9 +44,9 @@ public class LoggerController {
 	}
 
 	/**
-	 * The funcion is used to generate a security log entry
-	 * @param user that triggered this log event
-	 * @param description of what happen
+	 * The function is used to generate a security log entry
+	 * @param username		User that triggered this log event
+	 * @param description 	Description of what happen
 	 */
 	public void LogSecurityEntry(String username,String description) {
 		Log secLog = new Log(username,description,1);
@@ -55,9 +54,9 @@ public class LoggerController {
 	}
 
 	/**
-	 * The funcion is used to generate a change log entry
-	 * @param user that triggered this log event
-	 * @param description of what happen
+	 * The function is used to generate a change log entry
+	 * @param username		User that triggered this log event
+	 * @param description 	Description of what happen
 	 */
 	public void LogChangeEntry(String username,String description) {
 		Log changeLog = new Log(username,description,2);
@@ -65,9 +64,9 @@ public class LoggerController {
 	}
 
 	/**
-	 * The funcion is used to generate a error log entry
-	 * @param user that triggered this log event
-	 * @param description of what happen
+	 * The function is used to generate a error log entry
+	 * @param username		User that triggered this log event
+	 * @param description 	Description of what happen
 	 */
 	public void LogErrorEntry(String username,String description) {
 		Log errLog = new Log(username,description,3);
@@ -75,8 +74,8 @@ public class LoggerController {
 	}
 
 	/**
-	 * The funcion is get all the logs that are stored in log.csv
-	 * @return returns a list of log entries from log.csv
+	 * The function is get all the logs that are stored in log.csv
+	 * @return A list of log entries from log.csv
 	 */
 	public List<Log> getLogList(){
 		List<Log> logList = new ArrayList<>();
@@ -100,9 +99,9 @@ public class LoggerController {
 	}
 	
 	/**
-	 * The funcion acts as a search function to help filter wanted log entries
-	 * @param a keyword that is used to filter the log entires
-	 * @return returns a list of filtered log entries from log.csv
+	 * The function acts as a search function to help filter wanted log entries
+	 * @param keyword 	A keyword that is used to filter the log entries
+	 * @return returns 	A list of filtered log entries from log.csv
 	 */
 	public List<Log> getLogList(String keyword){
 		List<Log> logList = this.getLogList();
@@ -120,8 +119,8 @@ public class LoggerController {
 	}
 	
 	/**
-	 * The funcion helps update the log.csv file with a new log entry
-	 * @param takes in a new log entry and adds into log.csv
+	 * The function helps update the log.csv file with a new log entry
+	 * @param newlog 	A new log entry
 	 */
 	public void UpdateLogCSV(Log newLog) {
 		List<Log> logList = this.getLogList();

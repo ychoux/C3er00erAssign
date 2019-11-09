@@ -1,20 +1,28 @@
 package view;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 import controller.*;
 import entity.*;
 import login.AccessLevel;
 import login.AdminSession;
 
+/**
+ * The class to select all Admin and Superadmin settings 
+ * @author 
+ *
+ */
 public class AdminView {
 
-
 	/**
-	 *	This is the view page for movie settings
-	 *	@param passes in an authenticated admin session
-	 *	@param used for recurssion checking
+	 * This is the view page for movie settings
+	 * @param admSess 	Passes in an authenticated admin session
+	 * @param choice 	For recursion checking
 	 */
 	public static void movieSettings(AdminSession admSess,int choice) {
 		int option;
@@ -40,12 +48,15 @@ public class AdminView {
 		ReviewController rCon = new ReviewController();
 		switch(option) {
 		case 1:
-			StaffMovieListController.staffAddMovie(mlCon.getMovieList(),rCon.getReviewList());
-			LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Movie Added");
+			if(StaffMovieListController.staffAddMovie(mlCon.getMovieList(),rCon.getReviewList())) {
+				LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Movie Added");
+			}
+			
 			break;
 		case 2:
-			StaffMovieListController.staffUpdateStatus(mlCon.getMovieList());
-			LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Movie Status Updated");
+			if(StaffMovieListController.staffUpdateStatus(mlCon.getMovieList())) {
+				LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Movie Status Updated");
+			}
 			break;
 		case 3:
 			reviewSettings(0);
@@ -53,12 +64,13 @@ public class AdminView {
 		case 4:
 			return;
 		}
+		movieSettings(admSess,0);
 	}
 
 	/**
 	 *	This is the view page for cineplex settings
-	 *	@param passes in an authenticated admin session
-	 *	@param used for recurssion checking
+	 *	@param admSess 	Passes in an authenticated admin session
+	 *	@param choice 	For recursion checking
 	 */
 	public static void cineplexSettings(AdminSession admSess,int choice) {
 		int option;
@@ -91,8 +103,8 @@ public class AdminView {
 
 	/**
 	 *	This is the view page for price settings
-	 *	@param passes in an authenticated admin session
-	 *	@param used for recurssion checking
+	 *	@param admSess	Passes in an authenticated admin session
+	 *	@param choice 	For recursion checking
 	 */
 	public static void priceSettings(AdminSession admSess,int choice) {
 		int option;
@@ -127,8 +139,8 @@ public class AdminView {
 
 	/**
 	 *	This is the view page for public holiday settings
-	 *	@param passes in an authenticated admin session
-	 *	@param used for recurssion checking
+	 *	@param admSess 	Passes in an authenticated admin session
+	 *	@param choice 	For recursion checking
 	 */
 	public static void phSetting(AdminSession admSess,int choice) {
 		int option;
@@ -167,11 +179,10 @@ public class AdminView {
 		}
 	}
 
-
 	/**
 	 *	This is the view page for rates settings
-	 *	@param passes in an authenticated admin session
-	 *	@param used for recurssion checking
+	 *	@param admSess 	Passes in an authenticated admin session
+	 *	@param choice 	For recursion checking
 	 */
 	public static void ratesSetting(AdminSession admSess,int choice) {
 		int option;
@@ -223,8 +234,8 @@ public class AdminView {
 
 	/**
 	 *	This is the view page for user settings
-	 *	@param passes in an authenticated admin session
-	 *	@param passes in a admin controller to access methods for user settings.
+	 *	@param admSess 	Passes in an authenticated admin session
+	 *	@param aCon		Passes in a admin controller to access methods for user settings.
 	 */
 	public static void userSettings(AdminSession admSess,AdminController aCon) {
 		Scanner sc=new Scanner(System.in);
@@ -244,7 +255,7 @@ public class AdminView {
 			}
 			break;
 		case 2:
-			if(admSess.getAccesslevel() == AccessLevel.ADMIN || admSess.getAccesslevel()== AccessLevel.SUPERADMIN) {
+			if(admSess.getAccesslevel()== AccessLevel.SUPERADMIN) {
 				if(aCon.makeAdminUser()) {
 					LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "New user has been created");
 					System.out.println("User created!");
@@ -293,6 +304,10 @@ public class AdminView {
 		}
 	}
 
+	/**
+	 * This is the view page for review settings
+	 * @param choice	For recursion checking
+	 */
 	public static void reviewSettings(int choice) {
 		int option;
 		Scanner sc = new Scanner (System.in);
@@ -316,16 +331,35 @@ public class AdminView {
 		switch(option) {
 		case 1:
 			for(Review r : rList) {
-				System.out.print(r.getMovieTitle()+" ");
-				System.out.print(r.getRating()+" ");
-				System.out.print(r.getOverallRating()+" "); //System.out.printf("%.1f ",r.getOverallRating());
-				System.out.println(r.getReview()+" ");
-				System.out.println();
+				System.out.println(r.getMovieTitle());
+				String[] noOfratings = r.getRating().split(";");
+				System.out.println("All Ratings: "+Arrays.toString(noOfratings));
+				System.out.println("Overall Rating: ["+r.getOverallRating()+"]"); 
+				String[] noOfreviews = r.getReview().split(";");
+				System.out.println("Reviews: "+Arrays.toString(noOfreviews));
 			}
 			break;
 		case 2:
-			System.out.println("Top 5 Movies");
-
+			TreeMap<Double,String> ratingList = new TreeMap<Double,String>(Collections.reverseOrder());
+			for (Review r: rList) {
+				String[] noOfratings = r.getRating().split(";");
+				if(noOfratings.length>1) {
+					ratingList.put(r.getOverallRating(),r.getMovieTitle());
+				}
+			}
+			System.out.println("=====Top 5 Movies=====");
+			int i = 1;
+			if(ratingList.size()>5) {
+				for(;i<6;i++) {
+					System.out.println(i+". "+ratingList.firstEntry().getValue()+" [Overall Rating:"+ratingList.firstEntry().getKey()+"]");
+					ratingList.remove(ratingList.firstEntry().getKey());
+				}
+			}
+			else {
+				for (Entry<Double, String> movie : ratingList.entrySet()) {
+				    System.out.println(i+". "+movie.getValue()+" [Overall Rating:"+movie.getKey()+"]");
+				}
+			}
 			break;
 		case 3:
 			return;
@@ -335,7 +369,7 @@ public class AdminView {
 
 	/**
 	 *	This is the view page for user settings
-	 *	@param used for recurssion checking
+	 *	@param choice 	For recursion checking
 	 */
 	public static void logAnalysis(int choice) {
 		int option;

@@ -108,7 +108,7 @@ public class PriceManager {
 	
 	/**
 	 * The function to get the dictionary of Rates
-	 * @return The Dictionary of Rates
+	 * @return 	The Dictionary of Rates
 	 */
 	public Dictionary<String, Double> getRates() {
 		return rates;
@@ -116,7 +116,7 @@ public class PriceManager {
 	
 	/**
 	 * The function to get the list of Public Holidays
-	 * @return The list of Public Holidays
+	 * @return 	The list of Public Holidays
 	 */
 	public List<LocalDate> getPH(){
 		return PublicHolidays;

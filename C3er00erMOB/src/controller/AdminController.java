@@ -13,6 +13,11 @@ import entity.Admin;
 import login.AdminSession;
 import login.SecurityFunc;
 
+/**
+ * The class for all actions related to Superadmin settings
+ * @author 
+ *
+ */
 public class AdminController {
 
 	/**
@@ -25,8 +30,8 @@ public class AdminController {
 	}
 
 	/**
-	 * The function is fetch all the users inside the admin.csv file and complie them into a list
-	 * @return return a list of admin users
+	 * The function is fetch all the users inside the admin.csv file and compile them into a list
+	 * @return Return a list of admin users
 	 */
 	public List<Admin> getAdminUsers(){
 		List<Admin> adminList = new ArrayList<>();
@@ -51,9 +56,10 @@ public class AdminController {
 		return adminList;
 	}
 
-
 	/**
 	 * The function is to update the admin.csv file
+	 * @param adminList 	A list of updated admin
+	 * @return 				A boolean variable that indicates whether the operation is successful or not
 	 */
 	public boolean updateAdminCSV(List<Admin> adminList) {
 		FileWriter csvWriter;
@@ -95,7 +101,8 @@ public class AdminController {
 
 	/**
 	 * The function is to update user password
-	 * @param an admin session is parsed in to know the identity of the user changing password
+	 * @param admSess 		An admin session of the identity of user
+	 * @return				A boolean variable that indicates whether the operation is successful or not
 	 */
 	public boolean updateAdminUserPassword(AdminSession admSess) {
 		Scanner sc = new Scanner(System.in);
@@ -142,10 +149,9 @@ public class AdminController {
 		return false;
 	}
 
-
 	/**
 	 * The function is to lock users that failed to login multiple times
-	 * @param the name of the user is parsed in to be locked
+	 * @param username 	The name of the user is parsed in to be locked
 	 */
 	public void lockAdminUser(String username) {
 		List<Admin> adminList=getAdminUsers();
@@ -162,7 +168,7 @@ public class AdminController {
 
 	/**
 	 * The function is to delete users
-	 * @return returns a boolean to see if user was deleted successfully
+	 * @return	A boolean variable to see if user was deleted successfully
 	 */
 	public boolean deleteAdminUser() {
 		Scanner sc = new Scanner(System.in);
@@ -195,7 +201,7 @@ public class AdminController {
 
 	/**
 	 * The function is to unlock users
-	 * @return see if user was unlocked successfully
+	 * @return A boolean variable to see if user was unlocked successfully
 	 */
 	public boolean unlockAdminUser() {
 		Scanner sc = new Scanner (System.in);
@@ -221,10 +227,11 @@ public class AdminController {
 			return false;
 		}
 	}
+	
 	/**
 	 * The function is get a particular user from the admin.csv file
-	 * @param the name of the user is parsed in to get admin object from the list of admin users
-	 * @return a Admin object will be returned
+	 * @param username	 	The name of the user to get admin object from the list of admin users
+	 * @return 				An admin object of the user
 	 */
 	public Admin getAdminUser(String username) {
 		List<Admin> adminList=getAdminUsers();
@@ -238,7 +245,7 @@ public class AdminController {
 
 	/**
 	 * The function is to make a new admin user
-	 * @return a boolean will be returned to see if the creation of user was successful
+	 * @return 	A boolean variable to see if the creation of user was successful
 	 */
 	public boolean makeAdminUser() {
 		Scanner sc = new Scanner (System.in);
@@ -265,6 +272,7 @@ public class AdminController {
 
 	/**
 	 * The function is solely for debugging only
+	 * @param a 	An admin object for printing of details
 	 */
 	public void printUserDetails(Admin a) {
 		System.out.println("Username: "+a.username);
