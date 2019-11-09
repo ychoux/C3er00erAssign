@@ -5,7 +5,6 @@ import entity.Slot;
 import entity.Ticket;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,69 +38,145 @@ public class BookingController {
     }
 
 
-    public void booking_flow(List<Movie> movieDetailList)
-
-    {
-        CusMovController.getInstance().listMovie(movieDetailList);
+    public void booking_flow (List<Movie> movieDetailList) {
+        int stage = 0; //Flow stage
         Scanner sc = new Scanner(System.in);
-        try {
-            System.out.println("\nEnter the number of movie to see description: (others to quit)");
-            int ch = sc.nextInt();
-            CusMovController.getInstance().viewMovieDetails(movieDetailList.get(ch - 1));
+        int ch = 999,ch1 = 999 ,ch2 = 999; //for user input and going back main menu
+        String dummy; //flush
+        List<Slot> result = null; // list containing all slots from a chosen movie
+        Slot slot = null; //chosen slot
+        List<String> seats = new ArrayList<>(); //list of user input seats
+        List<Ticket.TicketType> tic_type = new ArrayList<>(); // list of tickets type
 
-            System.out.println("Enter 1 to show the slots available, others to go back");
-            int ch1 = sc.nextInt();
-            if (ch1 == 1) {
-                List<Slot> result;
-                Slot slot ;
-                result = BookingController.getInstance().viewAvailableSlot(movieDetailList.get(ch - 1).getMovieTitle());
-                if (!result.isEmpty()){
-                    System.out.println("Choose the slot you are interested in");
-                    int ch2 = sc.nextInt();
-                    slot = result.get(ch2 - 1);
-                    planofcineplex(slot);
-                }
-                else {System.out.println("No slot available for this movie. Sorry!");return;}
+        while (ch != 0 & ch1!=0 & ch2 != 0) {
+            switch (stage) {
+                //movie choosing stage
+                case 0:
+                    try {
+                        System.out.println("\nMovie List\n"+
+                                "-------------------");
+                        CusMovController.getInstance().listMovie(movieDetailList);
+                        System.out.println("\nEnter the number of movie to see description: (0 to quit)");
+                        ch = sc.nextInt();
+                        if (ch>0 & ch<=movieDetailList.size()){
+                            CusMovController.getInstance().viewMovieDetails(movieDetailList.get(ch - 1));
+                            System.out.println("\nEnter any number except 0 to show the slots available (0 to quit)");
+                            ch1 = sc.nextInt();
+                            stage = 1;
+                        }
 
-                String seat;
-                List<String> seats = new ArrayList<>();
-                List<Ticket.TicketType> tic_type = new ArrayList<>();
-                System.out.println("Enter the number of seat you want to book");
-                int no_of_tic = sc.nextInt();
-
-                for (int i = 0; i < no_of_tic; i++) {
-                    System.out.println("Enter the seat you want to book");
-                    seat = sc.next();
-                    if(slot.getBookings().getBookedSeatsID().contains(seat)){
-                        System.out.println("You have chosen a booked seat,try again");
-                        i--;
-                        break;
+                    } catch (Exception e) {
+                        if (sc.hasNext())
+                            dummy = sc.next();
+                        System.out.println("Invalid input\n");
+                        stage = 0;
                     }
-                    seats.add(seat);
-                    System.out.println("Enter the ticket type");
-                    int idx = 1;
-                    for (Ticket.TicketType type : Ticket.TicketType.values()) {
-                        System.out.println((idx++) + ". " + type);
+                    break;
+                //slot choosing
+                case 1:
+                    try {
+                        result = BookingController.getInstance().viewAvailableSlot(movieDetailList.get(ch - 1).getMovieTitle());
+                        if (!result.isEmpty()) {
+                            System.out.println("\nChoose the slot you are interested in (0 to quit, others number to choose another movie)");
+                            ch2 = sc.nextInt();
+                            if(ch2 > 0 & ch2 <= (result.size())){
+                                slot = result.get(ch2 - 1);
+                                stage = 2;
+                            }
+                            else stage=0;
+                        }
+                        else {
+                            System.out.println("No slot available for this movie. Sorry!");
+                            stage = 0;
+                        }
+
+                    }catch (Exception e) {
+                        if (sc.hasNext())
+                            dummy = sc.next();
+                        System.out.println("Invalid input\n");
+                        stage = 1;
                     }
+                    break;
+                //ticket booking
+                case 2:
+                    try {
+                        seats.clear();
+                        tic_type.clear();
+                        planofcineplex(slot);
+                        System.out.println("Enter the number of seat you want to book , max 5 tickets per booking (0 to quit)");
+                        ch = sc.nextInt();
+                        int no_of_tic = ch;
 
-                    int ticket_type = sc.nextInt();
-                    tic_type.add((Ticket.TicketType.values()[ticket_type - 1]));
-                }
+                        if (0 < no_of_tic & no_of_tic<= 5){
+                            for (int i = 1; i <= no_of_tic; i++) {
+                                System.out.println("Enter the seat you want to book: " + i + "th out of " + no_of_tic +" tickets");
+                                String seat = sc.next();
 
-                String tic_id = TicketManager.getInstance().addTicket(slot.getSlotID(), seats, tic_type);
-                try {
-                    TicketManager.getInstance().printTicketDetails(tic_id);
-                    System.out.println("Thank you for you payment. Hope you enjoy the movie");
-                    System.out.println("You can view your booking history in user portal");
-                    CustomerController.getInstance().addTic(tic_id);
-                }catch(NullPointerException e){System.out.println("You have chosen one or more invalid seat(s), try again");}
+                                if (!slot.getCinema().containSeat(seat) | slot.getBookings().getBookedSeatsID().contains(seat)) {
+                                    System.out.println("You have chosen a booked/invalid seat,try again");
+                                    i--;
+                                    continue;
+                                }
+                                System.out.println("Enter the ticket type");
+                                int idx = 1;
+                                for (Ticket.TicketType type : Ticket.TicketType.values()) {
+                                    System.out.println((idx++) + ". " + type);
+                                }
+                                int ticket_type = sc.nextInt();
+                                if (ticket_type>0 & ticket_type <=Ticket.TicketType.values().length){
+                                    seats.add(seat);
+                                    tic_type.add((Ticket.TicketType.values()[ticket_type - 1]));
+                                }
+                                else {System.out.println("Index out of bound");i--;}
+                            }
+                            stage = 3;
+                        }
+                        else if(no_of_tic>5){System.out.println("Max tickets amount is 5, you may have multiple transactions");stage = 2;}
+
+                    }catch (Exception e) {
+                        if (sc.hasNext())
+                            dummy = sc.next();
+                        System.out.println("Invalid input, try again");
+                        //System.out.println(ch + " "+" "+ch1+" "+ch2);
+                        stage = 2;
+                    }
+                    break;
+
+                case 3:
+                    try {
+                        System.out.println("Please confirm the tickets detail, tickets sold are not refundable\n" +
+                                "---------------------------------------------------------------");
+                        TicketManager.getInstance().printTicketDetails(slot,seats,tic_type);
+                        System.out.println("\n0. No, I would like to choose another movie (go back main menu)\n"+
+                                "1. No, I would like to make changes on seats or ticket type\n"+
+                                "2. No, I would like to choose another slot\n"+
+                                "3. Yes\n");
+                        int ch3 = sc.nextInt();
+                        if (ch3==3){
+                            String tic_id = TicketManager.getInstance().addTicket(slot.getSlotID(), seats, tic_type);
+                            TicketManager.getInstance().printTicketDetails(tic_id);
+                            System.out.println("Thank you for you payment. Hope you enjoy the movie");
+                            System.out.println("You can view your booking history in user portal");
+                            CustomerController.getInstance().addTic(tic_id);
+                            ch = 0;
+                        }
+                        else if (ch3==1) stage = 2;
+                        else if (ch3==2) stage = 1;
+                        else if (ch3==0) ch=0;
+                    }catch (Exception e) {
+                        if (sc.hasNext())
+                            dummy = sc.next();
+                        System.out.println("Invalid input, try again");
+                        stage = 3;
+                    }
+                    break;
+
+                default: ch = 0;break;
             }
-        }
-        catch (InputMismatchException |ArrayIndexOutOfBoundsException e)
-        {
-            System.out.println("Invalid Input, going back to main menu");
+
         }
     }
 }
+
 
 
