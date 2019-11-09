@@ -15,6 +15,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import entity.Cinema.CinemaType;
+import entity.Cineplex;
 import entity.Slot;
 import entity.Ticket.TicketType;
 
@@ -106,6 +107,22 @@ public class PriceManager {
 	}
 	
 	/**
+	 * The function to get the dictionary of Rates
+	 * @return 	The Dictionary of Rates
+	 */
+	public Dictionary<String, Double> getRates() {
+		return rates;
+	}
+	
+	/**
+	 * The function to get the list of Public Holidays
+	 * @return 	The list of Public Holidays
+	 */
+	public List<LocalDate> getPH(){
+		return PublicHolidays;
+	}
+	
+	/**
 	 * The function to see if a date is public holiday
 	 * @param date	The date
 	 * @return		Returns true if the date is a public holiday
@@ -125,8 +142,10 @@ public class PriceManager {
 	public boolean addPublicHoliday(LocalDate date) {
 		if (!this.PublicHolidays.contains(date)) {
 			this.PublicHolidays.add(date);
-			this.saveToCSV();
-			return true;
+			if(this.saveToCSV())
+				return true;
+			else
+				return false;
 		}
 		else return false;
 	}

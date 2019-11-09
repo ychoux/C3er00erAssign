@@ -1,6 +1,11 @@
 
 import java.util.Scanner;
 
+/**
+ * The class to run the whole application
+ * @author 
+ *
+ */
 public class mainApp {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -10,7 +15,7 @@ public class mainApp {
 		int choice=sc.nextInt();
 		switch(choice) {
 		case 1:
-			System.out.println("BLah");
+			System.out.println("Entering Customer mode...........");
 			break;
 		case 2:
 			System.out.println("Entering Admin mode...........");
