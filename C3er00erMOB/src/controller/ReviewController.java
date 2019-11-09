@@ -83,8 +83,6 @@ public class ReviewController {
 		Review reviewtmp;
 		reviewtmp = new Review();
 		reviewtmp.setMovieTitle(name);
-		reviewtmp.setRating("");
-		reviewtmp.setReview("");
 		rList.add(reviewtmp);
 		updateReviewCSV(rList);
 	}
