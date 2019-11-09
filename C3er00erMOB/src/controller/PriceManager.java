@@ -15,6 +15,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import entity.Cinema.CinemaType;
+import entity.Cineplex;
 import entity.Slot;
 import entity.Ticket.TicketType;
 
@@ -103,6 +104,22 @@ public class PriceManager {
 	 */
 	public static PriceManager getInstance() {
 		return INSTANCE;
+	}
+	
+	/**
+	 * The function to get the dictionary of Rates
+	 * @return The Dictionary of Rates
+	 */
+	public Dictionary<String, Double> getRates() {
+		return rates;
+	}
+	
+	/**
+	 * The function to get the list of Public Holidays
+	 * @return The list of Public Holidays
+	 */
+	public List<LocalDate> getPH(){
+		return PublicHolidays;
 	}
 	
 	/**

@@ -12,6 +12,144 @@ import login.SecurityFunc;
 
 public class AdminView {
 
+	public static void movieSettings(AdminSession admSess,int choice) {
+		int option;
+		Scanner sc = new Scanner (System.in);
+		if(choice == 0) {
+			System.out.println("====================");
+			System.out.println("1. Create Movie");
+			System.out.println("2. Update Movie Status");
+			System.out.println("3. Manage Reviews");
+			System.out.println("4. Back");
+			System.out.println("====================");
+			System.out.print("Select task: ");
+			option = sc.nextInt();
+			if(!(option >=1 && option <=4)) {
+				System.out.println("Invalid Choice! Try again.");
+				movieSettings(admSess,0);
+			}
+		}else {
+			option=choice;
+		}
+
+		MovieListController mlCon=new MovieListController();
+		ReviewController rCon = new ReviewController();
+		switch(option) {
+		case 1:
+			StaffMovieListController.staffAddMovie(mlCon.getMovieList(),rCon.getReviewList());
+			LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Movie Added");
+			break;
+		case 2:
+			StaffMovieListController.staffUpdateStatus(mlCon.getMovieList());
+			LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Movie Status Updated");
+			break;
+		case 3:
+			reviewSettings(0);
+			break;
+		case 4:
+			return;
+		}
+	}
+
+	public static void cineplexSettings(int choice) {
+		int option;
+		Scanner sc = new Scanner(System.in);
+		if(choice == 0) {
+			System.out.println("====================");
+			System.out.println("1. Create ShowTime");
+			System.out.println("2. Back");
+			System.out.println("====================");
+			System.out.print("Select task: ");
+			option = sc.nextInt();
+			if(!(option >=1 && option <=2)) {
+				System.out.println("Invalid Choice! Try again.");
+				cineplexSettings(0);
+			}
+		}else {
+			option=choice;
+		}
+		StaffSlotController ssCon = new StaffSlotController();
+		MovieListController mlCon=new MovieListController();
+		switch(option) {
+		case 1:
+			ssCon.staffAddSlot(mlCon.getMovieList());
+			break;
+		case 2:
+			return;
+		}
+	}
+
+	public static void priceSettings(AdminSession admSess,int choice) {
+		int option;
+		Scanner sc = new Scanner(System.in);
+		if(choice == 0) {
+			System.out.println("====================");
+			System.out.println("1. Manage Rates");
+			System.out.println("2. Manage Public Holidays");
+			System.out.println("3. Back");
+			System.out.println("====================");
+			System.out.print("Select task: ");
+			option = sc.nextInt();
+			if(!(option >=1 && option <=3)) {
+				System.out.println("Invalid Choice! Try again.");
+				priceSettings(admSess,0);
+			}
+		}else {
+			option=choice;
+		}
+		
+		switch(option){
+			case 1:
+				ratesSetting(admSess,0);
+				break;
+			case 2:
+				break;
+			case 3:
+				return;
+		}
+	}
+	
+	public static void ratesSetting(AdminSession admSess,int choice) {
+		int option;
+		Scanner sc = new Scanner(System.in);
+		if(choice == 0) {
+			System.out.println("====================");
+			System.out.println("1. Show Rates");
+			System.out.println("2. Create Rates");
+			System.out.println("3. Update Rates");
+			System.out.println("4. Back");
+			System.out.println("====================");
+			System.out.print("Select task: ");
+			option = sc.nextInt();
+			if(!(option >=1 && option <=4)) {
+				System.out.println("Invalid Choice! Try again.");
+				ratesSetting(admSess,0);
+			}
+		}else {
+			option=choice;
+		}
+		switch(option){
+		case 1:
+			StaffPriceController.staffShowRates();
+			break;
+		case 2:
+			
+			break;
+		case 3:
+			if(StaffPriceController.staffUpdateRates()) {
+				System.out.println("Rates updated successfully.");
+				LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Rates updated successfully.");
+			}
+			else {
+				System.out.println("Rates updated failed.");
+				LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Rates updated failed.");
+			}
+			break;
+		case 4:
+			return;
+	}
+	}
+	
 	public static void userSettings(AdminSession admSess,AdminController aCon) {
 		Scanner sc=new Scanner(System.in);
 		System.out.println("1. Change Password");
@@ -180,69 +318,4 @@ public class AdminView {
 		}
 	}
 	
-	public static void movieSettings(int choice) {
-		int option;
-		Scanner sc = new Scanner (System.in);
-		if(choice == 0) {
-			System.out.println("====================");
-			System.out.println("1. Create Movie");
-			System.out.println("2. Remove Movie");
-			System.out.println("3. Manage Reviews");
-			System.out.println("3. Back");
-			System.out.println("====================");
-			System.out.print("Select task: ");
-			option = sc.nextInt();
-			if(!(option >=1 && option <=3)) {
-				System.out.println("Invalid Choice! Try again.");
-				cineplexSettings(0);
-			}
-		}else {
-			option=choice;
-		}
-
-		MovieListController mlCon=new MovieListController();
-		ReviewController rCon = new ReviewController();
-		switch(option) {
-		case 1:
-			StaffMovieListController.staffAddMovie(mlCon.getMovieList(),rCon.getReviewList());
-			break;
-		case 2:
-			StaffMovieListController.staffDelMovie(mlCon.getMovieList(),rCon.getReviewList());
-			break;
-		case 3:
-			reviewSettings(0);
-			break;
-		case 4:
-			return;
-		}
-	}
-
-	public static void cineplexSettings(int choice) {
-		int option;
-		Scanner sc = new Scanner(System.in);
-		if(choice == 0) {
-			System.out.println("====================");
-			System.out.println("1. Create ShowTime");
-			System.out.println("2. Back");
-			System.out.println("====================");
-			System.out.print("Select task: ");
-			option = sc.nextInt();
-			if(!(option >=1 && option <=3)) {
-				System.out.println("Invalid Choice! Try again.");
-				cineplexSettings(0);
-			}
-		}else {
-			option=choice;
-		}
-		StaffSlotController ssCon = new StaffSlotController();
-		MovieListController mlCon=new MovieListController();
-		switch(option) {
-		case 1:
-			ssCon.staffAddSlot(mlCon.getMovieList());
-			break;
-		case 2:
-			return;
-		}
-	}
-
 }

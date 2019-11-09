@@ -70,7 +70,7 @@ public class StaffMovieListController {
 		//NAME	SYNOPSIS	DIRECTOR	CAST	GENRE	TIME	STATUS	SALES	RATING
 		MovieListController.addMovieList(mList,name,synopsis,director,cast,genre, time, status ,sale,rating);
 		ReviewController.addReviewList(rList, name);
-		System.out.println("Movie added");
+		System.out.println("Movie Added");
 	}
 	
 	
@@ -95,4 +95,28 @@ public class StaffMovieListController {
 		System.out.println("Movie Deleted");
 	}
 	
+	public static void staffUpdateStatus(List<Movie> mList) {
+		Scanner sc = new Scanner(System.in);
+		for(int i=0; i<mList.size(); i++) {
+			System.out.println(i+1 +": " + mList.get(i).getMovieTitle()+" , "+mList.get(i).getStatus().toString());
+		}
+		System.out.println("Choose Movie: ");
+		int choice = sc.nextInt()-1;
+		System.out.println("Pick status to update: ");
+		System.out.println("1: NOW_SHOWING");
+		System.out.println("2: END_OF_SHOWING");
+		int status = sc.nextInt();
+		if(status == 1) {
+			mList.get(choice).setStatus(MovieStatus.NOW_SHOWING);
+		}
+		else if(status == 2) {
+			mList.get(choice).setStatus(MovieStatus.END_OF_SHOWING);
+		}
+		else {
+			System.out.println("Wrong input!");
+			staffUpdateStatus(mList);
+		}
+		MovieListController.updateMovieListCSV(mList);
+		System.out.println("Movie Status Update!");
+	}
 }
