@@ -53,15 +53,88 @@ public class UserInput {
 	 */
 	
 	public static void userGetMovie(List<Movie> mList, List<Review> rList) {
-		int id, count =0;
+		int id, count;
 		System.out.println("Select Movie ID to show movie detail");
 		Scanner sc = new Scanner(System.in);
-		
+		count = 1;
 		for(Movie m: mList) {
 			System.out.println("ID: "+count+" Movie: "+m.getMovieTitle());
+			count++;
 		}
 		id = sc.nextInt();
 		PrintMovieList.printMovieList(mList, id);
 		PrintMovieList.printReview(rList, id);
+	}
+	
+	public static void userGetMovie(List<Movie> mList) {
+		ReviewController file = new ReviewController();
+		List<Review> rList = file.getReviewList();
+		int id, count;
+		boolean check = true;
+		System.out.println("Select Movie ID to show movie detail");
+		Scanner sc = new Scanner(System.in);
+		count = 1;
+		for(Movie m: mList) {
+			System.out.println("ID: "+count+" Movie: "+m.getMovieTitle());
+			count++;
+		}
+		while(check) {
+			if(sc.hasNextInt()) {
+				id = (sc.nextInt()-1);
+				if(id<(count-1)&& id>=0) {
+					PrintMovieList.printMovieList(mList, id);
+					PrintMovieList.printReview(rList, id);
+					check = false;
+				}
+				else {
+					System.out.println("Invalid Input");
+					sc.nextLine();
+				}
+			}
+			else {
+				System.out.println("Invalid Input");
+				sc.nextLine();
+			}
+		}
+		
+		
+	}
+	
+	public static void userGetReview(List<Movie> mList) {
+		ReviewController file = new ReviewController();
+		List<Review> rList = file.getReviewList();
+		int id, count;
+		boolean check = true;
+		System.out.println("Select Movie ID to show movie detail");
+		Scanner sc = new Scanner(System.in);
+		count = 1;
+		for(Movie m: mList) {
+			System.out.println("ID: "+count+" Movie: "+m.getMovieTitle());
+			count++;
+		}
+		while(check) {
+			if(sc.hasNextInt()) {
+				id = (sc.nextInt()-1);
+				if(id<(count-1) && id>=0) {
+					PrintMovieList.printMovieList(mList, id);
+					PrintMovieList.printReview(rList, id);
+					check = false;
+				}
+				else
+				{
+					System.out.println("Invalid Input");
+					sc.nextLine();
+				}
+			}
+			else
+			{
+				System.out.println("Invalid Input");
+				sc.nextLine();
+			}
+		}
+
+		
+		
+		
 	}
 }

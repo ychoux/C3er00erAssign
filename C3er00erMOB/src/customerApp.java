@@ -2,6 +2,7 @@ import controller.BookingController;
 import controller.CusMovController;
 import controller.CustomerController;
 import entity.Movie;
+import view.UserInput;
 
 import java.util.List;
 import java.util.Scanner;
@@ -33,11 +34,12 @@ public class customerApp {
                     break;}
 
                 case  3:{
-                    MovieListApp.review_cus();
+                    UserInput.userGetMovie(movieDetailList);
                     break;
                 }
                 case 4:{
-
+                	UserInput.userGetReview(movieDetailList);
+                	break;
                 }
 
             }

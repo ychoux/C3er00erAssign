@@ -76,20 +76,46 @@ public class PrintMovieList {
 	 */
 	
 	public static void printReview(List<Review> rList, int id) {
+		int count, count2;
 		for(Review r: rList) {
 			if(rList.get(id).getMovieTitle().equals(r.getMovieTitle())) {
 				String review;
 				String reviewtmp = r.getReview();
 				review = reviewtmp.replaceAll(SplitByColon, cvsSplitBy);
+				String[] ratings = r.getRating().split(SplitBy);
 				String[] reviews = review.split(SplitBy);
 				System.out.println("Reviews");
-				for(String rev: reviews) {
-					if(rev.equals("null")) {
+				count = 0;
+				for(String rate: ratings) {
+					System.out.print((count+1)+". ");
+					if(rate.equals("null")) {
 						
 					}
-					else {
-						System.out.println(rev);
+					else if(rate.equals("")) {
+						System.out.print("NIL,");
+						count++;
 					}
+					else {
+						System.out.print(rate+"/5,");
+						count++;
+					}
+					count2 =0;
+						for(String rev: reviews) {
+							if((count-1) == count2) {
+								if(rev.equals("null")) {
+									
+								}
+								else if(rev.equals("")){
+									System.out.println("NIL");
+									break;
+								}
+								else {
+									System.out.println(rev);
+									break;
+								}
+							}
+							count2++;
+						}
 				}
 				
 				
