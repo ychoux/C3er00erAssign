@@ -9,6 +9,11 @@ import java.util.Hashtable;
 import java.util.List;
 import java.time.LocalDate;
 
+/**
+ * This class is for CRU functions related to ticket pricings
+ * @author 
+ *
+ */
 public class StaffPriceController {
 
 	/**

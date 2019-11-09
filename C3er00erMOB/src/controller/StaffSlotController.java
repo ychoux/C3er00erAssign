@@ -9,10 +9,15 @@ import entity.Cinema;
 import entity.Cineplex;
 import entity.Movie;
 
+/**
+ * This class is for showtime creation
+ * @author 
+ *
+ */
 public class StaffSlotController {
 
 	/**
-	 * The function is adds a new slot time showing for a particular cineplex
+	 * The function adds a new slot time showing for a particular cineplex
 	 * @param passes in a list of movies that are screening
 	 */
 	public void staffAddSlot(List<Movie> movieList) {

@@ -9,6 +9,11 @@ import java.util.regex.Pattern;
 
 import entity.Log;
 
+/**
+ * This class is for creating and reading logs
+ * @author 
+ *
+ */
 public class LoggerController {
 
 	/**
