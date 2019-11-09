@@ -11,6 +11,14 @@ public class AdminSession {
 	private String username="";
 	private AccessLevel accesslevel=AccessLevel.NOACCESS;
 
+	/**
+	 *	This function helps to create a session
+	 *	@param username to be authenticated
+	 *	@param password to be authenticated
+	 * 	@return returns either a valid or not valid session depending if its authenticated
+	 * 	@exception if the user does not exist
+	 *  @exception if the password entered is wrong
+	 */
 	public static AdminSession createSession(String username,String password) {
 		AdminSession session = null;
 		try {
@@ -27,6 +35,14 @@ public class AdminSession {
 	}
 
 
+	/**
+	 *	This function helps to authenticate the session
+	 *	@param username to be authenticated
+	 *	@param password to be authenticated
+	 * 	@return returns either a valid or not valid session depending if its authenticated
+	 * 	@exception if the user does not exist
+	 *  @exception if the password entered is wrong
+	 */
 	AdminSession(String username,String password) throws NoSuchUserException,WrongPasswordException{
 		AdminController acon=new AdminController();
 		List<Admin> aList = acon.getAdminUsers();
@@ -68,6 +84,12 @@ public class AdminSession {
 
 	}
 	
+	/**
+	 *	This function helps the password entered
+	 *	@param password entered
+	 *  @param user obj that was retrieved when user name was valid
+	 *  @return	to see if the password is correct
+	 */
 	public boolean authenticatePassword(String password,Admin adtmp) {
 		if((SecurityFunc.hash(password.toCharArray(), Base64.getDecoder().decode(adtmp.salt))).equals(adtmp.password)) {
 			return true;

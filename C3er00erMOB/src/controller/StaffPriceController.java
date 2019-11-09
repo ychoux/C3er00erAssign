@@ -6,16 +6,52 @@ import entity.Admin;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Hashtable;
+import java.util.List;
+import java.time.LocalDate;
 
 public class StaffPriceController {
 
 	/**
-	 * The path to the CSV file that stores all the ticket price rate
+	 * The path to the CSV file that stores all the rates
 	 */
 	private static final String RATEPATH = "src/data/rates.csv";
 	
+	/**
+	 * The path to the CSV file that stores all the ph
+	 */
+	private static final String PHPATH = "src/data/PH.csv";
+	
+	/**
+	 * The function is to display the current public holidays that are stored inside the ph.csv file
+	 */
+	public static void staffShowPh() {
+		List<LocalDate> dates = PriceManager.getInstance().getPH();
+		int index=0;
+		for(LocalDate date : dates) {
+			System.out.println(index+1+". Date: "+date);
+			index++;
+		}
+	}
+	
+	/**
+	 * The function is to display the current public holidays that are stored inside the ph.csv file
+	 * @return return a boolean to see if PH was added successfully.
+	 */
+	public static boolean staffAddPh() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("====================");
+		System.out.println("Enter public holiday date [yyyy-MM-dd]: ");
+		String date = sc.next();
+		if(PriceManager.getInstance().addPublicHoliday(LocalDate.parse(date)))
+			return true;
+		else
+			return false;
+	}
 	
 	
+	/**
+	 * The function is to display the current rates that is stored inside the rates.csv file
+	 */
 	public static void staffShowRates() {
 		Hashtable<String, Double> rates = (Hashtable<String, Double>) controller.PriceManager.getInstance().getRates();
 		int index=0;
@@ -25,6 +61,10 @@ public class StaffPriceController {
 		}
 	}
 	
+	/**
+	 * The function is to add a new rate to the existing rates list
+	 * @return returns a boolean to the main view to see if the creation of rate was successful
+	 */
 	public static boolean staffAddRates() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("====================");
@@ -42,7 +82,8 @@ public class StaffPriceController {
 	}
 	
 	/**
-	 * 
+	 * The function is to update existing rates and update the CSV file
+	 * @return returns a boolean to the main view to see if the update was successful
 	 */
 	public static boolean staffUpdateRates() {
 		Scanner sc = new Scanner(System.in);
@@ -76,6 +117,11 @@ public class StaffPriceController {
 		return false;
 	}
 	
+	/**
+	 * The function is to update existing rates and update the CSV file
+	 * @param takes in a newly updated rates list
+	 * @return returns a boolean to see if the CSV file was successfully saved
+	 */
 	private static boolean saveRatesCSV(Hashtable<String, Double> rates) {
 		FileWriter csvWriter;
 		try {

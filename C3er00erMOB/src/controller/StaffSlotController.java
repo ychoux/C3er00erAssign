@@ -11,6 +11,10 @@ import entity.Movie;
 
 public class StaffSlotController {
 
+	/**
+	 * The function is adds a new slot time showing for a particular cineplex
+	 * @param passes in a list of movies that are screening
+	 */
 	public void staffAddSlot(List<Movie> movieList) {
 		Scanner sc = new Scanner(System.in);
 

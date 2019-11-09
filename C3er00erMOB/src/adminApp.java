@@ -37,6 +37,8 @@ public class adminApp {
 						System.out.println("2. Manage Cinema Showtimes");
 						System.out.println("3. Manage Ticket Rates");
 						System.out.println("4. Manage User Settings");
+						System.out.println("5. Log Analysis");
+						System.out.println("Exit [-1]");
 						System.out.println("====================");
 						System.out.print("Select task: ");
 						choice = sc.nextInt();
@@ -45,7 +47,7 @@ public class adminApp {
 							AdminView.movieSettings(admSess,0);
 							break;
 						case 2:
-							AdminView.cineplexSettings(0);
+							AdminView.cineplexSettings(admSess,0);
 							break;
 						case 3:
 							AdminView.priceSettings(admSess,0);
@@ -53,9 +55,13 @@ public class adminApp {
 						case 4:
 							AdminView.userSettings(admSess,aCon);
 							break;
+						case 5:
+							AdminView.logAnalysis(0);
+							break;
 						}
 						if(choice == -1){
-							break;
+							System.out.println("Good bye!");
+							return;
 						}
 					}	
 				}else {

@@ -5,12 +5,20 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
+
 import entity.Log;
 
 public class LoggerController {
 
+	/**
+	 * The LogController object instance, used as a singleton
+	 */
 	private static LoggerController INSTANCE = new LoggerController();
 
+	/**
+	 * The path to the CSV file that stores all the admin users
+	 */
 	private static String LOGFILE="src/data/log.csv";
 
 
@@ -18,30 +26,58 @@ public class LoggerController {
 
 	}
 	
+	/**
+	 * The function to get the instance of LoggerController object
+	 * @return a LoggerController object
+	 */
 	public static LoggerController getInstance() {
         return INSTANCE;
     }
 
+	/**
+	 * The funcion is used to generate a normal log entry
+	 * @param user that triggered this log event
+	 * @param description of what happen
+	 */
 	public void LogNormalEntry(String username,String description) {
 		Log normLog = new Log(username,description,0);
 		this.UpdateLogCSV(normLog);
 	}
 
+	/**
+	 * The funcion is used to generate a security log entry
+	 * @param user that triggered this log event
+	 * @param description of what happen
+	 */
 	public void LogSecurityEntry(String username,String description) {
 		Log secLog = new Log(username,description,1);
 		this.UpdateLogCSV(secLog);
 	}
 
+	/**
+	 * The funcion is used to generate a change log entry
+	 * @param user that triggered this log event
+	 * @param description of what happen
+	 */
 	public void LogChangeEntry(String username,String description) {
 		Log changeLog = new Log(username,description,2);
 		this.UpdateLogCSV(changeLog);
 	}
 
+	/**
+	 * The funcion is used to generate a error log entry
+	 * @param user that triggered this log event
+	 * @param description of what happen
+	 */
 	public void LogErrorEntry(String username,String description) {
 		Log errLog = new Log(username,description,3);
 		this.UpdateLogCSV(errLog);
 	}
 
+	/**
+	 * The funcion is get all the logs that are stored in log.csv
+	 * @return returns a list of log entries from log.csv
+	 */
 	public List<Log> getLogList(){
 		List<Log> logList = new ArrayList<>();
 		BufferedReader br = null;
@@ -62,10 +98,31 @@ public class LoggerController {
 		}
 		return logList;
 	}
-
-	public List<Log> getLogList(int logLvl){
-		return null;
+	
+	/**
+	 * The funcion acts as a search function to help filter wanted log entries
+	 * @param a keyword that is used to filter the log entires
+	 * @return returns a list of filtered log entries from log.csv
+	 */
+	public List<Log> getLogList(String keyword){
+		List<Log> logList = this.getLogList();
+		List<Log> fLogList = new ArrayList<>();
+		for(Log l : logList) {
+			if(Pattern.compile(Pattern.quote(keyword), Pattern.CASE_INSENSITIVE).matcher(l.username).find()
+					|| Pattern.compile(Pattern.quote(keyword), Pattern.CASE_INSENSITIVE).matcher(l.description).find()
+					|| l.datetime.contains(keyword) 
+					|| Integer.toString(l.loglvl).contains(keyword)) {
+				fLogList.add(l);
+			}
+		}
+				
+		return fLogList;
 	}
+	
+	/**
+	 * The funcion helps update the log.csv file with a new log entry
+	 * @param takes in a new log entry and adds into log.csv
+	 */
 	public void UpdateLogCSV(Log newLog) {
 		List<Log> logList = this.getLogList();
 		logList.add(newLog);
@@ -104,21 +161,5 @@ public class LoggerController {
 			e.printStackTrace();
 		}
 
-	}
-
-
-	protected static String GetServName(int logLvl) {
-		switch (logLvl) {
-		case 0:
-			return "Normal";
-		case 1:
-			return "Access";
-		case 2:
-			return "Change";
-		case 3:
-			return "Error";
-		default:
-			return "-";
-		}
 	}
 }

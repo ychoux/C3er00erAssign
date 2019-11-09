@@ -142,8 +142,10 @@ public class PriceManager {
 	public boolean addPublicHoliday(LocalDate date) {
 		if (!this.PublicHolidays.contains(date)) {
 			this.PublicHolidays.add(date);
-			this.saveToCSV();
-			return true;
+			if(this.saveToCSV())
+				return true;
+			else
+				return false;
 		}
 		else return false;
 	}

@@ -1,6 +1,5 @@
 package view;
 
-import java.util.Base64;
 import java.util.List;
 import java.util.Scanner;
 
@@ -8,10 +7,15 @@ import controller.*;
 import entity.*;
 import login.AccessLevel;
 import login.AdminSession;
-import login.SecurityFunc;
 
 public class AdminView {
 
+
+	/**
+	 *	This is the view page for movie settings
+	 *	@param passes in an authenticated admin session
+	 *	@param used for recurssion checking
+	 */
 	public static void movieSettings(AdminSession admSess,int choice) {
 		int option;
 		Scanner sc = new Scanner (System.in);
@@ -51,7 +55,12 @@ public class AdminView {
 		}
 	}
 
-	public static void cineplexSettings(int choice) {
+	/**
+	 *	This is the view page for cineplex settings
+	 *	@param passes in an authenticated admin session
+	 *	@param used for recurssion checking
+	 */
+	public static void cineplexSettings(AdminSession admSess,int choice) {
 		int option;
 		Scanner sc = new Scanner(System.in);
 		if(choice == 0) {
@@ -63,7 +72,7 @@ public class AdminView {
 			option = sc.nextInt();
 			if(!(option >=1 && option <=2)) {
 				System.out.println("Invalid Choice! Try again.");
-				cineplexSettings(0);
+				cineplexSettings(admSess,0);
 			}
 		}else {
 			option=choice;
@@ -72,6 +81,7 @@ public class AdminView {
 		MovieListController mlCon=new MovieListController();
 		switch(option) {
 		case 1:
+			LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Show time added successfully.");
 			ssCon.staffAddSlot(mlCon.getMovieList());
 			break;
 		case 2:
@@ -79,6 +89,11 @@ public class AdminView {
 		}
 	}
 
+	/**
+	 *	This is the view page for price settings
+	 *	@param passes in an authenticated admin session
+	 *	@param used for recurssion checking
+	 */
 	public static void priceSettings(AdminSession admSess,int choice) {
 		int option;
 		Scanner sc = new Scanner(System.in);
@@ -97,18 +112,67 @@ public class AdminView {
 		}else {
 			option=choice;
 		}
-		
+
 		switch(option){
-			case 1:
-				ratesSetting(admSess,0);
-				break;
-			case 2:
-				break;
-			case 3:
-				return;
+		case 1:
+			ratesSetting(admSess,0);
+			break;
+		case 2:
+			phSetting(admSess,0);
+			break;
+		case 3:
+			return;
 		}
 	}
-	
+
+	/**
+	 *	This is the view page for public holiday settings
+	 *	@param passes in an authenticated admin session
+	 *	@param used for recurssion checking
+	 */
+	public static void phSetting(AdminSession admSess,int choice) {
+		int option;
+		Scanner sc = new Scanner(System.in);
+		if(choice == 0) {
+			System.out.println("====================");
+			System.out.println("1. Show Public Holidays");
+			System.out.println("2. Add Public Holidays");
+			System.out.println("3. Back");
+			System.out.println("====================");
+			System.out.print("Select task: ");
+			option = sc.nextInt();
+			if(!(option >=1 && option <=3)) {
+				System.out.println("Invalid Choice! Try again.");
+				ratesSetting(admSess,0);
+			}
+		}else {
+			option=choice;
+		}
+
+		switch(option){
+		case 1:
+			StaffPriceController.staffShowPh();
+			break;
+		case 2:
+			if(StaffPriceController.staffAddPh()) {
+				System.out.println("Public Holiday creation successfully.");
+				LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Public Holiday creation successfully.");
+			}else {
+				System.out.println("Public Holiday creation failed.");
+				LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Public Holiday creation failed.");
+			}
+			break;
+		case 3:
+			return;
+		}
+	}
+
+
+	/**
+	 *	This is the view page for rates settings
+	 *	@param passes in an authenticated admin session
+	 *	@param used for recurssion checking
+	 */
 	public static void ratesSetting(AdminSession admSess,int choice) {
 		int option;
 		Scanner sc = new Scanner(System.in);
@@ -133,7 +197,14 @@ public class AdminView {
 			StaffPriceController.staffShowRates();
 			break;
 		case 2:
-			
+			if(StaffPriceController.staffAddRates()) {
+				System.out.println("Rates creation successfully.");
+				LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Rates creation successfully.");
+			}
+			else {
+				System.out.println("Rates creation failed.");
+				LoggerController.getInstance().LogErrorEntry(admSess.getUsername(), "Rates creation failed.");
+			}
 			break;
 		case 3:
 			if(StaffPriceController.staffUpdateRates()) {
@@ -142,14 +213,19 @@ public class AdminView {
 			}
 			else {
 				System.out.println("Rates updated failed.");
-				LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Rates updated failed.");
+				LoggerController.getInstance().LogErrorEntry(admSess.getUsername(), "Rates updated failed.");
 			}
 			break;
 		case 4:
 			return;
+		}
 	}
-	}
-	
+
+	/**
+	 *	This is the view page for user settings
+	 *	@param passes in an authenticated admin session
+	 *	@param passes in a admin controller to access methods for user settings.
+	 */
 	public static void userSettings(AdminSession admSess,AdminController aCon) {
 		Scanner sc=new Scanner(System.in);
 		System.out.println("1. Change Password");
@@ -160,85 +236,36 @@ public class AdminView {
 		int choice = sc.nextInt();
 		switch(choice) {
 		case 1:
-			for(;;) {
-				System.out.println("Enter current password: ");
-				String currpassword = sc.next();
-				Admin adtmp=aCon.getAdminUser(admSess.getUsername());
-				if(admSess.authenticatePassword(currpassword,adtmp)) {
-					for(;;) {
-						System.out.println("Enter new password: ");
-						String newpassword = sc.next();
-						System.out.println("Confirm new password: ");
-						String newcfmpassword = sc.next();
-						if(newpassword.equals(newcfmpassword)) {
-							// Generate new salt
-							String newSalt = Base64.getEncoder().encodeToString(SecurityFunc.getNextSalt());
-
-							// Newly hashed password
-							String newPassword= SecurityFunc.hash(newpassword.toCharArray(),Base64.getDecoder().decode(newSalt));
-
-							// update admin user password & salt
-							adtmp.password = newPassword;
-							adtmp.salt = newSalt;
-
-							List<Admin> adminList=aCon.getAdminUsers();
-							for(Admin a : adminList) {
-								if(a.username.equals(admSess.getUsername())) {
-									a.password = newPassword;
-									a.salt = newSalt;
-									break;
-								}
-							}
-
-							// Update csv file
-							aCon.updateAdminCSV(adminList);
-							System.out.println("Password updated!");
-							break;
-						}else {
-							System.out.println("Passwords did not match!");
-							System.out.println("Please try again.");
-						}
-					}
-					break;
-				}else {
-					System.out.println("Passwords did not match!");
-					System.out.println("Please try again.");
-				}
+			if(aCon.updateAdminUserPassword(admSess)) {
+				System.out.println("Password changed.");
+				LoggerController.getInstance().LogSecurityEntry(admSess.getUsername(), "Password change successfully");
+			}else {
+				LoggerController.getInstance().LogErrorEntry(admSess.getUsername(), "Wrong password was used to change password");
 			}
+			break;
 		case 2:
 			if(admSess.getAccesslevel() == AccessLevel.ADMIN || admSess.getAccesslevel()== AccessLevel.SUPERADMIN) {
-				System.out.println("Enter username: ");
-				String uname=sc.next();
-				System.out.println("Enter accesslevel(0-2)");
-				int accesslevel=sc.nextInt();
-				System.out.println("Enter password");
-				String password=sc.next();
-				Admin adtmp=aCon.makeAdminUser(uname, password, accesslevel);
-
-				List<Admin> adminList=aCon.getAdminUsers();
-				adminList.add(adtmp);
-				aCon.updateAdminCSV(adminList);
-				System.out.println("User created!");
+				if(aCon.makeAdminUser()) {
+					LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "New user has been created");
+					System.out.println("User created!");
+				}else {
+					LoggerController.getInstance().LogErrorEntry(admSess.getUsername(), "New user creation failed");
+					System.out.println("Failed to create new user.");
+				}
 				break;
 			}
 			else {
 				System.out.println("No permission");
+				LoggerController.getInstance().LogErrorEntry(admSess.getUsername(), "Failed to create user due to lacking privileges.");
 				break;
 			}
 		case 3:
 			if(admSess.getAccesslevel() == AccessLevel.SUPERADMIN) {
-				List<Admin> adminList=aCon.getAdminUsers();
-				for(Admin a : adminList) {
-					aCon.printUserDetails(a);
-				}
-				System.out.println("Choose user to remove: ");
-				String removeUsername = sc.next();
-				System.out.println("Are you sure? (Y/N)");
-				char cfm = sc.next().charAt(0);
-				if(cfm == 'Y' || cfm == 'y'){
-					aCon.deleteAdminUser(removeUsername);
+				if(aCon.deleteAdminUser()) {
+					LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "User removed successfully");
 					System.out.println("User has been removed.");
 				}else {
+					LoggerController.getInstance().LogNormalEntry(admSess.getUsername(), "User removed failed.");
 					System.out.println("Task abort..........");
 				}
 			}else {
@@ -247,35 +274,22 @@ public class AdminView {
 			break;
 		case 4:
 			if(admSess.getAccesslevel() == AccessLevel.SUPERADMIN) {
-
+				if(aCon.unlockAdminUser()) {
+					LoggerController.getInstance().LogSecurityEntry(admSess.getUsername(), "User has been unlocked successfully");
+					System.out.println("User has been unlocked.");
+				}
+				else {
+					LoggerController.getInstance().LogErrorEntry(admSess.getUsername(), "User was not unlocked");
+					System.out.println("Update error occured.");
+				}
 			}else {
 				System.out.println("No permission");
+				LoggerController.getInstance().LogErrorEntry(admSess.getUsername(), "Failed to create user due to lacking privileges.");
 			}
 			break;
 
 		case 5: 
-			int pick = -1;
-			while(true) {
-				System.out.println("====================");
-				System.out.println("1. Create/Update/Remove Movie Listing ");
-				System.out.println("2. Create/Update/Remove cinema showtimes");
-				System.out.println("3. User Settings");
-				System.out.println("====================");
-				pick = sc.nextInt();
-				switch(pick) {
-				case 1:
-					break;
-				case 2:
-					break;
-				case 3:
-					userSettings(admSess,aCon);
-					break;
-				}
-				if(pick == -1){
-					break;
-				}
-				break;
-			}
+			return;
 		}
 	}
 
@@ -292,7 +306,7 @@ public class AdminView {
 			option = sc.nextInt();
 			if(!(option >=1 && option <=3)) {
 				System.out.println("Invalid Choice! Try again.");
-				cineplexSettings(0);
+				reviewSettings(0);
 			}
 		}else {
 			option=choice;
@@ -304,18 +318,68 @@ public class AdminView {
 			for(Review r : rList) {
 				System.out.print(r.getMovieTitle()+" ");
 				System.out.print(r.getRating()+" ");
-				System.out.print(r.getOverallRating()+" ");
+				System.out.print(r.getOverallRating()+" "); //System.out.printf("%.1f ",r.getOverallRating());
 				System.out.println(r.getReview()+" ");
 				System.out.println();
 			}
 			break;
 		case 2:
 			System.out.println("Top 5 Movies");
-			
+
 			break;
 		case 3:
 			return;
 		}
 	}
-	
+
+
+	/**
+	 *	This is the view page for user settings
+	 *	@param used for recurssion checking
+	 */
+	public static void logAnalysis(int choice) {
+		int option;
+		Scanner sc = new Scanner (System.in);
+		if(choice == 0) {
+			System.out.println("====================");
+			System.out.println("1. Show logs");
+			System.out.println("2. Search logs");
+			System.out.println("3. Back");
+			System.out.println("====================");
+			System.out.print("Select task: ");
+			option = sc.nextInt();
+			if(!(option >=1 && option <=3)) {
+				System.out.println("Invalid Choice! Try again.");
+				logAnalysis(0);
+			}
+		}else {
+			option=choice;
+		}
+
+		switch(option) {
+		case 1:
+			List<Log> logList = LoggerController.getInstance().getLogList();
+			for(Log l : logList) {
+				System.out.println(l.username + " , " +l.description + " , "+l.loglvl + " , "+l.datetime);
+			}
+			break;
+		case 2:
+			while(true) {
+				System.out.println("====================");
+				System.out.println("[-1 to exit]");
+				System.out.println("Enter keyword: ");
+				String keyword=sc.next();
+
+				if(!keyword.equalsIgnoreCase("-1")) {
+					List<Log> fLogList = LoggerController.getInstance().getLogList(keyword);
+					for(Log l : fLogList) {
+						System.out.println(l.username + " , " +l.description + " , "+l.loglvl + " , "+l.datetime);
+					}
+				}else {
+					break;
+				}
+			}
+			break;
+		}
+	}
 }
