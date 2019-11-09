@@ -8,6 +8,11 @@ import entity.Movie;
 import entity.MovieStatus;
 import entity.Review;
 
+/**
+ * This class is for CRUD functions related to Movies
+ * @author 
+ *
+ */
 public class StaffMovieListController {
 	static String cvsSplitBy = ",";
 	static String SplitBy = ";";

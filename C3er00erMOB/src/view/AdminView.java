@@ -1,5 +1,6 @@
 package view;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +14,7 @@ import login.AccessLevel;
 import login.AdminSession;
 
 /**
- * The class to select all Admin and Superadmin settings 
+ * This class is for selecting all Admin and Superadmin settings 
  * @author 
  *
  */
@@ -32,11 +33,12 @@ public class AdminView {
 			System.out.println("1. Create Movie");
 			System.out.println("2. Update Movie Status");
 			System.out.println("3. Manage Reviews");
-			System.out.println("4. Back");
+			System.out.println("4. Show Top 5 Movies");
+			System.out.println("5. Back");
 			System.out.println("====================");
 			System.out.print("Select task: ");
 			option = sc.nextInt();
-			if(!(option >=1 && option <=4)) {
+			if(!(option >=1 && option <=5)) {
 				System.out.println("Invalid Choice! Try again.");
 				movieSettings(admSess,0);
 			}
@@ -62,6 +64,9 @@ public class AdminView {
 			reviewSettings(0);
 			break;
 		case 4:
+			top5Movies(mlCon.getMovieList(),rCon.getReviewList());
+			break;
+		case 5:
 			return;
 		}
 		movieSettings(admSess,0);
@@ -309,6 +314,7 @@ public class AdminView {
 	 * @param choice	For recursion checking
 	 */
 	public static void reviewSettings(int choice) {
+		DecimalFormat df = new DecimalFormat("0.0");
 		int option;
 		Scanner sc = new Scanner (System.in);
 		if(choice == 0) {
@@ -331,34 +337,32 @@ public class AdminView {
 		switch(option) {
 		case 1:
 			for(Review r : rList) {
-				System.out.println(r.getMovieTitle());
+				System.out.println("--------"+r.getMovieTitle()+"--------");
 				String[] noOfratings = r.getRating().split(";");
-				System.out.println("All Ratings: "+Arrays.toString(noOfratings));
-				System.out.println("Overall Rating: ["+r.getOverallRating()+"]"); 
+				if(noOfratings.length>0) {
+					System.out.println("All Ratings: "+Arrays.toString(noOfratings));
+					System.out.println("Overall Rating: ["+df.format(r.getOverallRating())+"]"); 
+				}
+				else {
+					System.out.println("All Ratings: [No Ratings]");
+					System.out.println("Overall Rating: [No Overall Rating]");
+				}
 				String[] noOfreviews = r.getReview().split(";");
-				System.out.println("Reviews: "+Arrays.toString(noOfreviews));
+				if(noOfreviews.length>0) {
+					System.out.println("Reviews: "+Arrays.toString(noOfreviews));
+				}
+				else {
+					System.out.println("Reviews: [No Reviews]");
+				}
+				System.out.println("");
 			}
 			break;
 		case 2:
-			TreeMap<Double,String> ratingList = new TreeMap<Double,String>(Collections.reverseOrder());
-			for (Review r: rList) {
-				String[] noOfratings = r.getRating().split(";");
-				if(noOfratings.length>1) {
-					ratingList.put(r.getOverallRating(),r.getMovieTitle());
-				}
-			}
-			System.out.println("=====Top 5 Movies=====");
+			System.out.println("=====Top Movies=====");
 			int i = 1;
-			if(ratingList.size()>5) {
-				for(;i<6;i++) {
-					System.out.println(i+". "+ratingList.firstEntry().getValue()+" [Overall Rating:"+ratingList.firstEntry().getKey()+"]");
-					ratingList.remove(ratingList.firstEntry().getKey());
-				}
-			}
-			else {
-				for (Entry<Double, String> movie : ratingList.entrySet()) {
-				    System.out.println(i+". "+movie.getValue()+" [Overall Rating:"+movie.getKey()+"]");
-				}
+			for(Review r: rList) {
+				System.out.println(i+". "+r.getMovieTitle()+" [Overall ratings:"+df.format(r.getOverallRating())+"]");
+				i++;
 			}
 			break;
 		case 3:
@@ -366,7 +370,75 @@ public class AdminView {
 		}
 	}
 
-
+	/**
+	 * This is the view page for top 5 movies
+	 * @param mList	A list of movies
+	 * @param rList	A list of reviews
+	 */
+	private static void top5Movies(List<Movie> mList, List<Review> rList) {
+		DecimalFormat df = new DecimalFormat("0.0");
+		Scanner sc = new Scanner(System.in);
+		System.out.println("====================");
+		System.out.println("1. Top 5 Movies by Sales: ");
+		System.out.println("2. Top 5 Movies by Ratings");
+		System.out.println("====================");
+		System.out.print("Choice: ");
+		int choice = sc.nextInt();
+		if(choice<1 || choice >2) {
+			System.out.println("Invalid Choice!");
+			top5Movies(mList,rList);
+		}
+		
+		switch (choice) {
+			case 1:
+				int j=1;
+				TreeMap<Integer,String> movieList = new TreeMap<Integer,String>(Collections.reverseOrder());
+				for (Movie m: mList) {
+					if(!(m.getStatus().equals(MovieStatus.END_OF_SHOWING)||m.getStatus().equals(MovieStatus.UP_COMING))) {
+						movieList.put(m.getSales(), m.getMovieTitle());
+					}
+				}
+				System.out.println("=====Top 5 Movies by Sales=====");
+				if(movieList.size()>5) {
+					for(;j<6;j++) {
+						System.out.println(j+". "+movieList.firstEntry().getValue()+" [Ticket Sales:"+movieList.firstEntry().getKey()+"]");
+						movieList.remove(movieList.firstEntry().getKey());
+					}
+				}
+				else {
+					for (Entry<Integer, String> movie : movieList.entrySet()) {
+					    System.out.println(j+". "+movie.getValue()+" [Ticket Sales:"+movie.getKey()+"]");
+					    j++;
+					}
+				}
+				break;
+				
+			case 2:
+				TreeMap<Double,String> ratingList = new TreeMap<Double,String>(Collections.reverseOrder());
+				for (Review r: rList) {
+					String[] noOfratings = r.getRating().split(";");
+					if(noOfratings.length>1) {
+						ratingList.put(r.getOverallRating(),r.getMovieTitle());
+					}
+				}
+				System.out.println("=====Top 5 Movies by Ratings=====");
+				int i = 1;
+				if(ratingList.size()>5) {
+					for(;i<6;i++) {
+						System.out.println(i+". "+ratingList.firstEntry().getValue()+" [Overall Rating:"+ratingList.firstEntry().getKey()+"]");
+						ratingList.remove(ratingList.firstEntry().getKey());
+					}
+				}
+				else {
+					for (Entry<Double, String> movie : ratingList.entrySet()) {
+					    System.out.println(i+". "+movie.getValue()+" [Overall Rating:"+df.format(movie.getKey())+"]");
+					    i++;
+					}
+				}
+				break;
+		}
+	}
+	
 	/**
 	 *	This is the view page for user settings
 	 *	@param choice 	For recursion checking
