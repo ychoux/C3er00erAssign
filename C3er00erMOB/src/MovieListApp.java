@@ -64,17 +64,18 @@ public class MovieListApp {
 		 *  // this function is to print selected review by object name is called by userinputReview
 		 * PrintMovieList.printReview(rList, name);
 		 */
-		StaffMovieListController.staffDelMovie(mList, rList);
-		StaffMovieListController.staffAddMovie(mList, rList);
+		//StaffMovieListController.staffDelMovie(mList, rList);
+		//StaffMovieListController.staffAddMovie(mList, rList);
 		ReviewController.updateOverallRating(rList);
 		ReviewController.updateMovieListRating(mList, rList);
-		PrintMovieList.printMovieList(mList,2); // movie.getid()
+		//PrintMovieList.printMovieList(mList,2); // movie.getid()
 		//ReviewController.userReview(rList, "this movie", "5", "Good movie"); //ReviewController.userReview(rList, movieid, user rating, user review);
 		//MovieListController.delMovieList(mList, 0); // this will remove the whole selected movielist
 		//MovieListController.addMovieList(mList, "red cliff", "synopsis", "director", "cast", "genre", null, null, 4, 5.5);
 		//
 		//PrintMovieList.printReview(rList, 10);
-		UserInput.userInputReview(mList,rList);
+		//UserInput.userInputReview(mList,rList);
+		//UserInput.userGetReview(mList);
 	}
 	
 

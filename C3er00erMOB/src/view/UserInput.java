@@ -11,21 +11,23 @@ public class UserInput {
 	static String cvsSplitBy = ",";
 	static String SplitBy =";";
 	static String SplitByColon = ":";
-	
+	static String rating;
 	/*
 	 * The function allow user to write review and give rating to the movie they
 	 * select userReview is called to handle the processing and updating of reviews
 	 * & rating
 	 */
 	public static void userInputReview(List<Movie> mList, List<Review> rList) {
-		String rating, review, reviewtmp;
-		int i=0;
+		String review, reviewtmp;
+		int i=1;
 		int select;
+		double checkrate;
+		boolean check = true;
 		System.out.println("Select Movie by its ID to review");
 		for(Review r:rList) {
 			System.out.print("ID: "+i);
 			for(Movie m:mList) {
-				if(rList.get(i).getMovieTitle().equals(m.getMovieTitle())) {
+				if(rList.get(i-1).getMovieTitle().equals(m.getMovieTitle())) {
 					System.out.println(" Movie: "+m.getMovieTitle());
 					break;
 				}
@@ -34,12 +36,21 @@ public class UserInput {
 		}
 		Scanner sc = new Scanner(System.in);
 		try {
-			select = sc.nextInt();
+			select = (sc.nextInt()-1);
 			for(Review r:rList) {
 				if( rList.get(select).getMovieTitle().equals(r.getMovieTitle())) {
-					System.out.println("Give Rating");
 					sc.nextLine();
-					rating = sc.nextLine();
+					while(check) {
+						System.out.println("Give Rating");
+						rating = sc.nextLine();
+						checkrate = Double.parseDouble(rating);
+						if(checkrate<=5 && checkrate>=0) {
+							check = false;
+						}
+						else {
+							System.out.println("Enter Rating within 0 to 5");
+						}
+					}
 					System.out.println("Give Review");
 					reviewtmp = sc.nextLine();
 					review = reviewtmp.replaceAll(cvsSplitBy, SplitByColon);

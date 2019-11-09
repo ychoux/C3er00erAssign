@@ -108,7 +108,7 @@ public class ReviewController {
 				String[] rating = r.getRating().split(SplitBy);
 				for(String ratings: rating)
 				{
-					if(ratings.equals("null")) {
+					if(ratings.equals("null")|| ratings.equals("null")) {
 						totalrating +=0;
 					}
 					else {
@@ -148,7 +148,7 @@ public class ReviewController {
 				String[] rating = r.getRating().split(SplitBy);
 				for(String ratings: rating)
 				{
-					if(ratings.equals("null")) {
+					if(ratings.equals("null")|| ratings.equals("")) {
 						totalrating +=0;
 					}
 					else {
