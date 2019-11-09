@@ -25,6 +25,22 @@ public class StaffPriceController {
 		}
 	}
 	
+	public static boolean staffAddRates() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("====================");
+		System.out.println("Enter name of rate: ");
+		String rateType=sc.next();
+		System.out.println("Enter rate: ");
+		double rate=sc.nextDouble();
+		
+		Hashtable<String, Double> rates = (Hashtable<String, Double>) PriceManager.getInstance().getRates();
+		rates.put(rateType, rate);
+		
+		if(saveRatesCSV(rates))
+			return true;
+		return false;
+	}
+	
 	/**
 	 * 
 	 */
