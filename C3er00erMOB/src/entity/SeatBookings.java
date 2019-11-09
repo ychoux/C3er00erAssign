@@ -17,13 +17,9 @@ public class SeatBookings {
 		
 		this.planID = plan.getPlanID();
 		this.slotID = slotID.toUpperCase();
-		
-		for (List<String> row: plan.getPlan()) {
-			for (String s: row) {
-				if (s.compareTo("") == 0)
-					continue;
-				bookings.put(s.toUpperCase(), new Seat(s.toUpperCase(), true));
-			}
+
+		for (String s: plan.getSeatIDs()) {
+			bookings.put(s.toUpperCase(), new Seat(s.toUpperCase(), true));
 		}
 		
 	}

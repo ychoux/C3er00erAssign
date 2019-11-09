@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.List;
+
 public class Cinema implements Comparable<Cinema> {
 
 	public static enum CinemaType {STANDARD_2D, STANDARD_3D, DELUXE, IMAX, LUXURY}
@@ -49,6 +51,16 @@ public class Cinema implements Comparable<Cinema> {
 	
 	public String getSeating_plan_path() {
 		return seating_plan_path;
+	}
+	
+	public boolean containSeat(String seatID) {
+		seatID = seatID.toUpperCase();
+		return this.seating_plan.getSeatIDs().contains(seatID);
+	}
+	
+	public boolean containSeat(List<String> seatIDs) {
+		seatIDs.replaceAll(String::toUpperCase);
+		return this.seating_plan.getSeatIDs().containsAll(seatIDs);
 	}
 	
 	@Override
