@@ -12,6 +12,7 @@ public class SeatingPlan {
 	
 	private String planID;
 	private List<List<String>> plan = new ArrayList<List<String>>();
+	private List<String> seatIDs = new ArrayList<String>();
 	
 	public SeatingPlan(String path, String planID) {
 
@@ -27,6 +28,14 @@ public class SeatingPlan {
 			this.planID = planID.toUpperCase();
 			br.close();
 			
+			for (List<String> row: this.plan) {
+				for (String s: row) {
+					if (s.compareTo("") == 0)
+						continue;
+					seatIDs.add(s);
+				}
+			}
+			
 		}
 		catch (IOException e) {
 			e.printStackTrace();
@@ -37,6 +46,10 @@ public class SeatingPlan {
 	
 	public List<List<String>> getPlan() {
 		return this.plan;
+	}
+	
+	public List<String> getSeatIDs() {
+		return this.seatIDs;
 	}
 	
 	public String getPlanID() {

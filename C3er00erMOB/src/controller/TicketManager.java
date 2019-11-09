@@ -205,6 +205,7 @@ public class TicketManager {
 	
 	/**
 	 * The function to print ticket details
+	 * @param ticketID	The ticketID of the ticket
 	 */
 	public void printTicketDetails(String ticketID) {
 		Ticket ticket = this.tickets.get(ticketID.toUpperCase());
@@ -228,6 +229,34 @@ public class TicketManager {
 		System.out.println();
 		System.out.println("Total Price: " + ticket.getPrice());
 		
+	}
+	
+	/**
+	 * The function to print ticket details, used to print confirmation before payment
+	 * @param slot			The slot booked
+	 * @param seats			The seats booked
+	 * @param ticketType	The list of ticket types chosen
+	 */
+	public void printTicketDetails(Slot slot, List<String> seats, List<TicketType> ticketType) {
+		System.out.println("Movie Name: " + slot.getMovie_name());
+		System.out.println("Showtime: " + slot.getShowtime().format(SlotManager.getInstance().getFormatter()));
+		System.out.printf("Duration: %d hours %d minutes\n", slot.getDuration().toHoursPart(), slot.getDuration().toMinutesPart());
+		System.out.println("Cinema: " + slot.getCinema().toString());
+		System.out.println("Seats: " + seats);
+		
+		System.out.print("Tickets: ");
+		for (TicketType type: TicketType.values()) {
+			int occurence = Collections.frequency(ticketType, type);
+			if (occurence > 0)
+				System.out.print(occurence + " " + type + " ");
+		}
+		System.out.println();
+		
+		double price = 0;
+		for (TicketType type: ticketType) {
+			price += PriceManager.getInstance().calculatePrice(type, slot);
+		}
+		System.out.println("Total Price: " + price);
 	}
 	
 	/**
@@ -298,6 +327,8 @@ public class TicketManager {
 			TicketManager.getInstance().printTicketDetails(t.getTicketID());
 			System.out.println();
 		}
+		
+		TicketManager.getInstance().printTicketDetails(SlotManager.getInstance().getSlot("TOY0001"), Arrays.asList("E03", "E04", "E05"), Arrays.asList(TicketType.ADULT, TicketType.ADULT, TicketType.ADULT));
 	}
 
 }
