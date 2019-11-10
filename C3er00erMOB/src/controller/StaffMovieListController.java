@@ -127,7 +127,7 @@ public class StaffMovieListController {
 		for(int i=0; i<mList.size(); i++) {
 			System.out.println(i+1 +". " + mList.get(i).getMovieTitle()+" ["+mList.get(i).getStatus().toString()+"]");
 		}
-		System.out.println("Choose Movie: ");
+		System.out.print("Choose Movie: ");
 		int choice = sc.nextInt()-1;
 		if(choice >= 0 && choice < mList.size()) {
 			System.out.println("Pick status to update: ");
