@@ -16,6 +16,7 @@ public class mainApp {
 		switch(choice) {
 		case 1:
 			System.out.println("Entering Customer mode...........");
+			customerApp.main(null);
 			break;
 		case 2:
 			System.out.println("Entering Admin mode...........");
