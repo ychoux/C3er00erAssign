@@ -41,7 +41,23 @@ public class MovieListController {
 		return movieList;
     }
     
-    
+    public static List<Movie> readMovieShow (List<Movie> mList){
+    	List<Movie>movieList = new ArrayList<>();
+		Movie movietmp;
+		for(Movie m: mList) {
+			
+			if(m.getStatus().equals(MovieStatus.END_OF_SHOWING)) {
+			}
+			else {
+				//NAME	SYNOPSIS	DIRECTOR	CAST	GENRE	TIME	STATUS	SALES	RATING
+
+				movietmp = new Movie(m.getMovieTitle(),m.getSynopsis(),m.getDirector(),m.getCast(),m.getGenre(),m.getTime()
+						,m.getStatus(),m.getSales(),m.getOverallRating());
+				movieList.add(movietmp);
+				}
+		}
+		return movieList;
+    }
     
 	/* 
 	 * This function is to allow staff to add movie into movie csv and objects

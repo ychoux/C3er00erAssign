@@ -1,6 +1,7 @@
 import controller.BookingController;
 import controller.CusMovController;
 import controller.CustomerController;
+import controller.MovieListController;
 import controller.ReviewController;
 import entity.Movie;
 import entity.Review;
@@ -13,8 +14,9 @@ import java.util.Scanner;
 public class customerApp {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        List<Movie> movieDetailList;
+        List<Movie> movieDetailList, movieDetailListFiltered;
         movieDetailList =  CusMovController.getInstance().movieCSVRead();
+        movieDetailListFiltered = MovieListController.readMovieShow(movieDetailList);
         ReviewController file = new ReviewController();
 		List<Review> reviewList = file.getReviewList();
         while(true) {
@@ -35,7 +37,7 @@ public class customerApp {
                 }
 
                 case 2:{
-                    BookingController.getInstance().booking_flow(movieDetailList);
+                    BookingController.getInstance().booking_flow(movieDetailListFiltered);
                     break;}
 
                 case  3:{

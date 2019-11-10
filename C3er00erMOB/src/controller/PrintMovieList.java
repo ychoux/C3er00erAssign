@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.util.List;
 
 import entity.Movie;
+import entity.MovieStatus;
 import entity.Review;
 
 public class PrintMovieList {
@@ -48,12 +49,14 @@ public class PrintMovieList {
 	public static void printMovieList(List<Movie>mList,int id) {
 		for(Movie m : mList) {
 			if( mList.get(id).getMovieTitle().equals(m.getMovieTitle())) {
-				String synopsis, cast, genre;
+				String synopsis, cast, genre,director;
 				String synoptmp = m.getSynopsis();
 				String casttmp = m.getCast();
 				String genretmp = m.getGenre();
+				String directortmp = m.getDirector();
 				System.out.println("Movie: "+m.getMovieTitle());
-				System.out.println("Director: "+m.getDirector());
+				director = directortmp.replaceAll(SplitBy, cvsSplitBy);
+				System.out.println("Director: "+director);
 				cast = casttmp.replaceAll(SplitBy, cvsSplitBy);
 				System.out.println("Cast: "+cast);
 				genre = genretmp.replaceAll(SplitBy, cvsSplitBy);
@@ -66,10 +69,36 @@ public class PrintMovieList {
 				System.out.println("Synopsis: "+synopsis);
 				break;
 			}
-			
 		}
 	}
+	public static void printMovieList(Movie m) {
+			String synopsis, cast, genre, director;
+			String synoptmp = m.getSynopsis();
+			String casttmp = m.getCast();
+			String genretmp = m.getGenre();
+			String directortmp = m.getDirector();
+			System.out.println("Movie: "+m.getMovieTitle());
+			director = directortmp.replaceAll(SplitBy, cvsSplitBy);
+			System.out.println("Director: "+director);
+			cast = casttmp.replaceAll(SplitBy, cvsSplitBy);
+			System.out.println("Cast: "+cast);
+			genre = genretmp.replaceAll(SplitBy, cvsSplitBy);
+			System.out.println("Genre: "+genre);
+			System.out.printf("Duration: %d Hours %d Minutes \n", m.getTime().toHoursPart(), m.getTime().toMinutesPart());
+			System.out.println("Status: "+m.getStatus());
+			System.out.println("Sales: "+m.getSales());
+			System.out.printf("Rating: %.2f\n",m.getOverallRating());
+			synopsis = synoptmp.replaceAll(SplitBy, cvsSplitBy);
+			System.out.println("Synopsis: "+synopsis);
+
+	}
 	
+	public static void MovieTitle(List<Movie> movieList){
+        int i =1;
+        for (Movie m : movieList){
+    		System.out.println((i++) + ": " + m.getMovieTitle());   
+        }
+    }
 	/*
 	 *  This function is to print out reviews from the seleted movie title
 	 *  id is object position
