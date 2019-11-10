@@ -20,7 +20,7 @@ public class StaffSlotController {
 	 * The function adds a new slot time showing for a particular cineplex
 	 * @param passes in a list of movies that are screening
 	 */
-	public void staffAddSlot(List<Movie> movieList) {
+	public boolean staffAddSlot(List<Movie> movieList) {
 		Scanner sc = new Scanner(System.in);
 
 		List<Cineplex> Cine = controller.CineplexManager.getInstance().getCineplexes();
@@ -60,12 +60,7 @@ public class StaffSlotController {
 				+ tmpCinema.getCinemaID().toUpperCase() 
 				+ Integer.toString(ranId);
 		
-		if(controller.SlotManager.getInstance().addSlot(slotId, showDateTime, tmpMovie.getTime(), tmpMovie.getMovieTitle(), tmpCinema)) {
-			System.out.println("Showtime Creation Successful!");
-		}
-		else {
-			System.out.println("Showtime Creation Failed!");
-		}
+		return controller.SlotManager.getInstance().addSlot(slotId, showDateTime, tmpMovie.getTime(), tmpMovie.getMovieTitle(), tmpCinema);
 	}
 
 }

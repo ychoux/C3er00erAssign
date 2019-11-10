@@ -102,30 +102,41 @@ public class AdminView {
 	 * @param choice  For recursion checking
 	 */
 	public static void cineplexSettings(AdminSession admSess, int choice) {
-		int option;
+		int option = 0;
 		Scanner sc = new Scanner(System.in);
-		if (choice == 0) {
-			System.out.println("====================");
-			System.out.println("1. Create ShowTime");
-			System.out.println("2. Back");
-			System.out.println("====================");
-			System.out.print("Select task: ");
-			option = sc.nextInt();
-			if (!(option >= 1 && option <= 2)) {
-				System.out.println("Invalid Choice! Try again.");
-				cineplexSettings(admSess, 0);
+		try {
+			if (choice == 0) {
+				System.out.println("====================");
+				System.out.println("1. Create ShowTime");
+				System.out.println("2. Back");
+				System.out.println("====================");
+				System.out.print("Select task: ");
+				option = sc.nextInt();
+				if (!(option >= 1 && option <= 2)) {
+					System.out.println("Invalid Choice! Try again.");
+					cineplexSettings(admSess, 0);
+				}
+			} else {
+				option = choice;
 			}
-		} else {
-			option = choice;
+		} catch (InputMismatchException e) {
+			System.out.println("Invalid input.");
+			cineplexSettings(admSess, 0);
 		}
+
 		StaffSlotController ssCon = new StaffSlotController();
 		MovieListController mlCon = new MovieListController();
 		switch (option) {
 		case 1:
-			LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Show time added successfully.");
-			ssCon.staffAddSlot(mlCon.getMovieList());
+			if (ssCon.staffAddSlot(mlCon.getMovieList())) {
+				LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Show time added successfully.");
+			} else {
+				LoggerController.getInstance().LogErrorEntry(admSess.getUsername(), "Show time added failed.");
+			}
 			break;
 		case 2:
+			ssCon = null;
+			mlCon = null;
 			return;
 		}
 	}
@@ -137,22 +148,27 @@ public class AdminView {
 	 * @param choice  For recursion checking
 	 */
 	public static void priceSettings(AdminSession admSess, int choice) {
-		int option;
+		int option = 0;
 		Scanner sc = new Scanner(System.in);
-		if (choice == 0) {
-			System.out.println("====================");
-			System.out.println("1. Manage Rates");
-			System.out.println("2. Manage Public Holidays");
-			System.out.println("3. Back");
-			System.out.println("====================");
-			System.out.print("Select task: ");
-			option = sc.nextInt();
-			if (!(option >= 1 && option <= 3)) {
-				System.out.println("Invalid Choice! Try again.");
-				priceSettings(admSess, 0);
+		try {
+			if (choice == 0) {
+				System.out.println("====================");
+				System.out.println("1. Manage Rates");
+				System.out.println("2. Manage Public Holidays");
+				System.out.println("3. Back");
+				System.out.println("====================");
+				System.out.print("Select task: ");
+				option = sc.nextInt();
+				if (!(option >= 1 && option <= 3)) {
+					System.out.println("Invalid Choice! Try again.");
+					priceSettings(admSess, 0);
+				}
+			} else {
+				option = choice;
 			}
-		} else {
-			option = choice;
+		} catch (InputMismatchException e) {
+			System.out.println("Invalid input.");
+			priceSettings(admSess, 0);
 		}
 
 		switch (option) {
@@ -377,12 +393,12 @@ public class AdminView {
 			for (Review r : rList) {
 				System.out.println("--------" + r.getMovieTitle() + "--------");
 				String[] noOfratings = r.getRating().split(";");
-				
+
 				if (noOfratings.length > 0) {
 					System.out.println("All Ratings: " + Arrays.toString(noOfratings));
-					if(noOfratings.length <2) {
+					if (noOfratings.length < 2) {
 						System.out.println("Overall Rating: [NA]");
-					}else {
+					} else {
 						System.out.println("Overall Rating: [" + df.format(r.getOverallRating()) + "]");
 					}
 				} else {
@@ -414,13 +430,14 @@ public class AdminView {
 
 	/**
 	 * This is the view page for top 5 movies
+	 * 
 	 * @param mList A list of movies
 	 * @param rList A list of reviews
 	 */
 	private static void top5Movies(List<Movie> mList, List<Review> rList) {
 		DecimalFormat df = new DecimalFormat("0.0");
 		Scanner sc = new Scanner(System.in);
-		int choice=0;
+		int choice = 0;
 		try {
 			System.out.println("====================");
 			System.out.println("1. Top 5 Movies by Sales: ");
@@ -477,7 +494,7 @@ public class AdminView {
 			if (ratingList.size() > 5) {
 				for (; i < 6; i++) {
 					System.out.println(i + ". " + ratingList.firstEntry().getValue() + " [Overall Rating:"
-							+  df.format(ratingList.firstEntry().getKey()) + "]");
+							+ df.format(ratingList.firstEntry().getKey()) + "]");
 					ratingList.remove(ratingList.firstEntry().getKey());
 				}
 			} else {
