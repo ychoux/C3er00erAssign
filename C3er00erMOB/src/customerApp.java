@@ -16,7 +16,7 @@ public class customerApp {
         while(true) {
             System.out.println("\nChoose\n" +
                     " 1. View user's detail\n" +
-                    " 2. List Movie\n" +
+                    " 2. List Movie (Movie Details & Book for Tickets)\n" +
                     " 3. Movie review or rating\n" +
                     " 4. View Review\n" +
                     " 5. List Top 5 Movies");
