@@ -51,9 +51,9 @@ public class ReviewController {
 		for(Review r: rList) {
 			if(r.getMovieTitle().equals(name)) {
 				ratingtmp = r.getRating();
-				ratingtmp = ratingtmp+SplitBy+rating;
+				ratingtmp = ratingtmp+rating+SplitBy;
 				reviewtmp = r.getReview();
-				reviewtmp = reviewtmp+SplitBy+review;
+				reviewtmp = reviewtmp+review+SplitBy;
 				r.setRating(ratingtmp);
 				r.setReview(reviewtmp);
 				break;
@@ -146,6 +146,9 @@ public class ReviewController {
 			for(String ratings: rating)
 			{
 				if(ratings.equals("null")) {
+					totalrating +=0;
+				}
+				else if(ratings.equals("")) {
 					totalrating +=0;
 				}
 				else {

@@ -62,28 +62,27 @@ public class UserInput {
 				sc.nextLine();
 				while(check) {
 					try {
-						if(sc.hasNextDouble()) {
-							rating = sc.nextLine();
-							rate = Double.parseDouble(rating);
-							if(rate>=0 && rate <=5) {
-								check = false;
-								break;
-							}
-							else {
-								System.out.println("Enter Rating between 0 to 5");
-							}
+						rating = sc.nextLine();
+						rate = Double.parseDouble(rating);
+						if(rate>=0 && rate <=5) {
+							check = false;
+							break;
 						}
 						else {
 							System.out.println("Enter Rating between 0 to 5");
-							sc.nextLine();
-						}	
+						}
 					}catch(NumberFormatException e) {
 						System.out.println("Enter Rating between 0 to 5");
 					}					
 				}
 				System.out.println("Give Review");
-				reviewtmp = sc.nextLine();
-				review = reviewtmp.replaceAll(cvsSplitBy, SplitByColon);
+				try {
+					reviewtmp = sc.nextLine();
+					review = reviewtmp.replaceAll(cvsSplitBy, SplitByColon);
+				}
+				catch (Exception e) {
+					review = "";
+				}
 				ReviewController.userReview(rList, r.getMovieTitle(), rating, review);
 				break;
 			}
