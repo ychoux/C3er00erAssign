@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import controller.AdminController;
@@ -15,22 +16,23 @@ public class adminApp {
 	/**
 	 * This function authenticate the admin/superadmin and select the necessary actions
 	 */
-	public static void startAdmin() {
+	public static void main(String[] args) {
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter Username: ");
-		String username = sc.nextLine();		
+			
 		int failCount=0;
 
-		for(;;) {
+		while(true) {
+			System.out.println("Enter Username: ");
+			String username = sc.nextLine();	
 			AdminSession admSess;
 			if(!username.equals("1")) {
 				System.out.println("Enter Password");
 				String password= sc.nextLine();
-
 				admSess = AdminSession.createSession(username, password);
 			}
 			else {
+				System.out.println("Entering bypass.....");
 				admSess= AdminSession.createSession("jy", "P@ssw0rd!");
 			}
 
@@ -48,28 +50,36 @@ public class adminApp {
 						System.out.println("5. Log Analysis");
 						System.out.println("Exit [-1]");
 						System.out.println("====================");
-						System.out.print("Select task: ");
-						choice = sc.nextInt();
-						switch(choice) {
-						case 1:
-							AdminView.movieSettings(admSess,0);
-							break;
-						case 2:
-							AdminView.cineplexSettings(admSess,0);
-							break;
-						case 3:
-							AdminView.priceSettings(admSess,0);
-							break;
-						case 4:
-							AdminView.userSettings(admSess,aCon);
-							break;
-						case 5:
-							AdminView.logAnalysis(0);
-							break;
-						}
-						if(choice == -1){
-							System.out.println("Good bye!");
-							return;
+						try {
+							System.out.print("Select task: ");
+							choice = sc.nextInt();
+							switch(choice) {
+							case 1:
+								AdminView.movieSettings(admSess,0);
+								break;
+							case 2:
+								AdminView.cineplexSettings(admSess,0);
+								break;
+							case 3:
+								AdminView.priceSettings(admSess,0);
+								break;
+							case 4:
+								AdminView.userSettings(admSess,aCon);
+								break;
+							case 5:
+								AdminView.logAnalysis(0);
+								break;
+							default:
+								System.out.println("Invalid option. Try again.");
+								break;
+							case -1:
+								System.out.println("Good bye!");
+								return;
+							}
+						}catch(InputMismatchException e) {
+							System.out.println("Invalid input!");
+							sc.reset();
+							sc.next();
 						}
 					}	
 				}else {

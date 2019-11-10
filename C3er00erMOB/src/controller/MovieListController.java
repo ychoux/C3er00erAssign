@@ -51,12 +51,12 @@ public class MovieListController {
     
     //(String movieTitle, String synopsis, String director, String cast, String genre, Duration time,String status, int sales,double overallRating)
 
-    public static void addMovieList(List<Movie> mList, String name, String synopsis,String director, String cast, String genre, 
+    public static boolean addMovieList(List<Movie> mList, String name, String synopsis,String director, String cast, String genre, 
     		Duration time, MovieStatus status, int sale, double rating ) {
     	Movie movietmp;
     	movietmp = new Movie(name,synopsis,director,cast,genre, time,status,sale,rating);
     	mList.add(movietmp);
-    	updateMovieListCSV(mList);
+    	return updateMovieListCSV(mList);
     }
     
     /* 
@@ -74,7 +74,7 @@ public class MovieListController {
 	 * This function is to update movie csv
 	 */
     
-    public static void updateMovieListCSV(List<Movie> mList) {
+    public static boolean updateMovieListCSV(List<Movie> mList) {
 		FileWriter csvWriter;
 		try {
 			csvWriter = new FileWriter(MOVIEFILE);
@@ -123,10 +123,11 @@ public class MovieListController {
 
 			csvWriter.flush();
 			csvWriter.close();
+			return true;
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 
 	}

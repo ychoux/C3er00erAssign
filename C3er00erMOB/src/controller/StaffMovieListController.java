@@ -1,6 +1,7 @@
 package controller;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,7 +18,7 @@ public class StaffMovieListController {
 	static String cvsSplitBy = ",";
 	static String SplitBy = ";";
 	static String SplitByColon = ":";
-	
+
 	/**
 	 * This function allow staff to add movie into movielist
 	 * addMovieList and addReviewList function will be called at the end of the 
@@ -27,10 +28,6 @@ public class StaffMovieListController {
 	 * @return 		A boolean variable that indicates whether the operation is successful or not
 	 */
 	public static boolean staffAddMovie(List<Movie> mList, List<Review> rList) {
-		List<String> movieTlist = new ArrayList<>();
-		for(Movie m:mList) {
-			movieTlist.add(m.getMovieTitle());
-		}
 		MovieStatus status = null;
 		String name,synopsis, director, cast, genre, synopsistmp, directortmp, casttmp, genretmp, nametmp;
 		int hr, min, choice;
@@ -38,10 +35,10 @@ public class StaffMovieListController {
 		boolean check = true;
 		double rating = 0.0;
 		int sale = 0;
-		System.out.print("Enter Movie Name: ");
 		Scanner sc = new Scanner(System.in);
+		System.out.print("Enter Movie Name: ");
 		nametmp = sc.nextLine();
-		if(movieTlist.contains(nametmp)) {
+		if(mList.stream().filter(o -> o.getMovieTitle().equalsIgnoreCase(nametmp)).findFirst().isPresent()) {
 			System.out.println("Movie Already Exists!");
 			return false;
 		}
@@ -60,16 +57,22 @@ public class StaffMovieListController {
 		genre = genretmp.replaceAll(cvsSplitBy, SplitBy);
 		System.out.println("Movie Duration");
 		while(check) {
-			System.out.print("How many Hours (0 to 24): ");
-			hr = sc.nextInt();
-			System.out.print("How many Minutes (0 to 59): ");
-			min = sc.nextInt();
-			if((0<=hr && hr<=24) && (0<=min && min<=59)) {
-				time = Duration.parse("PT"+hr+"H"+min+"M");
-				check = false;	
-			}
-			else {
-				System.out.println("Enter time again in correct format!");	
+			try {
+				System.out.print("How many Hours (0 to 24): ");
+				hr = sc.nextInt();
+				System.out.print("How many Minutes (0 to 59): ");
+				min = sc.nextInt();
+				if((0<=hr && hr<=24) && (0<=min && min<=59)) {
+					time = Duration.parse("PT"+hr+"H"+min+"M");
+					check = false;	
+				}
+				else {
+					System.out.println("Enter time again in correct format!");	
+				}
+			}catch(InputMismatchException e) {
+				System.out.println("Invalid input.");
+				sc.reset();
+				sc.next();
 			}
 		}
 		System.out.println("Choose Movie Status");
@@ -77,29 +80,29 @@ public class StaffMovieListController {
 		System.out.println("2: UP_COMING");
 		choice = sc.nextInt();
 		switch(choice) {
-			case 1:{
-				status = MovieStatus.NOW_SHOWING;
-			}
-			case 2:{
-				status = MovieStatus.UP_COMING;
-			}
+		case 1:{
+			status = MovieStatus.NOW_SHOWING;
 		}
-		
+		case 2:{
+			status = MovieStatus.UP_COMING;
+		}
+		}
+
 		//NAME	SYNOPSIS	DIRECTOR	CAST	GENRE	TIME	STATUS	SALES	RATING
-		MovieListController.addMovieList(mList,name,synopsis,director,cast,genre, time, status ,sale,rating);
-		ReviewController.addReviewList(rList, name);
-		System.out.println("Movie Added!");
-		return true;
+		if(MovieListController.addMovieList(mList,name,synopsis,director,cast,genre, time, status ,sale,rating) && 
+				ReviewController.addReviewList(rList, name))
+			return true;
+		return false;
 	}
-	
-	
+
+
 	/*
 	 * This function allow staff to delete movie from movielist At the end of the
 	 * function delMovieList and delReviewList is called to ensure that both
 	 * movielist and review csv is updated
 	 * the id in the function is the positon of the object in the List of objects
 	 */
-	
+
 	public static void staffDelMovie(List<Movie> mList, List<Review> rList) {
 		int id, count = 0;
 		System.out.println("Select Movie ID to delete movie");
@@ -113,7 +116,7 @@ public class StaffMovieListController {
 		ReviewController.delReviewList(rList, id);
 		System.out.println("Movie Deleted");
 	}
-	
+
 	/**
 	 * This function allows staff to update the status of the movie
 	 * @param mList	A list of movies
@@ -130,26 +133,34 @@ public class StaffMovieListController {
 			System.out.println("Pick status to update: ");
 			System.out.println("1: NOW_SHOWING");
 			System.out.println("2: END_OF_SHOWING");
-			System.out.println("Choose Status: ");
-			int status = sc.nextInt();
-			if(status == 1) {
-				mList.get(choice).setStatus(MovieStatus.NOW_SHOWING);
+			while(true) {
+				try {
+					System.out.println("Choose Status: ");
+					int status = sc.nextInt();
+					if(status == 1) {
+						mList.get(choice).setStatus(MovieStatus.NOW_SHOWING);
+						break;
+					}
+					else if(status == 2) {
+						mList.get(choice).setStatus(MovieStatus.END_OF_SHOWING);
+						break;
+					}
+					else {
+						System.out.println("Invalid option!");
+					}
+				}catch(InputMismatchException e) {
+					System.out.println("Invalid input.");
+					sc.reset();
+					sc.next();
+				}
 			}
-			else if(status == 2) {
-				mList.get(choice).setStatus(MovieStatus.END_OF_SHOWING);
-			}
-			else {
-				System.out.println("Wrong input!");
-				staffUpdateStatus(mList);
-			}
-			MovieListController.updateMovieListCSV(mList);
-			System.out.println("Movie Status Update!");
+			return MovieListController.updateMovieListCSV(mList);
 		}
 		else{
 			System.out.println("Invalid movie choice!");
 			System.out.println("====================");
 			staffUpdateStatus(mList);
 		}
-		return true;
+		return false;
 	}
 }
