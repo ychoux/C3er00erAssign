@@ -26,7 +26,7 @@ public class UserInput {
 		int choice = 0,i=1;
 		double rate;
 		boolean check = true, checkm = true;
-		System.out.println("Select Movie by its ID to review");
+		System.out.println("\nSelect Movie by its ID to review");
 		for(Review r:rList) {
 			System.out.print("ID: "+i);
 			for(Movie m:mList) {
@@ -99,7 +99,7 @@ public class UserInput {
 	// if nvr use will remove
 	public static void userGetMovie(List<Movie> mList, List<Review> rList) {
 		int id, count;
-		System.out.println("Select Movie ID to show movie detail");
+		System.out.println("\nSelect Movie ID to show movie detail");
 		Scanner sc = new Scanner(System.in);
 		count = 1;
 		for(Movie m: mList) {
@@ -116,7 +116,7 @@ public class UserInput {
 		List<Review> rList = file.getReviewList();
 		int id, count;
 		boolean check = true;
-		System.out.println("Select Movie ID to show movie detail");
+		System.out.println("\nSelect Movie ID to show movie detail");
 		Scanner sc = new Scanner(System.in);
 		count = 1;
 		for(Movie m: mList) {
@@ -150,7 +150,7 @@ public class UserInput {
 		List<Review> rList = file.getReviewList();
 		int id, count;
 		boolean check = true;
-		System.out.println("Select Movie ID to show movie detail");
+		System.out.println("\nSelect Movie ID to show movie detail");
 		Scanner sc = new Scanner(System.in);
 		count = 1;
 		for(Movie m: mList) {
@@ -163,6 +163,7 @@ public class UserInput {
 				if(id<(count-1) && id>=0) {
 					PrintMovieList.printMovieList(mList, id);
 					PrintMovieList.printReview(rList, id);
+					System.out.println();
 					check = false;
 				}
 				else{
@@ -181,10 +182,10 @@ public class UserInput {
 	 * This is the view page for top 5 movies
 	 * @param mList	A list of movies
 	 */
-	public static void top5Movies(List<Movie> mList) {
+	public static void top5Movies(List<Movie> mList, List<Review> rList) {
 		DecimalFormat df = new DecimalFormat("0.0");
 		Scanner sc = new Scanner(System.in);
-		System.out.println("====================");
+		System.out.println("\n====================");
 		System.out.println("1. Top 5 Movies by Sales: ");
 		System.out.println("2. Top 5 Movies by Ratings");
 		System.out.println("====================");
@@ -220,8 +221,6 @@ public class UserInput {
 				break;
 				
 			case 2:
-				ReviewController file = new ReviewController();
-				List<Review> rList = file.getReviewList();
 				TreeMap<Double,String> ratingList = new TreeMap<Double,String>(Collections.reverseOrder());
 				for (Review r: rList) {
 					String[] noOfratings = r.getRating().split(";");
