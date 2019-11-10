@@ -14,11 +14,12 @@ public class customerApp {
         List<Movie> movieDetailList;
         movieDetailList =  CusMovController.getInstance().movieCSVRead();
         while(true) {
-            System.out.println("\nChoose\n " +
-                    "1. View user's detail\n" +
+            System.out.println("\nChoose\n" +
+                    " 1. View user's detail\n" +
                     " 2. List Movie\n" +
-                    " 3. Movie review or rating\n"+
-                    " 4. View Review");
+                    " 3. Movie review or rating\n" +
+                    " 4. View Review\n" +
+                    " 5. List Top 5 Movies");
 
             int choice = sc.nextInt();
             switch (choice) {
@@ -39,6 +40,10 @@ public class customerApp {
                 }
                 case 4:{
                 	UserInput.userGetReview(movieDetailList);
+                	break;
+                }
+                case 5: {
+                	UserInput.top5Movies(movieDetailList);
                 	break;
                 }
 

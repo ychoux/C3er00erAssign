@@ -1,10 +1,15 @@
 package view;
+import java.text.DecimalFormat;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+import java.util.TreeMap;
+import java.util.Map.Entry;
 
 import controller.PrintMovieList;
 import controller.ReviewController;
 import entity.Movie;
+import entity.MovieStatus;
 import entity.Review;
 public class UserInput {
 	static String cvsSplitBy = ",";
@@ -169,6 +174,76 @@ public class UserInput {
 				System.out.println("Invalid Input");
 				sc.nextLine();
 			}
+		}
+	}
+	
+	/**
+	 * This is the view page for top 5 movies
+	 * @param mList	A list of movies
+	 */
+	public static void top5Movies(List<Movie> mList) {
+		DecimalFormat df = new DecimalFormat("0.0");
+		Scanner sc = new Scanner(System.in);
+		System.out.println("====================");
+		System.out.println("1. Top 5 Movies by Sales: ");
+		System.out.println("2. Top 5 Movies by Ratings");
+		System.out.println("====================");
+		System.out.print("Choice: ");
+		int choice = sc.nextInt();
+		if(choice<1 || choice >2) {
+			System.out.println("Invalid Choice!");
+			return;
+		}
+		
+		switch (choice) {
+			case 1:
+				int j=1;
+				TreeMap<Integer,String> movieList = new TreeMap<Integer,String>(Collections.reverseOrder());
+				for (Movie m: mList) {
+					if(!(m.getStatus().equals(MovieStatus.END_OF_SHOWING)||m.getStatus().equals(MovieStatus.UP_COMING))) {
+						movieList.put(m.getSales(), m.getMovieTitle());
+					}
+				}
+				System.out.println("=====Top 5 Movies by Sales=====");
+				if(movieList.size()>5) {
+					for(;j<6;j++) {
+						System.out.println(j+". "+movieList.firstEntry().getValue()+" [Ticket Sales:"+movieList.firstEntry().getKey()+"]");
+						movieList.remove(movieList.firstEntry().getKey());
+					}
+				}
+				else {
+					for (Entry<Integer, String> movie : movieList.entrySet()) {
+					    System.out.println(j+". "+movie.getValue()+" [Ticket Sales:"+movie.getKey()+"]");
+					    j++;
+					}
+				}
+				break;
+				
+			case 2:
+				ReviewController file = new ReviewController();
+				List<Review> rList = file.getReviewList();
+				TreeMap<Double,String> ratingList = new TreeMap<Double,String>(Collections.reverseOrder());
+				for (Review r: rList) {
+					String[] noOfratings = r.getRating().split(";");
+					if(noOfratings.length>1) {
+						ratingList.put(r.getOverallRating(),r.getMovieTitle());
+					}
+				}
+				System.out.println("=====Top 5 Movies by Ratings=====");
+				int i = 1;
+				if(ratingList.size()>5) {
+					for(;i<6;i++) {
+						System.out.println(i+". "+ratingList.firstEntry().getValue()+" [Overall Rating:"+ratingList.firstEntry().getKey()+"]");
+						ratingList.remove(ratingList.firstEntry().getKey());
+					}
+				}
+				else {
+					for (Entry<Double, String> movie : ratingList.entrySet()) {
+					    System.out.println(i+". "+movie.getValue()+" [Overall Rating:"+df.format(movie.getKey())+"]");
+					    i++;
+					}
+				}
+				break;
 		}
 	}
 }
