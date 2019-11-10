@@ -79,12 +79,14 @@ public class ReviewController {
 	 * updateReviewCSV is called to ensure csv updated
 	 */
 	
-	public static void addReviewList(List<Review> rList, String name) {
+	public static boolean addReviewList(List<Review> rList, String name) {
 		Review reviewtmp;
 		reviewtmp = new Review();
 		reviewtmp.setMovieTitle(name);
+		reviewtmp.setRating(";");
+		reviewtmp.setReview(";");
 		rList.add(reviewtmp);
-		updateReviewCSV(rList);
+		return updateReviewCSV(rList);
 	}
 	
 	/* 
@@ -232,8 +234,7 @@ public class ReviewController {
 	 * This function is to allow update on review csv
 	 */
 	
-	
-	public static void updateReviewCSV(List<Review> rList) {
+	public static boolean updateReviewCSV(List<Review> rList) {
 		FileWriter csvWriter;
 		String SplitBy = ",";
 
@@ -264,10 +265,12 @@ public class ReviewController {
 
 			csvWriter.flush();
 			csvWriter.close();
+			return true;
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 
 	}
