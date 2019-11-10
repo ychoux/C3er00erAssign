@@ -457,7 +457,7 @@ public class AdminView {
 		int choice = 0;
 		try {
 			System.out.println("====================");
-			System.out.println("1. Top 5 Movies by Sales: ");
+			System.out.println("1. Top 5 Movies by Sales ");
 			System.out.println("2. Top 5 Movies by Ratings");
 			System.out.println("====================");
 			System.out.print("Choice: ");
