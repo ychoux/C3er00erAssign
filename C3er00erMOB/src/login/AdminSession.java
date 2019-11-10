@@ -21,8 +21,6 @@ public class AdminSession {
 	 *	@param username 	A name to be authenticated
 	 *	@param password 	A password to be authenticated
 	 * 	@return 			A boolean variable to check for a valid or not valid session depending if its authenticated
-	 * 	@exception 			An exception if the user does not exist
-	 *  @exception 			An exception if the password entered is wrong
 	 */
 	public static AdminSession createSession(String username,String password) {
 		AdminSession session = null;
@@ -44,7 +42,6 @@ public class AdminSession {
 	 *	This function helps to authenticate the session
 	 *	@param username 				A name to be authenticated
 	 *	@param password 				A password to be authenticated
-	 * 	@return			 				A boolean variable to check for a valid or not valid session depending if its authenticated
 	 * 	@throws NoSuchUserException		An exception if the user does not exist
 	 *  @throws WrongPasswordException	An exception if the password entered is wrong
 	 */

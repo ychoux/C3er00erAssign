@@ -20,7 +20,7 @@ public class mainApp {
 			break;
 		case 2:
 			System.out.println("Entering Admin mode...........");
-			adminApp.startAdmin();
+			adminApp.main(null);
 			break;
 		}
 		sc.close();
