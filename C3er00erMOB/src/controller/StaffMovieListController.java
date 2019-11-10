@@ -137,24 +137,35 @@ public class StaffMovieListController {
 				try {
 					System.out.println("Choose Status: ");
 					int status = sc.nextInt();
-					if(status == 1) {
-						mList.get(choice).setStatus(MovieStatus.NOW_SHOWING);
-						break;
+					switch(status) {
+						case 1:
+							if(mList.get(choice).getStatus() == MovieStatus.NOW_SHOWING) {
+								System.out.println("Movie is already NOW_SHOWING!");
+								return false;
+							}
+							mList.get(choice).setStatus(MovieStatus.NOW_SHOWING);
+							break;
+							
+						case 2:
+							if(mList.get(choice).getStatus() == MovieStatus.END_OF_SHOWING) {
+								System.out.println("Movie is already END_OF_SHOWING!");
+								return false;
+							}
+							mList.get(choice).setStatus(MovieStatus.END_OF_SHOWING);
+							break;
+							
+						default:
+							System.out.println("Invalid option!");
+							return false;
 					}
-					else if(status == 2) {
-						mList.get(choice).setStatus(MovieStatus.END_OF_SHOWING);
-						break;
-					}
-					else {
-						System.out.println("Invalid option!");
-					}
+
+					return MovieListController.updateMovieListCSV(mList);
 				}catch(InputMismatchException e) {
 					System.out.println("Invalid input.");
 					sc.reset();
 					sc.next();
 				}
 			}
-			return MovieListController.updateMovieListCSV(mList);
 		}
 		else{
 			System.out.println("Invalid movie choice!");

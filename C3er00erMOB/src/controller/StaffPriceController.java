@@ -47,10 +47,7 @@ public class StaffPriceController {
 		System.out.println("====================");
 		System.out.println("Enter public holiday date [yyyy-MM-dd]: ");
 		String date = sc.next();
-		if(PriceManager.getInstance().addPublicHoliday(LocalDate.parse(date)))
-			return true;
-		else
-			return false;
+		return PriceManager.getInstance().addPublicHoliday(LocalDate.parse(date));
 	}
 	
 	
@@ -81,9 +78,7 @@ public class StaffPriceController {
 		Hashtable<String, Double> rates = (Hashtable<String, Double>) PriceManager.getInstance().getRates();
 		rates.put(rateType, rate);
 		
-		if(saveRatesCSV(rates))
-			return true;
-		return false;
+		return saveRatesCSV(rates);
 	}
 	
 	/**
@@ -117,9 +112,7 @@ public class StaffPriceController {
 		rates.replace(choice, rates.get(choice),newRate);
 		
 		// updates rates.csv
-		if(saveRatesCSV(rates))
-			return true;
-		return false;
+		return saveRatesCSV(rates);
 	}
 	
 	/**

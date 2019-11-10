@@ -29,23 +29,26 @@ public class StaffSlotController {
 			System.out.println(i+1+". "+Cine.get(i).getCineplex_name());
 		}
 		System.out.println("====================");
-		System.out.println("Select Cineplex: ");
+		System.out.print("Select Cineplex: ");
 		Cineplex tmpcineplex = Cine.get(sc.nextInt()-1);
-
+		System.out.println("====================");
+		
 		List<Cinema> tmpCinemaList = tmpcineplex.getCinemas();
 		for(int k = 0;k<tmpCinemaList.size();k++) {
 			System.out.println(k+1+". "+tmpCinemaList.get(k).getCinemaID());
 		}
 		System.out.println("====================");
-		System.out.println("Select Cinema: ");
+		System.out.print("Select Cinema: ");
 		Cinema tmpCinema = tmpCinemaList.get(sc.nextInt()-1);
+		System.out.println("====================");
 
 		for(int m = 0;m<movieList.size();m++) {
 			System.out.println(m+1+". "+movieList.get(m).getMovieTitle());
 		}
 		System.out.println("====================");
-		System.out.println("Select Movie: ");
+		System.out.print("Select Movie: ");
 		Movie tmpMovie = movieList.get(sc.nextInt()-1);
+		System.out.println("====================");
 		
 		LocalDateTime showDateTime=null;
 		

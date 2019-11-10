@@ -60,19 +60,19 @@ public class AdminView {
 		case 1:
 			if (StaffMovieListController.staffAddMovie(mlCon.getMovieList(), rCon.getReviewList())) {
 				System.out.println("Movie created!");
-				LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Movie Added");
+				LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Movie Added.");
 			} else {
 				System.out.println("Failed to create movie!");
-				LoggerController.getInstance().LogErrorEntry(admSess.getUsername(), "Failed to add Movie");
+				LoggerController.getInstance().LogErrorEntry(admSess.getUsername(), "Failed to add Movie.");
 			}
 			break;
 		case 2:
 			if (StaffMovieListController.staffUpdateStatus(mlCon.getMovieList())) {
 				System.out.println("Status updated!");
-				LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Movie Status Updated");
+				LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Movie Status Updated.");
 			} else {
 				System.out.println("Failed to update status!");
-				LoggerController.getInstance().LogErrorEntry(admSess.getUsername(), "Fail to update movie status");
+				LoggerController.getInstance().LogErrorEntry(admSess.getUsername(), "Fail to update movie status.");
 			}
 			break;
 		case 3:
@@ -129,9 +129,11 @@ public class AdminView {
 		switch (option) {
 		case 1:
 			if (ssCon.staffAddSlot(mlCon.getMovieList())) {
-				LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Show time added successfully.");
+				System.out.println("Showtime creation successful!");
+				LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Showtime creation successful.");
 			} else {
-				LoggerController.getInstance().LogErrorEntry(admSess.getUsername(), "Show time added failed.");
+				System.out.println("Showtime creation failed!");
+				LoggerController.getInstance().LogErrorEntry(admSess.getUsername(), "Showtime creation failed.");
 			}
 			break;
 		case 2:
@@ -190,35 +192,40 @@ public class AdminView {
 	 * @param choice  For recursion checking
 	 */
 	public static void phSetting(AdminSession admSess, int choice) {
-		int option;
+		int option = 0;
 		Scanner sc = new Scanner(System.in);
-		if (choice == 0) {
-			System.out.println("====================");
-			System.out.println("1. Show Public Holidays");
-			System.out.println("2. Add Public Holidays");
-			System.out.println("3. Back");
-			System.out.println("====================");
-			System.out.print("Select task: ");
-			option = sc.nextInt();
-			if (!(option >= 1 && option <= 3)) {
-				System.out.println("Invalid Choice! Try again.");
-				ratesSetting(admSess, 0);
+		try {
+			if (choice == 0) {
+				System.out.println("====================");
+				System.out.println("1. Show Public Holidays");
+				System.out.println("2. Add Public Holidays");
+				System.out.println("3. Back");
+				System.out.println("====================");
+				System.out.print("Select task: ");
+				option = sc.nextInt();
+				if (!(option >= 1 && option <= 3)) {
+					System.out.println("Invalid Choice! Try again.");
+					ratesSetting(admSess, 0);
+				}
+			} else {
+				option = choice;
 			}
-		} else {
-			option = choice;
+		} catch (InputMismatchException e) {
+			System.out.println("Invalid input.");
+			phSetting(admSess, 0);
 		}
-
+		
 		switch (option) {
 		case 1:
 			StaffPriceController.staffShowPh();
 			break;
 		case 2:
 			if (StaffPriceController.staffAddPh()) {
-				System.out.println("Public Holiday creation successfully.");
+				System.out.println("Public Holiday creation successful!");
 				LoggerController.getInstance().LogChangeEntry(admSess.getUsername(),
-						"Public Holiday creation successfully.");
+						"Public Holiday creation successful.");
 			} else {
-				System.out.println("Public Holiday creation failed.");
+				System.out.println("Public Holiday creation failed!");
 				LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Public Holiday creation failed.");
 			}
 			break;
@@ -258,19 +265,19 @@ public class AdminView {
 			break;
 		case 2:
 			if (StaffPriceController.staffAddRates()) {
-				System.out.println("Rates creation successfully.");
-				LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Rates creation successfully.");
+				System.out.println("Rates creation successful!");
+				LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Rates creation successful.");
 			} else {
-				System.out.println("Rates creation failed.");
+				System.out.println("Rates creation failed!");
 				LoggerController.getInstance().LogErrorEntry(admSess.getUsername(), "Rates creation failed.");
 			}
 			break;
 		case 3:
 			if (StaffPriceController.staffUpdateRates()) {
-				System.out.println("Rates updated successfully.");
+				System.out.println("Rates updated successfully!");
 				LoggerController.getInstance().LogChangeEntry(admSess.getUsername(), "Rates updated successfully.");
 			} else {
-				System.out.println("Rates updated failed.");
+				System.out.println("Rates updated failed!");
 				LoggerController.getInstance().LogErrorEntry(admSess.getUsername(), "Rates updated failed.");
 			}
 			break;
@@ -367,8 +374,8 @@ public class AdminView {
 		try {
 			if (choice == 0) {
 				System.out.println("====================");
-				System.out.println("1. Show Reviews");
-				System.out.println("2. Show all Reviews");
+				System.out.println("1. Show Movie Reviews & Ratings");
+				System.out.println("2. Show Overall Ratings");
 				System.out.println("3. Back");
 				System.out.println("====================");
 				System.out.print("Select task: ");
@@ -406,6 +413,11 @@ public class AdminView {
 					System.out.println("Overall Rating: [No Overall Rating]");
 				}
 				String[] noOfreviews = r.getReview().split(";");
+				for(int i=0; i<noOfreviews.length;i++) {
+					if(noOfreviews[i].isEmpty())
+						noOfreviews[i]="NA";
+				}
+				
 				if (noOfreviews.length > 0) {
 					System.out.println("Reviews: " + Arrays.toString(noOfreviews));
 				} else {
@@ -415,11 +427,16 @@ public class AdminView {
 			}
 			break;
 		case 2:
-			System.out.println("=====Top Movies=====");
+			System.out.println("=====Overall Ratings=====");
 			int i = 1;
 			for (Review r : rList) {
-				System.out.println(
-						i + ". " + r.getMovieTitle() + " [Overall ratings:" + df.format(r.getOverallRating()) + "]");
+				String[] noOfratings = r.getRating().split(";");
+				if(noOfratings.length<2) {
+					System.out.println(i + ". " + r.getMovieTitle() + " [Overall ratings: NA]");
+				}
+				else {
+					System.out.println(i + ". " + r.getMovieTitle() + " [Overall ratings:" + df.format(r.getOverallRating()) + "]");
+				}
 				i++;
 			}
 			break;
