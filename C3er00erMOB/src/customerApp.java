@@ -17,8 +17,8 @@ public class customerApp {
             System.out.println("\nChoose\n" +
                     " 1. View user's detail\n" +
                     " 2. List Movie (Movie Details & Book for Tickets)\n" +
-                    " 3. Movie review or rating\n" +
-                    " 4. View Review\n" +
+                    " 3. Rate & Review Movie\n" +
+                    " 4. View Movie Reviews\n" +
                     " 5. List Top 5 Movies");
 
             int choice = sc.nextInt();
