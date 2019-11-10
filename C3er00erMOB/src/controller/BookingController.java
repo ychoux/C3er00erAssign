@@ -55,11 +55,11 @@ public class BookingController {
                     try {
                         System.out.println("\nMovie List\n"+
                                 "-------------------");
-                        CusMovController.getInstance().listMovie(movieDetailList);
+                        PrintMovieList.MovieTitle(movieDetailList);
                         System.out.println("\nEnter the number of movie to see description: (0 to quit)");
                         ch = sc.nextInt();
                         if (ch>0 & ch<=movieDetailList.size()){
-                            CusMovController.getInstance().viewMovieDetails(movieDetailList.get(ch - 1));
+                            PrintMovieList.printMovieList(movieDetailList.get(ch - 1));
                             System.out.println("\nEnter any number except 0 to show the slots available (0 to quit)");
                             ch1 = sc.nextInt();
                             stage = 1;
