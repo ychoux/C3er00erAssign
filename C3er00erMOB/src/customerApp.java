@@ -12,9 +12,10 @@ public class customerApp {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String dummy = "";
-        List<Movie> movieDetailList, movieDetailListFiltered;
-        movieDetailList =  CusMovController.getInstance().movieCSVRead();
-        movieDetailListFiltered = MovieListController.readMovieShow(movieDetailList);
+        List<Movie> movieDetailListFiltered;
+        MovieListController mlist = new MovieListController();
+        List<Movie>movieDetailList = mlist.getMovieList();
+        movieDetailListFiltered = MovieListController.readMovieShowing(movieDetailList);
         ReviewController file = new ReviewController();
 		List<Review> reviewList = file.getReviewList();
 
