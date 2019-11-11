@@ -16,7 +16,7 @@ public class MovieListApp {
 		List<Review> rList = file.getReviewList();
 		MovieListController mfile = new MovieListController();
 		List<Movie> mList = mfile.getMovieList();
-		List<Movie> mList2 = MovieListController.readMovieShow(mList);
+		List<Movie> mList2 = MovieListController.readMovieShowing(mList);
 		/*
 		 * //for staff
 		 * 
@@ -78,7 +78,7 @@ public class MovieListApp {
 		//UserInput.userInputReview(mList, rList);
 		//PrintMovieList.printReview(rList, 10);
 		//UserInput.userInputReview(mList, rList);
-		//PrintMovieList.printReview(rList, 10);
+		PrintMovieList.printReview(rList, 10);
 		PrintMovieList.MovieTitle(mList);
 		PrintMovieList.MovieTitle(mList2);
 	}

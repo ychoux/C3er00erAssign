@@ -12,14 +12,26 @@ import java.util.List;
 import entity.Movie;
 import entity.MovieStatus;
 
+/**
+ * The class for all action related to movielist
+ * @author
+ *
+ */
 public class MovieListController {
+	/**
+	 * Path to the csv file that store movielist data
+	 */
 	static String MOVIEFILE = "src/data/movielist.csv";
+	/**
+	 * The seperator in csv file
+	 */
 	static String cvsSplitBy = ",";
 	
-	/* 
-	 * This function is to get data from movielist csv into movie object 
-	 */
 	
+    /**
+     * This function is to fetch movielist data from movielist.csv into list of movie object
+     * @return	return list of movie objects
+     */
     public List<Movie>getMovieList(){
     	List<Movie>movieList = new ArrayList<>();
     	BufferedReader br = null;
@@ -41,7 +53,12 @@ public class MovieListController {
 		return movieList;
     }
     
-    public static List<Movie> readMovieShow (List<Movie> mList){
+    /**
+     * This function is to filter out END_OF_SHOWING movies
+     * @param mList		A list of movie objects
+     * @return			return the filtered list of movie objects
+     */
+    public static List<Movie> readMovieShowing (List<Movie> mList){
     	List<Movie>movieList = new ArrayList<>();
 		Movie movietmp;
 		for(Movie m: mList) {
@@ -58,15 +75,20 @@ public class MovieListController {
 		}
 		return movieList;
     }
-    
-	/* 
-	 * This function is to allow staff to add movie into movie csv and objects
-	 * updateMovieListCSV is called to ensure movie csv is updated
-	 */
-    
-    
-    //(String movieTitle, String synopsis, String director, String cast, String genre, Duration time,String status, int sales,double overallRating)
-
+    /**
+     * this function is to allow staff to add new movie into movie csv and movie objects
+     * @param mList			A list of movie objects
+     * @param name			Movie name
+     * @param synopsis		Movie Synopsis
+     * @param director		Movie Director
+     * @param cast			Movie cast
+     * @param genre			Movie genre
+     * @param time			Movie duration
+     * @param status		Movie status
+     * @param sale			Movie sales
+     * @param rating		Movie Rating
+     * @return				It will return true if movies is updated into csv successfully
+     */
     public static boolean addMovieList(List<Movie> mList, String name, String synopsis,String director, String cast, String genre, 
     		Duration time, MovieStatus status, int sale, double rating ) {
     	Movie movietmp;
@@ -75,21 +97,25 @@ public class MovieListController {
     	return updateMovieListCSV(mList);
     }
     
-    /* 
-	 * This function is to allow staff to delete movie into movie csv and objects
-	 * updateMovieListCSV is called to ensure movie csv is updated
-	 */
     
-    public static void delMovieList(List<Movie> mList,int id) {
+    /**
+     * This function allow staff to delete movie in the movie csv and movie objects
+     * @param mList		A list of movie objects
+     * @param id		selected movie index
+     * @return			It will return true if movies is updated into csv successfully
+     */
+    // will remove if not used
+    public static boolean delMovieList(List<Movie> mList,int id) {
     	mList.remove(id);
-    	updateMovieListCSV(mList);
+    	return updateMovieListCSV(mList);
 
     }
     
-    /* 
-	 * This function is to update movie csv
-	 */
-    
+    /**
+     * This function is to update movie csv
+     * @param mList		A list of movie objects
+     * @return			It will return true if movies is updated into csv successfully
+     */
     public static boolean updateMovieListCSV(List<Movie> mList) {
 		FileWriter csvWriter;
 		try {
