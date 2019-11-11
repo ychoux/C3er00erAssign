@@ -1,5 +1,5 @@
+
 import controller.BookingController;
-import controller.CusMovController;
 import controller.CustomerController;
 import controller.MovieListController;
 import controller.ReviewController;
@@ -14,9 +14,9 @@ import java.util.Scanner;
 public class customerApp {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        List<Movie> movieDetailList, movieDetailListFiltered;
-        movieDetailList =  CusMovController.getInstance().movieCSVRead();
-        movieDetailListFiltered = MovieListController.readMovieShow(movieDetailList);
+        MovieListController mlist =new MovieListController();
+		List<Movie> movieDetailList = mlist.getMovieList();
+		List<Movie> movieDetailListFiltered = MovieListController.readMovieShowing(movieDetailList);
         ReviewController file = new ReviewController();
 		List<Review> reviewList = file.getReviewList();
         while(true) {
