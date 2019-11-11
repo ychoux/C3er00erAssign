@@ -6,17 +6,15 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class CustomerController {
 
     private static final String USERFILE = "src/data/user.csv";
-    private Customer customer;
+    private List<Customer> customerlst = new ArrayList<>();
+    private Customer cus=null;
     private String[] header;
-    private  static  CustomerController INSTANCE = new CustomerController();
+
     public CustomerController() {
         try {
 
@@ -33,9 +31,9 @@ public class CustomerController {
                     String mail = row[1].toUpperCase();
                     int phone = Integer.parseInt(row[2]);
                     List<String> ticket = Arrays.asList(row[3].split("\\+"));
-                    this.customer = new Customer(name, mail, phone, ticket);
+                    this.customerlst.add(new Customer(name, mail, phone, ticket));
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("Unable to retrieve ticket information!");
+                    System.out.println("Unable to retrieve user information!");
                 }
 
             }
@@ -44,25 +42,42 @@ public class CustomerController {
             this.autoSave();
 
         } catch (IOException e) {
-            System.out.println("Unable to retrieve ticket information!");
+            System.out.println("Unable to retrieve user information!");
         }
     }
 
-    public void addTic(String Tic_id){
-        if (Tic_id == null)
-            return;
-        customer.getTicket().add(Tic_id);
-        this.saveToCSV();
+    public Customer userVeri(String username, int tel_no){
+            cus = null;
+            for (Customer cust : customerlst){
+                if (cust.getName().equals(username.toUpperCase()) & cust.getPhone() == tel_no){
+                    this.cus = cust;
+                    break;
+                }
+            }
+            if (cus!=null) return cus;
+            return null;
+    }
+
+    public void update_user(Customer cus) {
+        try{
+        for (Customer cust : customerlst) {
+            if (cust.getName().equals(cus.getName().toUpperCase()) & cust.getPhone() == cus.getPhone()) {
+                customerlst.set(customerlst.indexOf(cust), cus);
+                break;
+            }
+            this.saveToCSV();
+        }
+        }catch (Exception e){System.out.println("Fail to update in user");}
     }
 
     public void print(){
-        System.out.println("Name " + customer.getName());
-        System.out.println("Mail " + customer.getEmail());
-        System.out.println("Phone "+ customer.getPhone());
+        System.out.println("Name " + cus.getName());
+        System.out.println("Mail " + cus.getEmail());
+        System.out.println("Phone "+ cus.getPhone());
 
         System.out.println("Booking History: ");
-        for (String s : customer.getTicket()){
-            System.out.println((customer.getTicket().indexOf(s)+1)+ ". "+
+        for (String s : cus.getTicket()){
+            System.out.println((cus.getTicket().indexOf(s)+1)+ ". "+
                     s);
         }
 
@@ -71,7 +86,7 @@ public class CustomerController {
         Scanner sc = new Scanner(System.in);
         try {
             int choice = sc.nextInt();
-            if (choice <= customer.getTicket().size()) {
+            if (choice <= cus.getTicket().size()) {
                 checkTic(choice);
             }
         }catch (InputMismatchException e){}
@@ -79,10 +94,10 @@ public class CustomerController {
     }
     private void checkTic(int index)
     {
-        String ticID = customer.getTicket().get(index-1);
+        String ticID = cus.getTicket().get(index-1);
         TicketManager.getInstance().printTicketDetails(ticID);
     }
-    public  static CustomerController getInstance(){return INSTANCE;}
+
     private boolean saveToCSV() {
 
         try {
@@ -90,16 +105,18 @@ public class CustomerController {
             FileWriter csvWriter = new FileWriter(USERFILE);
             csvWriter.append(String.join(",", this.header));
             csvWriter.append("\n");
-            StringBuilder sb = new StringBuilder();
-            sb.append(customer.getName());
-            sb.append(',');
-            sb.append(customer.getEmail());
-            sb.append(',');
-            sb.append(customer.getPhone());
-            sb.append(',');
-            sb.append(String.join("+", customer.getTicket()));
-            sb.append("+\n");
-            csvWriter.append(sb.toString());
+            for(Customer customer : this.customerlst){
+                StringBuilder sb = new StringBuilder();
+                sb.append(customer.getName());
+                sb.append(',');
+                sb.append(customer.getEmail());
+                sb.append(',');
+                sb.append(customer.getPhone());
+                sb.append(',');
+                sb.append(String.join("+", customer.getTicket()));
+                sb.append("+\n");
+                csvWriter.append(sb.toString());
+            }
 
             csvWriter.flush();
             csvWriter.close();
@@ -119,8 +136,11 @@ public class CustomerController {
     }
 
     public static void main(String[] args) {
-        //CustomerController.getInstance().addTic("JOK000120191106220743");
-        CustomerController.getInstance().print();
+//        CustomerController cc = new CustomerController();
+//        Customer css = cc.userVeri("abc",135790);
+//        css.addticket("JOK000120191106220743");
+//        cc.update_user(css);
+//        cc.print();
     }
 }
 

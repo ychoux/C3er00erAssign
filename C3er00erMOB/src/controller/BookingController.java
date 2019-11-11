@@ -1,5 +1,6 @@
 package controller;
 
+import entity.Customer;
 import entity.Movie;
 import entity.Slot;
 import entity.Ticket;
@@ -38,7 +39,7 @@ public class BookingController {
     }
 
 
-    public void booking_flow (List<Movie> movieDetailList) {
+    public Customer booking_flow (List<Movie> movieDetailList, Customer cus) {
         int stage = 0; //Flow stage
         Scanner sc = new Scanner(System.in);
         int ch = 999,ch1 = 999 ,ch2 = 999; //for user input and going back main menu
@@ -124,8 +125,11 @@ public class BookingController {
                                 }
                                 int ticket_type = sc.nextInt();
                                 if (ticket_type>0 & ticket_type <=Ticket.TicketType.values().length){
-                                    seats.add(seat);
-                                    tic_type.add((Ticket.TicketType.values()[ticket_type - 1]));
+                                    if (!seats.contains(seat)) { // to check whether same seat is input
+                                        seats.add(seat);
+                                        tic_type.add((Ticket.TicketType.values()[ticket_type - 1]));
+                                    }
+                                    else {System.out.println("You have chosen repeated seats");i--;}
                                 }
                                 else {System.out.println("Index out of bound");i--;}
                             }
@@ -157,8 +161,9 @@ public class BookingController {
                             TicketManager.getInstance().printTicketDetails(tic_id);
                             System.out.println("Thank you for you payment. Hope you enjoy the movie");
                             System.out.println("You can view your booking history in user portal");
-                            CustomerController.getInstance().addTic(tic_id);
+                            cus.addticket(tic_id);
                             ch = 0;
+                            return cus;
                         }
                         else if (ch3==1) stage = 2;
                         else if (ch3==2) stage = 1;
@@ -175,6 +180,7 @@ public class BookingController {
             }
 
         }
+        return cus;
     }
 }
 

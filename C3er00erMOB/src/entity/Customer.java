@@ -48,6 +48,10 @@ public class Customer {
         this.ticket = ticket;
     }
 
+    public void addticket(String tic_id){
+        this.ticket.add(tic_id);
+    }
+
     public Customer(String name, String email, int phone, List<String> ticket ) {
         this.name = name;
         this.email = email;
