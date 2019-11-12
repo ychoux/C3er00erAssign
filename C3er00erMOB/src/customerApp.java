@@ -39,8 +39,9 @@ public class customerApp {
             if (chc == 1) {
                 boolean valid_username = true;
                 try{
+                    dummy = sc.nextLine();
                     System.out.println("Enter your username");
-                    String username = sc.next();
+                    String username = sc.nextLine();
                     for (Customer usr : cc.getCustomerlst()){
                         if(usr.getUsername().equals(username.toUpperCase())){
                             System.out.println("User exists, try another username");
@@ -50,23 +51,24 @@ public class customerApp {
                     }
                     if (valid_username){
                         System.out.println("Enter you name");
-                        String name = sc.next();
+                        String name = sc.nextLine();
                         System.out.println("Enter your email address");
-                        String mail = sc.next();
+                        String mail = sc.nextLine();
                         System.out.println("Enter you phone number");
                         int phone = sc.nextInt();
                         cc.addUser(username,name, mail, phone);
                         System.out.println("User added");
                     }
                 }catch (InputMismatchException e){
-                    if(sc.hasNext()) dummy = sc.next();
+                    if(sc.hasNext()) dummy = sc.nextLine();
                     System.out.println("Invalid input");
                 }
             }
             else if (chc == 2) {
                 try {
-                    System.out.println("Enter your name");
-                    String name = sc.next();
+                    System.out.println("Enter your username");
+                    if (sc.hasNext()) dummy = sc.nextLine();
+                    String name = sc.nextLine();
                     System.out.println("Enter your phone number as verification");
                     int phone = sc.nextInt();
                     cus = cc.userVeri(name, phone);
@@ -77,7 +79,7 @@ public class customerApp {
                     }
 
                 } catch (Exception e) {
-                    if (sc.hasNext()) dummy = sc.next();
+                    if (sc.hasNext()) dummy = sc.nextLine();
                     System.out.println("Phone number cannot have alphabets, try again\n");
                 }
 
@@ -89,7 +91,7 @@ public class customerApp {
                             " 4. View Movie Reviews\n" +
                             " 5. List Top 5 Movies\n" +
                             " 6. Switch user");
-
+                    if(sc.hasNext()) dummy = sc.nextLine();
                     int choice = sc.nextInt();
                     switch (choice) {
 
