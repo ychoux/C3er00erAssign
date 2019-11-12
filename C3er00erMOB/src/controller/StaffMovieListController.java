@@ -82,9 +82,11 @@ public class StaffMovieListController {
 		switch(choice) {
 		case 1:{
 			status = MovieStatus.NOW_SHOWING;
+			break;
 		}
 		case 2:{
 			status = MovieStatus.UP_COMING;
+			break;
 		}
 		}
 
