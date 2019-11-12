@@ -135,12 +135,22 @@ public class ReviewController {
 			String[] rating = r.getRating().split(SplitBy);
 			for(String ratings: rating)
 			{
-				rates = Double.parseDouble(ratings);
+				if(!ratings.isBlank()) {
+					rates = Double.parseDouble(ratings);
+					count++;
+				}
+				else {
+					rates = 0;
+				}
 				totalrating += rates;
-				count++;
 			}
-				totalrating /= count;
+			totalrating /= count;
+			if(count == 0) {
+				r.setOverallRating(0);
+			}
+			else {
 				r.setOverallRating(totalrating);
+			}
 		}
 		return updateReviewCSV(rList);
 	}
