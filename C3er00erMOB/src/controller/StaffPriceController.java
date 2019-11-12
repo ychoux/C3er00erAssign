@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Hashtable;
 import java.util.List;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 /**
  * This class is for CRU functions related to ticket pricings
@@ -43,11 +44,16 @@ public class StaffPriceController {
 	 * @return return a boolean to see if PH was added successfully.
 	 */
 	public static boolean staffAddPh() {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("====================");
-		System.out.println("Enter public holiday date [yyyy-MM-dd]: ");
-		String date = sc.next();
-		return PriceManager.getInstance().addPublicHoliday(LocalDate.parse(date));
+		try {
+			Scanner sc = new Scanner(System.in);
+			System.out.println("====================");
+			System.out.println("Enter public holiday date [yyyy-MM-dd]: ");
+			String date = sc.next();
+			return PriceManager.getInstance().addPublicHoliday(LocalDate.parse(date));
+		} 
+		catch (DateTimeParseException e) {
+			return false;
+		}
 	}
 	
 	

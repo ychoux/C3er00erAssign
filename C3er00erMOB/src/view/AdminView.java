@@ -205,7 +205,7 @@ public class AdminView {
 				option = sc.nextInt();
 				if (!(option >= 1 && option <= 3)) {
 					System.out.println("Invalid Choice! Try again.");
-					ratesSetting(admSess, 0);
+					phSetting(admSess, 0);
 				}
 			} else {
 				option = choice;
