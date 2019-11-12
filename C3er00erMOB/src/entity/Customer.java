@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Customer {
-
+    private String username;
     private String name;
     private String email;
     private int phone;
@@ -15,6 +15,13 @@ public class Customer {
     }
 
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getName() {
         return name;
@@ -52,7 +59,8 @@ public class Customer {
         this.ticket.add(tic_id);
     }
 
-    public Customer(String name, String email, int phone, List<String> ticket ) {
+    public Customer(String username ,String name, String email, int phone, List<String> ticket ) {
+        this.username = username;
         this.name = name;
         this.email = email;
         this.phone = phone;

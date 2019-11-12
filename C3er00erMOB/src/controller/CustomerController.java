@@ -27,11 +27,12 @@ public class CustomerController {
 
                 try {
                     row = line.split(",");
-                    String name = row[0].toUpperCase();
-                    String mail = row[1].toUpperCase();
-                    int phone = Integer.parseInt(row[2]);
-                    List<String> ticket = Arrays.asList(row[3].split("\\+"));
-                    this.customerlst.add(new Customer(name, mail, phone, ticket));
+                    String username = row[0].toUpperCase();
+                    String name = row[1].toUpperCase();
+                    String mail = row[2].toUpperCase();
+                    int phone = Integer.parseInt(row[3]);
+                    List<String> ticket = Arrays.asList(row[4].split("\\+"));
+                    this.customerlst.add(new Customer(username,name,mail, phone, ticket));
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("Unable to retrieve user information!");
                 }
@@ -49,7 +50,7 @@ public class CustomerController {
     public Customer userVeri(String username, int tel_no){
             cus = null;
             for (Customer cust : customerlst){
-                if (cust.getName().equals(username.toUpperCase()) & cust.getPhone() == tel_no){
+                if (cust.getUsername().equals(username.toUpperCase()) & cust.getPhone() == tel_no){
                     this.cus = cust;
                     break;
                 }
@@ -58,10 +59,16 @@ public class CustomerController {
             return null;
     }
 
+    public void addUser(String username,String name, String mail,int tel_no){
+        Customer new_cus = new Customer(username.toUpperCase(),name.toUpperCase(),mail.toUpperCase(),tel_no,new ArrayList<>());
+        customerlst.add(new_cus);
+        this.saveToCSV();
+    }
+
     public void update_user(Customer cus) {
         try{
         for (Customer cust : customerlst) {
-            if (cust.getName().equals(cus.getName().toUpperCase()) & cust.getPhone() == cus.getPhone()) {
+            if (cust.getUsername().equals(cus.getUsername().toUpperCase()) & cust.getPhone() == cus.getPhone()) {
                 customerlst.set(customerlst.indexOf(cust), cus);
                 break;
             }
@@ -98,6 +105,10 @@ public class CustomerController {
         TicketManager.getInstance().printTicketDetails(ticID);
     }
 
+    public List<Customer> getCustomerlst() {
+        return customerlst;
+    }
+
     private boolean saveToCSV() {
 
         try {
@@ -107,6 +118,8 @@ public class CustomerController {
             csvWriter.append("\n");
             for(Customer customer : this.customerlst){
                 StringBuilder sb = new StringBuilder();
+                sb.append(customer.getUsername());
+                sb.append(',');
                 sb.append(customer.getName());
                 sb.append(',');
                 sb.append(customer.getEmail());
