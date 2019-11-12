@@ -64,6 +64,7 @@ public class BookingView {
                         ch = sc.nextInt();
                         if (ch>0 & ch<=movieDetailList.size()){
                             PrintMovieList.printMovieList(movieDetailList.get(ch - 1));
+                            if(sc.hasNextLine()) dummy = sc.nextLine();
                             System.out.println("\nEnter any number except 0 to show the slots available (0 to quit)");
                             ch1 = sc.nextInt();
                             stage = 1;
@@ -81,6 +82,7 @@ public class BookingView {
                     try {
                         result = BookingView.getInstance().viewAvailableSlot(movieDetailList.get(ch - 1).getMovieTitle());
                         if (!result.isEmpty()) {
+                            if(sc.hasNextLine()) dummy = sc.nextLine();
                             System.out.println("\nChoose the slot you are interested in (0 to quit, others number to choose another movie)");
                             ch2 = sc.nextInt();
                             if(ch2 > 0 & ch2 <= (result.size())){
@@ -107,17 +109,20 @@ public class BookingView {
                         seats.clear();
                         tic_type.clear();
                         planofcineplex(slot);
+                        if(sc.hasNextLine()) dummy = sc.nextLine();
                         System.out.println("Enter the number of seat you want to book , max 5 tickets per booking (0 to quit)");
                         ch = sc.nextInt();
                         int no_of_tic = ch;
 
                         if (0 < no_of_tic & no_of_tic<= 5){
+
                             for (int i = 1; i <= no_of_tic; i++) {
+                                if(sc.hasNextLine()) dummy = sc.nextLine();
                                 System.out.println("Enter the seat you want to book: " + i + "th out of " + no_of_tic +" tickets");
-                                String seat = sc.next();
+                                String seat = sc.nextLine();
 
                                 if (!slot.getCinema().containSeat(seat) | slot.getBookings().getBookedSeatsID().contains(seat)) {
-                                    System.out.println("You have chosen a booked/invalid seat,try again");
+                                    System.out.println("You have chosen a booked/invalid seat,try again, press enter to continue");
                                     i--;
                                     continue;
                                 }
@@ -126,6 +131,7 @@ public class BookingView {
                                 for (Ticket.TicketType type : Ticket.TicketType.values()) {
                                     System.out.println((idx++) + ". " + type);
                                 }
+
                                 int ticket_type = sc.nextInt();
                                 if (ticket_type>0 & ticket_type <=Ticket.TicketType.values().length){
                                     if (!seats.contains(seat)) { // to check whether same seat is input
@@ -139,10 +145,10 @@ public class BookingView {
                             stage = 3;
                         }
                         else if(no_of_tic>5){System.out.println("Max tickets amount is 5, you may have multiple transactions");stage = 2;}
-
+                        if(sc.hasNextLine()) dummy = sc.nextLine();
                     }catch (Exception e) {
-                        if (sc.hasNext())
-                            dummy = sc.next();
+                        if (sc.hasNextLine())
+                            dummy = sc.nextLine();
                         System.out.println("Invalid input, try again");
                         //System.out.println(ch + " "+" "+ch1+" "+ch2);
                         stage = 2;
@@ -165,6 +171,7 @@ public class BookingView {
                             System.out.println("Thank you for you payment. Hope you enjoy the movie");
                             System.out.println("You can view your booking history in user portal");
                             cus.addticket(tic_id);
+
                             ch = 0;
                             return cus;
                         }
