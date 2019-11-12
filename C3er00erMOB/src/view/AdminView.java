@@ -400,10 +400,19 @@ public class AdminView {
 			for (Review r : rList) {
 				System.out.println("--------" + r.getMovieTitle() + "--------");
 				String[] noOfratings = r.getRating().split(";");
-
-				if (noOfratings.length > 0) {
-					System.out.println("All Ratings: " + Arrays.toString(noOfratings));
-					if (noOfratings.length < 2) {
+				if (noOfratings.length > 1) {
+					System.out.print("All Ratings: [");
+					for(int i=1; i<noOfratings.length;i++) {
+						if(!noOfratings[i].isBlank()) {
+							System.out.print(noOfratings[i]);
+						}
+						if(i<noOfratings.length-1) {
+							System.out.print(", ");
+						}
+					}
+					System.out.print("]\n");
+					
+					if (noOfratings.length < 1) {
 						System.out.println("Overall Rating: [NA]");
 					} else {
 						System.out.println("Overall Rating: [" + df.format(r.getOverallRating()) + "]");
@@ -413,13 +422,21 @@ public class AdminView {
 					System.out.println("Overall Rating: [No Overall Rating]");
 				}
 				String[] noOfreviews = r.getReview().split(";");
-				for(int i=0; i<noOfreviews.length;i++) {
-					if(noOfreviews[i].isEmpty())
+				for(int i=1; i<noOfreviews.length;i++) {
+					if(noOfreviews[i].isBlank()) {
 						noOfreviews[i]="NA";
+					}
 				}
 				
-				if (noOfreviews.length > 0) {
-					System.out.println("Reviews: " + Arrays.toString(noOfreviews));
+				if (noOfreviews.length > 1) {
+					System.out.print("Reviews: [");
+					for(int i=1; i<noOfreviews.length;i++) {
+						System.out.print(noOfreviews[i]);
+						if(i<noOfreviews.length-1) {
+							System.out.print(", ");
+						}
+					}
+					System.out.print("]\n");
 				} else {
 					System.out.println("Reviews: [No Reviews]");
 				}

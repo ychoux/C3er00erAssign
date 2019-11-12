@@ -28,6 +28,10 @@ public class ReviewController {
 	 */
 	static String SplitBy =";";
 	
+	/**
+	 * The seperator for first entry in csv
+	 */
+	static String firstEntry =" ;";
 	
 	/* 
 	 * This function is to get data from review csv file into review objects 
@@ -74,7 +78,7 @@ public class ReviewController {
 				ratingtmp = r.getRating();
 				ratingtmp = ratingtmp+rating+SplitBy;
 				reviewtmp = r.getReview();
-				reviewtmp = reviewtmp+review+SplitBy;
+				reviewtmp = reviewtmp+review+firstEntry;
 				r.setRating(ratingtmp);
 				r.setReview(reviewtmp);
 				break;
@@ -106,8 +110,8 @@ public class ReviewController {
 		Review reviewtmp;
 		reviewtmp = new Review();
 		reviewtmp.setMovieTitle(name);
-		reviewtmp.setRating(";");
-		reviewtmp.setReview(";");
+		reviewtmp.setRating(" ;");
+		reviewtmp.setReview(" ;");
 		rList.add(reviewtmp);
 		return updateReviewCSV(rList);
 	}
