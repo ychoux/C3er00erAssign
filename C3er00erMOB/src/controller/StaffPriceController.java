@@ -34,7 +34,7 @@ public class StaffPriceController {
 		List<LocalDate> dates = PriceManager.getInstance().getPH();
 		int index=0;
 		for(LocalDate date : dates) {
-			System.out.println(index+1+". Date: "+date);
+			System.out.println(index+1+". Date: "+ date);
 			index++;
 		}
 	}
@@ -47,9 +47,9 @@ public class StaffPriceController {
 		try {
 			Scanner sc = new Scanner(System.in);
 			System.out.println("====================");
-			System.out.println("Enter public holiday date [yyyy-MM-dd]: ");
+			System.out.println("Enter public holiday date [dd-MM-yyyy]: ");
 			String date = sc.next();
-			return PriceManager.getInstance().addPublicHoliday(LocalDate.parse(date));
+			return PriceManager.getInstance().addPublicHoliday(date);
 		} 
 		catch (DateTimeParseException e) {
 			return false;
