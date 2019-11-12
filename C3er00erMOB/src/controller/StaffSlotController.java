@@ -1,13 +1,16 @@
 package controller;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+import java.util.TreeMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 import entity.Cinema;
 import entity.Cineplex;
 import entity.Movie;
+import entity.MovieStatus;
 
 /**
  * This class is for showtime creation
@@ -42,12 +45,19 @@ public class StaffSlotController {
 		Cinema tmpCinema = tmpCinemaList.get(sc.nextInt()-1);
 		System.out.println("====================");
 
+		TreeMap<Integer, Integer> newmList = new TreeMap<Integer, Integer>();
+		int mapIndex = 0;
 		for(int m = 0;m<movieList.size();m++) {
-			System.out.println(m+1+". "+movieList.get(m).getMovieTitle());
+			if(movieList.get(m).getStatus() != MovieStatus.END_OF_SHOWING) {
+				System.out.println(mapIndex+1+". "+movieList.get(m).getMovieTitle());
+				newmList.put(mapIndex, m);
+				mapIndex++;
+			}
 		}
+		
 		System.out.println("====================");
 		System.out.print("Select Movie: ");
-		Movie tmpMovie = movieList.get(sc.nextInt()-1);
+		Movie tmpMovie = movieList.get((newmList.get(sc.nextInt()-1)));
 		System.out.println("====================");
 		
 		LocalDateTime showDateTime=null;
