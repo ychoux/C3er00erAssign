@@ -128,7 +128,6 @@ public class ReviewController {
 
 		ReviewController file = new ReviewController();
 		List<Review> rList = file.getReviewList();
-		String SplitBy = ";";
 		for(Review r: rList)
 		{
 			count =0;
@@ -136,22 +135,12 @@ public class ReviewController {
 			String[] rating = r.getRating().split(SplitBy);
 			for(String ratings: rating)
 			{
-				if(ratings.equals("null")) {
-					totalrating +=0;
-				}
-				else {
-					rates = Double.parseDouble(ratings);
-					totalrating += rates;
-					count++;
-				}
+				rates = Double.parseDouble(ratings);
+				totalrating += rates;
+				count++;
 			}
-			if(count>=2) {
 				totalrating /= count;
 				r.setOverallRating(totalrating);
-			}
-			else {
-				r.setOverallRating(0.0);
-			}
 		}
 		return updateReviewCSV(rList);
 	}
@@ -173,26 +162,15 @@ public class ReviewController {
 			String[] rating = r.getRating().split(SplitBy);
 			for(String ratings: rating)
 			{
-				if(ratings.equals("null")) {
-					totalrating +=0;
-				}
-				else if(ratings.equals("")) {
-					totalrating +=0;
-				}
-				else {
-					rates = Double.parseDouble(ratings);
-					totalrating += rates;
-					count++;
-				}
+
+				rates = Double.parseDouble(ratings);
+				totalrating += rates;
+				count++;
 				
 			}
-			if(count>=2) {
-				totalrating /= count;
-				r.setOverallRating(totalrating);
-			}
-			else {
-				r.setOverallRating(0.0);
-			}
+
+			totalrating /= count;
+			r.setOverallRating(totalrating);
 		}
 		return updateReviewCSV(rList);
 	}

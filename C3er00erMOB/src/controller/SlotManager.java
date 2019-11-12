@@ -5,15 +5,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import entity.Cinema;
 import entity.Slot;
 
@@ -126,7 +123,7 @@ public class SlotManager {
 		if (this.getSlot(slotID) != null)
 			return false;
 		
-		for (Slot s: this.getCinemaSlots(cinema.getCineplex_name(), cinema.getCinemaID(), showtime.toLocalDate())) {
+		for (Slot s: this.getCinemaSlots(cinema.getCineplex_name(), cinema.getCinemaID(), showtime)) {
 			if (checkClash(s.getShowtime(), s.getShowtime().plus(s.getDuration()), showtime, showtime.plus(duration))) {
 				System.out.println("Duplicate time slot! Try again.");
 				return false;
@@ -257,17 +254,17 @@ public class SlotManager {
 	 * The function to filter all slots that uses a specific cinema at a specific date
 	 * @param cineplex_name	The cineplex name
 	 * @param cinemaID		The cinema ID
-	 * @param date			The date, a LocalDate object
+	 * @param time			The time, a LocalDateTime object
 	 * @return				A list of all slots that uses the cinema on that date
 	 */
-	public List<Slot> getCinemaSlots(String cineplex_name, String cinemaID, LocalDate date) {
+	public List<Slot> getCinemaSlots(String cineplex_name, String cinemaID, LocalDateTime time) {
 		
 		cinemaID = cinemaID.toUpperCase();
 		List<Slot> result = new ArrayList<Slot>();		
 		for (Slot s: this.slots) {
 			if (s.getCinema().getCineplex_name().compareTo(cineplex_name) == 0 
 					& s.getCinema().getCinemaID().compareTo(cinemaID) == 0 
-					& s.getShowtime().toLocalDate().compareTo(date) == 0) {
+					& s.getShowtime().isAfter(time)) {
 				result.add(s);
 			}
 		}		
@@ -278,16 +275,16 @@ public class SlotManager {
 	/**
 	 * The function to filter all slots that plays a specific movie at a specific date
 	 * @param movie				The movie name
-	 * @param date				The date, a LocalDate object
+	 * @param time				The time, a LocalDateTime object
 	 * @return					All slots that plays the specific movie at the specific date
 	 */
-	public List<Slot> getMovieSlots(String movie, LocalDate date) {
+	public List<Slot> getMovieSlots(String movie, LocalDateTime time) {
 		
 		movie = movie.toUpperCase();
 		List<Slot> result = new ArrayList<Slot>();		
 		for (Slot s: this.slots) {
 			if (s.getMovie_name().toUpperCase().compareTo(movie) == 0 
-					& s.getShowtime().toLocalDate().compareTo(date) == 0) {
+					& s.getShowtime().isAfter(time)) {
 				result.add(s);
 			}
 		}
@@ -341,10 +338,10 @@ public class SlotManager {
 	 * The function to filter all slots that plays a specific movie at a specific cineplex at a specific date
 	 * @param cineplex_name		The name of the cineplex
 	 * @param movie				The movie name
-	 * @param date				The date, a LocalDate object
+	 * @param time				The time, a LocalDateTime object
 	 * @return					All slots that plays the specific movie at the specific date
 	 */
-	public List<Slot> getMovieSlots(String cineplex_name, String movie, LocalDate date) {
+	public List<Slot> getMovieSlots(String cineplex_name, String movie, LocalDateTime time) {
 		
 		cineplex_name = cineplex_name.toUpperCase();
 		movie = movie.toUpperCase();
@@ -352,7 +349,7 @@ public class SlotManager {
 		for (Slot s: this.slots) {
 			if (s.getCinema().getCineplex_name().compareTo(cineplex_name) == 0 
 					& s.getMovie_name().toUpperCase().compareTo(movie) == 0 
-					& s.getShowtime().toLocalDate().compareTo(date) == 0) {
+					& s.getShowtime().isAfter(time)) {
 				result.add(s);
 			}
 		}

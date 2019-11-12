@@ -33,12 +33,17 @@ public class PrintMovieList {
 	 * @param mList		A list of movie object
 	 */
 	public static void printAllMovieList(List<Movie>mList){	
+		int count,id;
+		ReviewController file = new ReviewController();
+		List<Review> rlist = file.getReviewList();
+		id=0;
 		for(Movie m : mList) {
 			String synopsis, cast, genre, director;
 			String directortmp = m.getDirector();
 			String synoptmp = m.getSynopsis();
 			String casttmp = m.getCast();
 			String genretmp = m.getGenre();
+			String[] rating;
 			System.out.println("Movie: "+m.getMovieTitle());
 			director = directortmp.replaceAll(SplitBy, cvsSplitBy);
 			System.out.println("Director: "+director);
@@ -49,9 +54,22 @@ public class PrintMovieList {
 			System.out.printf("Duration: %d Hours %d Minutes \n", m.getTime().toHoursPart(), m.getTime().toMinutesPart());
 			System.out.println("Status: "+m.getStatus());
 			System.out.println("Sales: "+m.getSales());
-			System.out.printf("Rating: %.2f\n",m.getOverallRating());
+			Review r =rlist.get(id);
+			rating = r.getRating().split(SplitBy);
+			count =0;
+			for(String rates: rating) {
+				count++;
+			}
+			if(count >1) {
+				System.out.printf("Rating: %.2f\n",m.getOverallRating());
+			}
+			else {
+				System.out.println("Rating: Nil");
+			}
 			synopsis = synoptmp.replaceAll(SplitBy, cvsSplitBy);
 			System.out.println("Synopsis: "+synopsis);
+			System.out.println("");
+			id++;
 		}
 		
 	}
@@ -62,6 +80,9 @@ public class PrintMovieList {
 	 * @param id		Index of selected movie from list of movie object
 	 */
 	public static void printMovieList(List<Movie>mList,int id) {
+		int count;
+		ReviewController file = new ReviewController();
+		List<Review> rlist = file.getReviewList();
 		for(Movie m : mList) {
 			if( mList.get(id).getMovieTitle().equals(m.getMovieTitle())) {
 				String synopsis, cast, genre,director;
@@ -69,6 +90,7 @@ public class PrintMovieList {
 				String casttmp = m.getCast();
 				String genretmp = m.getGenre();
 				String directortmp = m.getDirector();
+				String[] rating;
 				System.out.println("Movie: "+m.getMovieTitle());
 				director = directortmp.replaceAll(SplitBy, cvsSplitBy);
 				System.out.println("Director: "+director);
@@ -79,9 +101,21 @@ public class PrintMovieList {
 				System.out.printf("Duration: %d Hours %d Minutes \n", m.getTime().toHoursPart(), m.getTime().toMinutesPart());
 				System.out.println("Status: "+m.getStatus());
 				System.out.println("Sales: "+m.getSales());
-				System.out.printf("Rating: %.2f\n",m.getOverallRating());
+				Review r =rlist.get(id);
+				rating = r.getRating().split(SplitBy);
+				count =0;
+				for(String rates: rating) {
+					count++;
+				}
+				if(count >1) {
+					System.out.printf("Rating: %.2f\n",m.getOverallRating());
+				}
+				else {
+					System.out.println("Rating: Nil");
+				}
 				synopsis = synoptmp.replaceAll(SplitBy, cvsSplitBy);
 				System.out.println("Synopsis: "+synopsis);
+				System.out.println("");
 				break;
 			}
 		}
