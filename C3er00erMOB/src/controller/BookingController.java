@@ -158,12 +158,16 @@ public class BookingController {
                         int ch3 = sc.nextInt();
                         if (ch3==3){
                             String tic_id = TicketManager.getInstance().addTicket(slot.getSlotID(), seats, tic_type);
-                            TicketManager.getInstance().printTicketDetails(tic_id);
-                            System.out.println("Thank you for you payment. Hope you enjoy the movie");
-                            System.out.println("You can view your booking history in user portal");
-                            cus.addticket(tic_id);
-                            ch = 0;
-                            return cus;
+                            if (tic_id != null) {
+	                            TicketManager.getInstance().printTicketDetails(tic_id);
+	                            System.out.println("Thank you for you payment. Hope you enjoy the movie");
+	                            System.out.println("You can view your booking history in user portal");
+	                            cus.addticket(tic_id);
+	                            ch = 0;
+	                            return cus;
+                            }
+                            else
+                            	System.out.println("An error occured! Failed to book ticket!");
                         }
                         else if (ch3==1) stage = 2;
                         else if (ch3==2) stage = 1;
