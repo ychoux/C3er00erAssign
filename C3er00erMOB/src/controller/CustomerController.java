@@ -99,10 +99,12 @@ public class CustomerController {
         }catch (InputMismatchException e){}
 
     }
+
     private void checkTic(int index)
-    {
+    {try{
         String ticID = cus.getTicket().get(index-1);
         TicketManager.getInstance().printTicketDetails(ticID);
+    }catch (Exception e){}
     }
 
     public List<Customer> getCustomerlst() {

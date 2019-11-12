@@ -1,10 +1,11 @@
-import controller.BookingController;
+
 import controller.CustomerController;
 import controller.MovieListController;
 import controller.ReviewController;
 import entity.Customer;
 import entity.Movie;
 import entity.Review;
+import view.BookingView;
 import view.UserInput;
 
 import java.util.InputMismatchException;
@@ -70,14 +71,14 @@ public class customerApp {
                     int phone = sc.nextInt();
                     cus = cc.userVeri(name, phone);
 
-                    if (cus == null) System.out.println("Wrong user name or password\n");
+                    if (cus == null) System.out.println("Wrong user name or phone number\n");
                     else {
                         System.out.println("Login successfully ");
                     }
 
                 } catch (Exception e) {
                     if (sc.hasNext()) dummy = sc.next();
-                    System.out.println("User does not exist, try again\n");
+                    System.out.println("Phone number cannot have alphabets, try again\n");
                 }
 
                 while (cus != null) {
@@ -98,7 +99,7 @@ public class customerApp {
                         }
 
                         case 2: {
-                            Customer updated_cus = BookingController.getInstance().booking_flow(movieDetailListFiltered, cus);
+                            Customer updated_cus = BookingView.getInstance().booking_flow(movieDetailListFiltered, cus);
                             cc.update_user(updated_cus);
                             break;
                         }
@@ -117,7 +118,7 @@ public class customerApp {
                         }
                         default: {
                             cus = null;
-                            break;
+                            return;
                         }
 
                     }
