@@ -78,9 +78,9 @@ public class MovieListApp {
 		//UserInput.userInputReview(mList, rList);
 		//PrintMovieList.printReview(rList, 10);
 		//UserInput.userInputReview(mList, rList);
-		PrintMovieList.printReview(rList, 10);
-		PrintMovieList.MovieTitle(mList);
-		PrintMovieList.MovieTitle(mList2);
+		PrintMovieList.printMovieList(mList,1);
+		//PrintMovieList.MovieTitle(mList);
+		//PrintMovieList.MovieTitle(mList2);
 	}
 	
 
