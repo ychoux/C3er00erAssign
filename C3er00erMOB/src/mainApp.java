@@ -20,7 +20,8 @@ public class mainApp {
 			int choice=sc.nextInt();
 			switch(choice) {
 
-			case 0: return;
+			case 0: 
+				return;
 
 			case 1:
 				System.out.println("Entering Customer mode...........");

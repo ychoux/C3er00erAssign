@@ -174,19 +174,27 @@ public class AdminController {
 		Scanner sc = new Scanner(System.in);
 		List<Admin> adminList=getAdminUsers();
 		for(Admin a : adminList) {
+			System.out.println("===========");
 			printUserDetails(a);
+			System.out.println("===========");
 		}
-		System.out.println("Choose user to remove: ");
+		System.out.println("Enter username to remove: ");
 		String removeUsername = sc.next();
 		System.out.println("Are you sure? (Y/N)");
 		char cfm = sc.next().charAt(0);
 		if(cfm == 'Y' || cfm == 'y'){
-			int indexRemove=0;
+			int indexRemove=-1;
 			for(int i=0;i<adminList.size();i++) {
 				if(adminList.get(i).username.equals(removeUsername))
 					indexRemove=i;
 			}
-			adminList.remove(indexRemove);
+			if(indexRemove!=-1) {
+				adminList.remove(indexRemove);
+			}
+			else {
+				System.out.println("No such user!");
+				return false;
+			}
 			if(updateAdminCSV(adminList)) {
 				return true;
 			}
@@ -206,23 +214,34 @@ public class AdminController {
 	public boolean unlockAdminUser() {
 		Scanner sc = new Scanner (System.in);
 		List<Admin> adminList=getAdminUsers();
+		boolean check = true;
 		for(Admin a : adminList) {
-			printUserDetails(a);
+			if(a.AccessLevel==0) {
+				printUserDetails(a);
+			}
+			else {
+				check = false;
+			}
 		}
-		System.out.println("Choose user to unlock: ");
-		String unlockUsername = sc.next();
-		System.out.println("Are you sure? (Y/N)");
-		char cfm = sc.next().charAt(0);
-		if(cfm == 'Y' || cfm == 'y'){
-			for(int i=0;i<adminList.size();i++) {
-				if(adminList.get(i).username.equals(unlockUsername)) {
-					adminList.get(i).AccessLevel=1;
-					if(updateAdminCSV(adminList))
-						return true;
+		if(check) {
+			System.out.println("Choose user to unlock: ");
+			String unlockUsername = sc.next();
+			System.out.println("Are you sure? (Y/N)");
+			char cfm = sc.next().charAt(0);
+			if(cfm == 'Y' || cfm == 'y'){
+				for(int i=0;i<adminList.size();i++) {
+					if(adminList.get(i).username.equals(unlockUsername)) {
+						adminList.get(i).AccessLevel=1;
+						if(updateAdminCSV(adminList)) {
+							return true;
+						}
+					}
 				}
 			}
 			return false;
-		}else {
+		}
+		else {
+			System.out.println("No user to unlock!");
 			System.out.println("Task abort..........");
 			return false;
 		}

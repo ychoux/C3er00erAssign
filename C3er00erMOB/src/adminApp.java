@@ -73,7 +73,7 @@ public class adminApp {
 								System.out.println("Invalid option. Try again.");
 								break;
 							case -1:
-								System.out.println("Good bye!");
+								System.out.println("Admin Signing Out...");
 								return;
 							}
 						}catch(InputMismatchException e) {

@@ -295,11 +295,13 @@ public class AdminView {
 	 */
 	public static void userSettings(AdminSession admSess, AdminController aCon) {
 		Scanner sc = new Scanner(System.in);
+		System.out.println("===========");
 		System.out.println("1. Change Password");
 		System.out.println("2. Create user");
 		System.out.println("3. Delete user");
 		System.out.println("4. Unlock user");
 		System.out.println("5. Back");
+		System.out.println("===========");
 		int choice = sc.nextInt();
 		switch (choice) {
 		case 1:
