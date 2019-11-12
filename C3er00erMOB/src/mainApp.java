@@ -26,9 +26,12 @@ public class mainApp {
 				System.out.println("Entering Admin mode...........");
 				adminApp.main(null);
 				break;
+			default:
+				System.out.println("Invalid Input!");
+				main(null);
 			}
 		} catch (InputMismatchException e) {
-			System.out.println("Invalid input.");
+			System.out.println("Invalid Input!");
 			main(null);
 		}
 		sc.close();
