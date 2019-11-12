@@ -72,8 +72,9 @@ public class CustomerController {
                 customerlst.set(customerlst.indexOf(cust), cus);
                 break;
             }
-            this.saveToCSV();
         }
+            this.saveToCSV();
+
         }catch (Exception e){System.out.println("Fail to update in user");}
     }
 
@@ -111,7 +112,7 @@ public class CustomerController {
         return customerlst;
     }
 
-    private boolean saveToCSV() {
+    public boolean saveToCSV() {
 
         try {
 
