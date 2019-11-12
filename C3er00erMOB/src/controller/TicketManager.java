@@ -208,6 +208,10 @@ public class TicketManager {
 	 * @param ticketID	The ticketID of the ticket
 	 */
 	public void printTicketDetails(String ticketID) {
+		if (ticketID == null) {
+			System.out.println("Ticket ID is null!");
+			return;
+		}		
 		Ticket ticket = this.tickets.get(ticketID.toUpperCase());
 		if (ticket == null) {
 			System.out.println("Ticket ID not found!");
@@ -314,14 +318,6 @@ public class TicketManager {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		TicketManager.getInstance().addTicket("TOY0001", Arrays.asList("E03", "E04", "E05"), Arrays.asList(TicketType.ADULT, TicketType.ADULT, TicketType.ADULT));
-		TicketManager.getInstance().addTicket("JOK0003", Arrays.asList("D13", "D14"), Arrays.asList(TicketType.ADULT, TicketType.ADULT));
-		TicketManager.getInstance().addTicket("JOK0002", Arrays.asList("F07", "F06"), Arrays.asList(TicketType.ADULT, TicketType.ADULT));
-		TicketManager.getInstance().addTicket("MAL0001", Arrays.asList("E01", "E02", "E03", "E04", "E05"), Arrays.asList(TicketType.STUDENT, TicketType.STUDENT, TicketType.STUDENT, TicketType.STUDENT, TicketType.STUDENT));
-		TicketManager.getInstance().addTicket("TER0001", Arrays.asList("F01", "F02", "F03", "F04", "F05"), Arrays.asList(TicketType.ADULT, TicketType.ADULT, TicketType.CHILD, TicketType.CHILD, TicketType.CHILD));
-		TicketManager.getInstance().addTicket("TOY0001", Arrays.asList("F03"), Arrays.asList(TicketType.ADULT));
-		TicketManager.getInstance().addTicket("JOK0003", Arrays.asList("E13", "E14"), Arrays.asList(TicketType.ADULT, TicketType.ADULT));
-		TicketManager.getInstance().addTicket("JOK0002", Arrays.asList("C04", "C05"), Arrays.asList(TicketType.STUDENT, TicketType.STUDENT));
 		
 		for (Ticket t: Collections.list(TicketManager.getInstance().tickets.elements())) {
 			TicketManager.getInstance().printTicketDetails(t.getTicketID());
