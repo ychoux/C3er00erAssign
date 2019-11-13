@@ -80,8 +80,10 @@ public class UserInput {
 				while(check) {
 					try {
 						rating = sc.nextLine();
+						DecimalFormat df = new DecimalFormat("#.#");
 						rate = Double.parseDouble(rating);
 						if(rate>=0 && rate <=5) {
+							rating = df.format(rate);
 							check = false;
 							break;
 						}
