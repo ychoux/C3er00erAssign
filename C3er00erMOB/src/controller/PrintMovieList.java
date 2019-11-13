@@ -27,53 +27,6 @@ public class PrintMovieList {
 	 */
 	static String SplitByColon = ":";
 	
-	
-	/**
-	 * This function is to print out all the movies from list of movie object
-	 * @param mList		A list of movie object
-	 */
-	public static void printAllMovieList(List<Movie>mList){	
-		int count,id;
-		ReviewController file = new ReviewController();
-		List<Review> rlist = file.getReviewList();
-		id=0;
-		for(Movie m : mList) {
-			String synopsis, cast, genre, director;
-			String directortmp = m.getDirector();
-			String synoptmp = m.getSynopsis();
-			String casttmp = m.getCast();
-			String genretmp = m.getGenre();
-			String[] rating;
-			System.out.println("Movie: "+m.getMovieTitle());
-			director = directortmp.replaceAll(SplitBy, cvsSplitBy);
-			System.out.println("Director: "+director);
-			cast = casttmp.replaceAll(SplitBy, cvsSplitBy);
-			System.out.println("Cast: "+cast);
-			genre = genretmp.replaceAll(SplitBy, cvsSplitBy);
-			System.out.println("Genre: "+genre);
-			System.out.printf("Duration: %d Hours %d Minutes \n", m.getTime().toHoursPart(), m.getTime().toMinutesPart());
-			System.out.println("Status: "+m.getStatus());
-			System.out.println("Sales: "+m.getSales());
-			Review r =rlist.get(id);
-			rating = r.getRating().split(SplitBy);
-			count =0;
-			for(String rates: rating) {
-				count++;
-			}
-			if(count >1) {
-				System.out.printf("Rating: %.2f\n",m.getOverallRating());
-			}
-			else {
-				System.out.println("Rating: Nil");
-			}
-			synopsis = synoptmp.replaceAll(SplitBy, cvsSplitBy);
-			System.out.println("Synopsis: "+synopsis);
-			System.out.println("");
-			id++;
-		}
-		
-	}
-	
 	/**
 	 * This function is to print the selected movie from the list of movie object
 	 * @param mList		A list of movie object
@@ -209,30 +162,5 @@ public class PrintMovieList {
 			}
 		}
 	}
-	
-//	/*
-//	 *  This function is to print out reviews from the seleted movie title
-//	 *  name is movie title 
-//	 */
-//	// will remove if not used
-//	public static void printReview(List<Review> rList, String name) {
-//		for(Review r: rList) {
-//			if(r.getMovieTitle().equals(name)) {
-//				String review;
-//				String reviewtmp = r.getReview();
-//				review = reviewtmp.replaceAll(SplitByColon, cvsSplitBy);
-//				String[] reviews = review.split(SplitBy);
-//				System.out.println("Reviews");
-//				for(String rev: reviews) {
-//					if(rev.equals("null")) {
-//						
-//					}
-//					else {
-//						System.out.println(rev);
-//					}
-//				}
-//			}
-//		}
-//	}
 	
 }

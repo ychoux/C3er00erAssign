@@ -97,20 +97,6 @@ public class MovieListController {
     	return updateMovieListCSV(mList);
     }
     
-    
-    /**
-     * This function allow staff to delete movie in the movie csv and movie objects
-     * @param mList		A list of movie objects
-     * @param id		selected movie index
-     * @return			It will return true if movies is updated into csv successfully
-     */
-    // will remove if not used
-    public static boolean delMovieList(List<Movie> mList,int id) {
-    	mList.remove(id);
-    	return updateMovieListCSV(mList);
-
-    }
-    
     /**
      * This function is to update movie csv
      * @param mList		A list of movie objects
