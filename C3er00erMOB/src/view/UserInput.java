@@ -75,31 +75,27 @@ public class UserInput {
 		
 		for(Review r:rList) {
 			if( rList.get(choice).getMovieTitle().equals(r.getMovieTitle())) {
-<<<<<<< HEAD
 				System.out.println("Give Rating [0 to 5]");
-=======
-				System.out.println("Give Rating");
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 				sc.nextLine();
 				while(check) {
 					try {
 						rating = sc.nextLine();
-<<<<<<< HEAD
 						DecimalFormat df = new DecimalFormat("#.#");
 						rate = Double.parseDouble(rating);
 						if(rate>=0 && rate <=5) {
 							rating = df.format(rate);
-=======
+						}
 						rate = Double.parseDouble(rating);
 						if(rate>=0 && rate <=5) {
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 							check = false;
 							break;
 						}
 						else {
 							System.out.println("Enter Rating between 0 to 5");
 						}
-					}catch(NumberFormatException e) {
+						
+						
+						}catch(NumberFormatException e) {
 						System.out.println("Enter Rating between 0 to 5");
 					}					
 				}
@@ -121,9 +117,6 @@ public class UserInput {
 			}
 		}
 	}
-	
-<<<<<<< HEAD
-=======
 	
 	// if nvr use will remove
 	public static void userGetMovie(List<Movie> mList, List<Review> rList) {
@@ -177,7 +170,6 @@ public class UserInput {
 //		}
 //	}
 	
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 	/**
 	 * This function is to allow user to get movie details and review
 	 * @param mList		A list of movie object
