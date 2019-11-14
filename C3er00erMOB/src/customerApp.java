@@ -108,6 +108,7 @@ public class customerApp {
 
                         case 3: {
                             UserInput.userInputReview(movieDetailList, reviewList);
+				movieDetailList = mlist.getMovieList();
                             break;
                         }
                         case 4: {
