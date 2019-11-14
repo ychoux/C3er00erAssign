@@ -11,15 +11,15 @@ import view.AdminView;
 
 /**
  * The class to authenticate the admin/superadmin
- * @author 
+ * @author JIAYING
  *
  */
 public class adminApp {
+	
 	/**
 	 * This function authenticate the admin/superadmin and select the necessary actions
 	 */
 	public static void main(String[] args) {
-		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 			
 		int failCount=0;

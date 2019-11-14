@@ -17,7 +17,7 @@ import login.AdminSession;
 /**
  * This class is for selecting all Admin and Superadmin settings
  * 
- * @author
+ * @author JIAYING
  *
  */
 public class AdminView {
@@ -30,6 +30,7 @@ public class AdminView {
 	 */
 	public static void movieSettings(AdminSession admSess, int choice) {
 		int option = 0;
+		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 		try {
 			if (choice == 0) {
@@ -544,6 +545,7 @@ public class AdminView {
 		}
 	}
 
+	
 	/**
 	 * This is the view page for user settings
 	 * 

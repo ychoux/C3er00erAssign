@@ -12,7 +12,7 @@ import java.time.format.DateTimeParseException;
 
 /**
  * This class is for CRU functions related to ticket pricings
- * @author 
+ * @author JIAYING
  *
  */
 public class StaffPriceController {

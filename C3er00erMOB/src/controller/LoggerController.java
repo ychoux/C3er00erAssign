@@ -10,8 +10,8 @@ import java.util.regex.Pattern;
 import entity.Log;
 
 /**
- * This class is for creating and reading logs
- * @author 
+ * This class is for creating and reading logs entries
+ * @author JIAYING
  *
  */
 public class LoggerController {
@@ -26,6 +26,10 @@ public class LoggerController {
 	 */
 	//private static String LOGFILE="src/data/log.csv";
 	private static String LOGFILE="data/log.csv";
+	
+	/**
+	 * The constructor for this class
+	 */
 	private LoggerController() {
 
 	}

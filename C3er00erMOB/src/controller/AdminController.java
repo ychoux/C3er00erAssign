@@ -15,7 +15,7 @@ import login.SecurityFunc;
 
 /**
  * The class for all actions related to Superadmin settings
- * @author 
+ * @author JIAYING
  *
  */
 public class AdminController {

@@ -15,14 +15,15 @@ import entity.MovieStatus;
 
 /**
  * This class is for showtime creation
- * @author 
+ * @author JIAYING
  *
  */
 public class StaffSlotController {
 
 	/**
 	 * The function adds a new slot time showing for a particular cineplex
-	 * @param passes in a list of movies that are screening
+	 * @param movieList	Passes in a list of movies that are screening
+	 * @return	Returns a boolean to see if the slot was created
 	 */
 	public boolean staffAddSlot(List<Movie> movieList) {
 		Scanner sc = new Scanner(System.in);

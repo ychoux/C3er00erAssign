@@ -8,12 +8,19 @@ import entity.Admin;
 
 /**
  * A class for all actions related to the AdminSession
- * @author 
+ * @author JIAYING
  *
  */
 public class AdminSession {
 
+	/**
+	 * This string is used as a global variable for this class
+	 */
 	private String username="";
+	
+	/**
+	 * This access level is used as a global variable for this class
+	 */
 	private AccessLevel accesslevel=AccessLevel.NOACCESS;
 
 	/**
