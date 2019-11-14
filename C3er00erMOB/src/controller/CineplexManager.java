@@ -17,7 +17,7 @@ import entity.Cineplex;
 /**
  * The class that loads in all the cineplexes and cinemas from a CSV file and
  * store them in a hashtable
- * @author 
+ * @author Yew Wei Chee
  *
  */
 public class CineplexManager {

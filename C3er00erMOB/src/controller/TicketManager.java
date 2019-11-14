@@ -21,7 +21,7 @@ import entity.Ticket.TicketType;
 
 /**
  * The class that manages all tickets and create ticket IDs
- * @author User
+ * @author Yew Wei Chee
  *
  */
 public class TicketManager {

@@ -20,6 +20,13 @@ import entity.Slot;
 import entity.Ticket.TicketType;
 
 
+/**
+ * The class use to manage the price of tickets, calculate price of tickets.
+ * Used to manage the rates for different days, ticket type or cinema types.
+ * Used to manage public holidays.
+ * @author Yew Wei Chee
+ *
+ */
 public class PriceManager {
 	
 	/**
@@ -41,14 +48,14 @@ public class PriceManager {
 	 * The path to the CSV file that stores all the public holidays
 	 */
 
-	//private static final String HOLIDAYPATH = "src/data/PH.csv";
-	private static final String HOLIDAYPATH = "data/PH.csv";
+	private static final String HOLIDAYPATH = "src/data/PH.csv";
+	//private static final String HOLIDAYPATH = "data/PH.csv";
 	
 	/**
 	 * The path to the CSV file that stores all the ticket price rate
 	 */
-	//private static final String RATEPATH = "src/data/rates.csv";
-	private static final String RATEPATH = "data/rates.csv";
+	private static final String RATEPATH = "src/data/rates.csv";
+	//private static final String RATEPATH = "data/rates.csv";
 	
 	/**
 	 * The DateTimeFormatter object that specifies how LocalDate object is formatted to string and vice versa

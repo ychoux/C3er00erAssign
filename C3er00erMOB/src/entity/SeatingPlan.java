@@ -8,12 +8,33 @@ import java.util.Arrays;
 import java.util.List;
 
 
+/**
+ * The seating plan for a cinema
+ * @author Yew Wei Chee
+ *
+ */
 public class SeatingPlan {
 	
+	/**
+	 * The seating plan ID, or the file name that stores the seating plan
+	 */
 	private String planID;
+	
+	/**
+	 * The seating plan, which is a 2D list
+	 */
 	private List<List<String>> plan = new ArrayList<List<String>>();
+	
+	/**
+	 * The list of seatIDs in the seating plan
+	 */
 	private List<String> seatIDs = new ArrayList<String>();
 	
+	/**
+	 * The constructor of the seating plan
+	 * @param path		The seating plan path
+	 * @param planID	The seating plan ID
+	 */
 	public SeatingPlan(String path, String planID) {
 
 		try {
@@ -44,18 +65,33 @@ public class SeatingPlan {
 		
 	}
 	
+	/**
+	 * The function that returns the 2D array seating plan
+	 * @return The 2D array seating plan
+	 */
 	public List<List<String>> getPlan() {
 		return this.plan;
 	}
 	
+	/**
+	 * The function to get all the seatIDs in the seating plan
+	 * @return	A list of seatIDs
+	 */
 	public List<String> getSeatIDs() {
 		return this.seatIDs;
 	}
 	
+	/**
+	 * The function to get the plan ID
+	 * @return The plan ID
+	 */
 	public String getPlanID() {
 		return this.planID;
 	}
 	
+	/**
+	 * The function to print the seating plan
+	 */
 	public void printSeatingPlan() {
 		
 		boolean first = true;
@@ -106,6 +142,9 @@ public class SeatingPlan {
 		
 	}
 	
+	/**
+	 * The function to print the seating plan with seat bookings
+	 */
 	public void printSeatingPlan(SeatBookings bookings) {
 		
 		boolean first = true;

@@ -16,7 +16,7 @@ import entity.Slot;
 
 /**
  * The class that is used to manage slots
- * @author 
+ * @author Yew Wei Chee
  *
  */
 public class SlotManager {
