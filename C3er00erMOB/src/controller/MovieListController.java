@@ -21,7 +21,9 @@ public class MovieListController {
 	/**
 	 * Path to the csv file that store movielist data
 	 */
-	static String MOVIEFILE = "src/data/movielist.csv";
+	//static String MOVIEFILE = "src/data/movielist.csv";
+	static String MOVIEFILE = "data/movielist.csv";
+	
 	/**
 	 * The seperator in csv file
 	 */

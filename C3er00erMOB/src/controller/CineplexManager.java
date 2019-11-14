@@ -42,7 +42,9 @@ public class CineplexManager {
 	/**
 	 * The path to the CSV file that stores all the cineplexes and cinema
 	 */
-	private static final String CINEMASPATH = "src/data/cinemas.csv";
+	//private static final String CINEMASPATH = "src/data/cinemas.csv";
+	private static final String CINEMASPATH = "data/cinemas.csv";
+	
 	
 	/**
 	 * The private constructor of the class

@@ -18,7 +18,9 @@ public class ReviewController {
 	/**
 	 * Path to the csv file that store review data
 	 */
-	static String REVIEWFILE = "src/data/review.csv";
+	//static String REVIEWFILE = "src/data/review.csv";
+	static String REVIEWFILE = "data/review.csv";
+	
 	/**
 	 * The seperator in csv file
 	 */

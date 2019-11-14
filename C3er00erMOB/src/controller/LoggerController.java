@@ -24,8 +24,9 @@ public class LoggerController {
 	/**
 	 * The path to the CSV file that stores all the admin users
 	 */
-	private static String LOGFILE="src/data/log.csv";
-
+	//private static String LOGFILE="src/data/log.csv";
+	private static String LOGFILE="data/log.csv";
+	
 	private LoggerController() {
 
 	}

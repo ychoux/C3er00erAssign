@@ -39,7 +39,8 @@ public class SlotManager {
 	/**
 	 * The path to the CSV that stores all the slots
 	 */
-	private static final String SLOTSPATH = "src/data/slots.csv";
+	//private static final String SLOTSPATH = "src/data/slots.csv";
+	private static final String SLOTSPATH = "data/slots.csv";
 	
 	/**
 	 * The DateTimeFormatter object that specifies how LocalDateTime object is formatted to string and vice versa

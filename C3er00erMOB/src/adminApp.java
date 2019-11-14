@@ -1,3 +1,5 @@
+import java.io.Console;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -23,9 +25,20 @@ public class adminApp {
 		int failCount=0;
 
 		while(true) {
-			System.out.println("Enter Username: ");
+			System.out.print("Enter Username: ");
 			String username = sc.nextLine();	
 			AdminSession admSess;
+			
+			Console console = System.console();
+	        if (console == null) {
+	            System.out.println("Couldn't get Console instance");
+	            System.exit(0);
+	        }
+	        char[] passwordArray = console.readPassword("Enter Password: ");
+	        //console.printf("Password entered was: %s%n", new String(passwordArray));
+			admSess = AdminSession.createSession(username, new String(passwordArray));
+			
+			/**
 			if(!username.equals("1")) {
 				System.out.println("Enter Password");
 				String password= sc.nextLine();
@@ -34,7 +47,7 @@ public class adminApp {
 			else {
 				System.out.println("Entering bypass.....");
 				admSess= AdminSession.createSession("jy", "P@ssw0rd!");
-			}
+			}**/
 
 			AdminController aCon=new AdminController();
 			if(admSess != null) {

@@ -20,12 +20,14 @@ public class StaffPriceController {
 	/**
 	 * The path to the CSV file that stores all the rates
 	 */
-	private static final String RATEPATH = "src/data/rates.csv";
+	//private static final String RATEPATH = "src/data/rates.csv";
+	private static final String RATEPATH = "data/rates.csv";
 	
 	/**
 	 * The path to the CSV file that stores all the ph
 	 */
-	private static final String PHPATH = "src/data/PH.csv";
+	//private static final String PHPATH = "src/data/PH.csv";
+	private static final String PHPATH = "data/PH.csv";
 	
 	/**
 	 * The function is to display the current public holidays that are stored inside the ph.csv file
