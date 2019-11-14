@@ -112,7 +112,7 @@ public class customerApp {
                             break;
                         }
                         case 4: {
-                            UserInput.userGetReview();
+                            UserInput.userGetReview(movieDetailList);
                             break;
                         }
                         case 5: {
