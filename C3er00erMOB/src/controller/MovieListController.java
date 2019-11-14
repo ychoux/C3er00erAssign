@@ -21,9 +21,13 @@ public class MovieListController {
 	/**
 	 * Path to the csv file that store movielist data
 	 */
+<<<<<<< HEAD
 	//static String MOVIEFILE = "src/data/movielist.csv";
 	static String MOVIEFILE = "data/movielist.csv";
 	
+=======
+	static String MOVIEFILE = "src/data/movielist.csv";
+>>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 	/**
 	 * The seperator in csv file
 	 */
@@ -99,6 +103,23 @@ public class MovieListController {
     	return updateMovieListCSV(mList);
     }
     
+<<<<<<< HEAD
+=======
+    
+    /**
+     * This function allow staff to delete movie in the movie csv and movie objects
+     * @param mList		A list of movie objects
+     * @param id		selected movie index
+     * @return			It will return true if movies is updated into csv successfully
+     */
+    // will remove if not used
+    public static boolean delMovieList(List<Movie> mList,int id) {
+    	mList.remove(id);
+    	return updateMovieListCSV(mList);
+
+    }
+    
+>>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
     /**
      * This function is to update movie csv
      * @param mList		A list of movie objects

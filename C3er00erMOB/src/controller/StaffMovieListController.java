@@ -97,6 +97,31 @@ public class StaffMovieListController {
 		return false;
 	}
 
+<<<<<<< HEAD
+=======
+
+	/*
+	 * This function allow staff to delete movie from movielist At the end of the
+	 * function delMovieList and delReviewList is called to ensure that both
+	 * movielist and review csv is updated
+	 * the id in the function is the positon of the object in the List of objects
+	 */
+
+	public static void staffDelMovie(List<Movie> mList, List<Review> rList) {
+		int id, count = 0;
+		System.out.println("Select Movie ID to delete movie");
+		for(Movie m: mList) {
+			System.out.println("ID: "+ count+" Movie: "+ m.getMovieTitle());
+			count++;
+		}
+		Scanner sc = new Scanner(System.in);
+		id = sc.nextInt();
+		MovieListController.delMovieList(mList, id);
+		ReviewController.delReviewList(rList, id);
+		System.out.println("Movie Deleted");
+	}
+
+>>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 	/**
 	 * This function allows staff to update the status of the movie
 	 * @param mList	A list of movies

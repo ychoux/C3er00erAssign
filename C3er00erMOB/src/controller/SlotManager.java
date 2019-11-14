@@ -39,8 +39,12 @@ public class SlotManager {
 	/**
 	 * The path to the CSV that stores all the slots
 	 */
+<<<<<<< HEAD
 	//private static final String SLOTSPATH = "src/data/slots.csv";
 	private static final String SLOTSPATH = "data/slots.csv";
+=======
+	private static final String SLOTSPATH = "src/data/slots.csv";
+>>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 	
 	/**
 	 * The DateTimeFormatter object that specifies how LocalDateTime object is formatted to string and vice versa

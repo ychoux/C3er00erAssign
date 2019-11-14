@@ -23,9 +23,14 @@ public class AdminController {
 	/**
 	 * The path to the CSV file that stores all the admin users
 	 */
+<<<<<<< HEAD
 	//private static String ADMINFILE="src/data/admin.csv";
 	private static String ADMINFILE="data/admin.csv";
 	
+=======
+	private static String ADMINFILE="src/data/admin.csv";
+
+>>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 	public AdminController() {
 
 	}
