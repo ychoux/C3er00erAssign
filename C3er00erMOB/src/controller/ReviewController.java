@@ -84,7 +84,8 @@ public class ReviewController {
 				break;
 			}
 		}
-		return (updateReviewCSV(rList) && updateMovieListRating(rList) && updateOverallRating(rList));
+		updateOverallRating(rList);
+		return (updateMovieListRating(rList));
 	}
 	
 	/**
