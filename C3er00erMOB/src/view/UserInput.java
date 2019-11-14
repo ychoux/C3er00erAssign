@@ -84,18 +84,13 @@ public class UserInput {
 						rate = Double.parseDouble(rating);
 						if(rate>=0 && rate <=5) {
 							rating = df.format(rate);
-						}
-						rate = Double.parseDouble(rating);
-						if(rate>=0 && rate <=5) {
 							check = false;
 							break;
 						}
 						else {
 							System.out.println("Enter Rating between 0 to 5");
 						}
-						
-						
-						}catch(NumberFormatException e) {
+					}catch(NumberFormatException e) {
 						System.out.println("Enter Rating between 0 to 5");
 					}					
 				}
@@ -117,58 +112,6 @@ public class UserInput {
 			}
 		}
 	}
-	
-	// if nvr use will remove
-	public static void userGetMovie(List<Movie> mList, List<Review> rList) {
-		int id, count;
-		System.out.println("\nSelect Movie ID to show movie detail");
-		Scanner sc = new Scanner(System.in);
-		count = 1;
-		for(Movie m: mList) {
-			System.out.println("ID: "+count+" Movie: "+m.getMovieTitle());
-			count++;
-		}
-		id = sc.nextInt();
-		PrintMovieList.printMovieList(mList, id);
-		PrintMovieList.printReview(rList, id);
-	}
-	
-//	/**
-//	 * This function is to allow user to get movie details and review
-//	 * printMovieList and printReview is called to print selected details
-//	 * @param mList		A list of Movie object
-//	 */
-//	public static void userGetMovie(List<Movie> mList) {
-//		ReviewController file = new ReviewController();
-//		List<Review> rList = file.getReviewList();
-//		int id, count;
-//		boolean check = true;
-//		System.out.println("\nSelect Movie ID to show movie detail");
-//		Scanner sc = new Scanner(System.in);
-//		count = 1;
-//		for(Movie m: mList) {
-//			System.out.println("ID: "+count+" Movie: "+m.getMovieTitle());
-//			count++;
-//		}
-//		while(check) {
-//			if(sc.hasNextInt()) {
-//				id = (sc.nextInt()-1);
-//				if(id<(count-1)&& id>=0) {
-//					PrintMovieList.printMovieList(mList, id);
-//					PrintMovieList.printReview(rList, id);
-//					check = false;
-//				}
-//				else {
-//					System.out.println("Invalid Input");
-//					sc.nextLine();
-//				}
-//			}
-//			else {
-//				System.out.println("Invalid Input");
-//				sc.nextLine();
-//			}
-//		}
-//	}
 	
 	/**
 	 * This function is to allow user to get movie details and review
