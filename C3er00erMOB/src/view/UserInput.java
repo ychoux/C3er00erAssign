@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.Map.Entry;
-
+import controller.MovieListController;
 import controller.PrintMovieList;
 import controller.ReviewController;
 import entity.Movie;
@@ -115,11 +115,13 @@ public class UserInput {
 	
 	/**
 	 * This function is to allow user to get movie details and review
-	 * @param mList		A list of movie object
+	 * 
 	 */
-	public static void userGetReview(List<Movie> mList) {
+	public static void userGetReview() {
 		ReviewController file = new ReviewController();
 		List<Review> rList = file.getReviewList();
+		MovieListController mfile = new MovieListController();
+		List<Movie> mList = mfile.getMovieList();
 		int id, count;
 		boolean check = true;
 		System.out.println("\nSelect Movie ID to show movie detail");
