@@ -97,8 +97,6 @@ public class StaffMovieListController {
 		return false;
 	}
 
-<<<<<<< HEAD
-=======
 
 	/*
 	 * This function allow staff to delete movie from movielist At the end of the
@@ -121,7 +119,6 @@ public class StaffMovieListController {
 		System.out.println("Movie Deleted");
 	}
 
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 	/**
 	 * This function allows staff to update the status of the movie
 	 * @param mList	A list of movies

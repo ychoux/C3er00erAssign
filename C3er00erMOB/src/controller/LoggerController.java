@@ -24,14 +24,8 @@ public class LoggerController {
 	/**
 	 * The path to the CSV file that stores all the admin users
 	 */
-<<<<<<< HEAD
 	//private static String LOGFILE="src/data/log.csv";
 	private static String LOGFILE="data/log.csv";
-	
-=======
-	private static String LOGFILE="src/data/log.csv";
-
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 	private LoggerController() {
 
 	}

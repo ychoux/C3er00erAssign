@@ -3,10 +3,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-<<<<<<< HEAD
 import java.text.DecimalFormat;
-=======
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,13 +19,9 @@ public class ReviewController {
 	/**
 	 * Path to the csv file that store review data
 	 */
-<<<<<<< HEAD
 	//static String REVIEWFILE = "src/data/review.csv";
 	static String REVIEWFILE = "data/review.csv";
 	
-=======
-	static String REVIEWFILE = "src/data/review.csv";
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 	/**
 	 * The seperator in csv file
 	 */
@@ -96,8 +89,6 @@ public class ReviewController {
 		}
 		return (updateReviewCSV(rList) && updateMovieListRating(rList) && updateOverallRating(rList));
 	}
-<<<<<<< HEAD
-=======
 
 	
 	/**
@@ -111,7 +102,6 @@ public class ReviewController {
 		rList.remove(id);
 		return updateReviewCSV(rList);
 	}
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 	
 	/**
 	 * This function is to allow staff to add review in review csv when new movie is added
@@ -129,7 +119,6 @@ public class ReviewController {
 		return updateReviewCSV(rList);
 	}
 	
-<<<<<<< HEAD
 //
 //	/**
 //	 * This function allow update of all overallrating in review csv
@@ -169,7 +158,6 @@ public class ReviewController {
 //		}
 //		return updateReviewCSV(rList);
 //	}
-=======
 
 	/**
 	 * This function allow update of all overallrating in review csv
@@ -208,7 +196,6 @@ public class ReviewController {
 		}
 		return updateReviewCSV(rList);
 	}
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 
 	/**
 	 * This function allow update of overallrating in review csv from list of review object
@@ -238,26 +225,19 @@ public class ReviewController {
 			}
 
 			totalrating /= count;
-<<<<<<< HEAD
 			DecimalFormat df = new DecimalFormat("#.#");
 			totalrating = Double.valueOf(df.format(totalrating));
-=======
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
+
 			if(count == 0) {
 				r.setOverallRating(0);
 			}
 			else {
-<<<<<<< HEAD
-				
-=======
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 				r.setOverallRating(totalrating);
 			}
 		}
 		return updateReviewCSV(rList);
 	}
 	
-<<<<<<< HEAD
 //	/**
 //	 * This function allow update of overallrating in movielist csv directly from review csv
 //	 * @return		return true if successfully update overallrating in movielist csv
@@ -278,7 +258,6 @@ public class ReviewController {
 //		}
 //		return MovieListController.updateMovieListCSV(mList);
 //	}
-=======
 	/**
 	 * This function allow update of overallrating in movielist csv directly from review csv
 	 * @return		return true if successfully update overallrating in movielist csv
@@ -300,7 +279,6 @@ public class ReviewController {
 		return MovieListController.updateMovieListCSV(mList);
 		
 	}
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 	
 	/**
 	 * This function allow update of overallrating in movielist csv directly from list of review object

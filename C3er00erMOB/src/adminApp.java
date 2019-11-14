@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 import java.io.Console;
 import java.util.Arrays;
-=======
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -28,7 +25,6 @@ public class adminApp {
 		int failCount=0;
 
 		while(true) {
-<<<<<<< HEAD
 			System.out.print("Enter Username: ");
 			String username = sc.nextLine();	
 			AdminSession admSess;
@@ -43,11 +39,9 @@ public class adminApp {
 			admSess = AdminSession.createSession(username, new String(passwordArray));
 			
 			/**
-=======
 			System.out.println("Enter Username: ");
 			String username = sc.nextLine();	
 			AdminSession admSess;
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 			if(!username.equals("1")) {
 				System.out.println("Enter Password");
 				String password= sc.nextLine();
@@ -56,11 +50,8 @@ public class adminApp {
 			else {
 				System.out.println("Entering bypass.....");
 				admSess= AdminSession.createSession("jy", "P@ssw0rd!");
-<<<<<<< HEAD
 			}**/
-=======
-			}
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
+			
 
 			AdminController aCon=new AdminController();
 			if(admSess != null) {

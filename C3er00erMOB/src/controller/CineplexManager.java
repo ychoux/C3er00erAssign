@@ -42,13 +42,9 @@ public class CineplexManager {
 	/**
 	 * The path to the CSV file that stores all the cineplexes and cinema
 	 */
-<<<<<<< HEAD
 	//private static final String CINEMASPATH = "src/data/cinemas.csv";
 	private static final String CINEMASPATH = "data/cinemas.csv";
 	
-=======
-	private static final String CINEMASPATH = "src/data/cinemas.csv";
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 	
 	/**
 	 * The private constructor of the class

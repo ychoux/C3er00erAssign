@@ -27,9 +27,6 @@ public class PrintMovieList {
 	 */
 	static String SplitByColon = ":";
 	
-<<<<<<< HEAD
-=======
-	
 	/**
 	 * This function is to print out all the movies from list of movie object
 	 * @param mList		A list of movie object
@@ -76,7 +73,6 @@ public class PrintMovieList {
 		
 	}
 	
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 	/**
 	 * This function is to print the selected movie from the list of movie object
 	 * @param mList		A list of movie object
@@ -128,21 +124,16 @@ public class PrintMovieList {
 	 * @param m		Movie object
 	 */
 	public static void printMovieList(Movie m) {
-<<<<<<< HEAD
 			int count;
 			ReviewController file = new ReviewController();
 			List<Review> rlist = file.getReviewList();
-=======
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 			String synopsis, cast, genre, director;
 			String synoptmp = m.getSynopsis();
 			String casttmp = m.getCast();
 			String genretmp = m.getGenre();
 			String directortmp = m.getDirector();
-<<<<<<< HEAD
 			String[] rating;
-=======
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
+
 			System.out.println("Movie: "+m.getMovieTitle());
 			director = directortmp.replaceAll(SplitBy, cvsSplitBy);
 			System.out.println("Director: "+director);
@@ -153,7 +144,7 @@ public class PrintMovieList {
 			System.out.printf("Duration: %d Hours %d Minutes \n", m.getTime().toHoursPart(), m.getTime().toMinutesPart());
 			System.out.println("Status: "+m.getStatus());
 			System.out.println("Sales: "+m.getSales());
-<<<<<<< HEAD
+
 			for(Review r: rlist) {
 				if(r.getMovieTitle().equals(m.getMovieTitle())) {
 					rating = r.getRating().split(SplitBy);
@@ -169,9 +160,8 @@ public class PrintMovieList {
 					}
 				}
 			}
-=======
+
 			System.out.printf("Rating: %.2f\n",m.getOverallRating());
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 			synopsis = synoptmp.replaceAll(SplitBy, cvsSplitBy);
 			System.out.println("Synopsis: "+synopsis);
 	}
@@ -241,8 +231,6 @@ public class PrintMovieList {
 		}
 	}
 	
-<<<<<<< HEAD
-=======
 //	/*
 //	 *  This function is to print out reviews from the seleted movie title
 //	 *  name is movie title 
@@ -267,6 +255,4 @@ public class PrintMovieList {
 //			}
 //		}
 //	}
-	
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 }

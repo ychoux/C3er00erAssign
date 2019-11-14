@@ -40,22 +40,15 @@ public class PriceManager {
 	/**
 	 * The path to the CSV file that stores all the public holidays
 	 */
-<<<<<<< HEAD
+
 	//private static final String HOLIDAYPATH = "src/data/PH.csv";
 	private static final String HOLIDAYPATH = "data/PH.csv";
-=======
-	private static final String HOLIDAYPATH = "src/data/PH.csv";
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 	
 	/**
 	 * The path to the CSV file that stores all the ticket price rate
 	 */
-<<<<<<< HEAD
 	//private static final String RATEPATH = "src/data/rates.csv";
 	private static final String RATEPATH = "data/rates.csv";
-=======
-	private static final String RATEPATH = "src/data/rates.csv";
->>>>>>> parent of 92d8d6f... IU-2019.2.4 <junro@Jr-Asus Overwrite remote https://github.com/ychoux/C3er00erAssign.git to local
 	
 	/**
 	 * The DateTimeFormatter object that specifies how LocalDate object is formatted to string and vice versa
