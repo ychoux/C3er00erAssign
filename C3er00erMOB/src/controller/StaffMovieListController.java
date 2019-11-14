@@ -82,9 +82,11 @@ public class StaffMovieListController {
 		switch(choice) {
 		case 1:{
 			status = MovieStatus.NOW_SHOWING;
+			break;
 		}
 		case 2:{
 			status = MovieStatus.UP_COMING;
+			break;
 		}
 		}
 
@@ -93,28 +95,6 @@ public class StaffMovieListController {
 				ReviewController.addReviewList(rList, name))
 			return true;
 		return false;
-	}
-
-
-	/*
-	 * This function allow staff to delete movie from movielist At the end of the
-	 * function delMovieList and delReviewList is called to ensure that both
-	 * movielist and review csv is updated
-	 * the id in the function is the positon of the object in the List of objects
-	 */
-
-	public static void staffDelMovie(List<Movie> mList, List<Review> rList) {
-		int id, count = 0;
-		System.out.println("Select Movie ID to delete movie");
-		for(Movie m: mList) {
-			System.out.println("ID: "+ count+" Movie: "+ m.getMovieTitle());
-			count++;
-		}
-		Scanner sc = new Scanner(System.in);
-		id = sc.nextInt();
-		MovieListController.delMovieList(mList, id);
-		ReviewController.delReviewList(rList, id);
-		System.out.println("Movie Deleted");
 	}
 
 	/**

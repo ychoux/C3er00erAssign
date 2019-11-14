@@ -21,6 +21,7 @@ public class mainApp {
 			switch(choice) {
 
 			case 0: 
+				sc.close();
 				return;
 
 			case 1:
