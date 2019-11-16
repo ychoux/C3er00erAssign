@@ -16,8 +16,17 @@ import entity.Review;
  *
  */
 public class StaffMovieListController {
+	/**
+	 * seperator for csv
+	 */
 	static String cvsSplitBy = ",";
+	/**
+	 * seperator for string in genre, director and cast
+	 */
 	static String SplitBy = ";";
+	/**
+	 * converter that will convert user "," to ":" in csv
+	 */
 	static String SplitByColon = ":";
 
 	/**
