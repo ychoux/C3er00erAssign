@@ -45,7 +45,7 @@ public class BookingView {
         result = SlotManager.getInstance().getMovieSlots(title);
         for (Slot s : result) {
             System.out.println((result.indexOf(s) + 1) + ". " + s.getCinema().getCineplex_name() + " "
-                    + s.getShowtime().toLocalDate() + " " + s.getShowtime().toLocalTime());
+                    + s.getShowtime().toLocalDate() + " " + s.getShowtime().toLocalTime() + " "+ s.getCinema().getCinema_type().toString());
         }
         return result;
     }
