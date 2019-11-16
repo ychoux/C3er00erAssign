@@ -3,7 +3,7 @@ import java.time.Duration;
 
 /**
  * The Movie class represents movie entity
- * @author Jun Rong
+ * @author JunRong
  *
  */
 public class Movie {
