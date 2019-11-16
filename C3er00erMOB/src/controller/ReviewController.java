@@ -11,8 +11,8 @@ import entity.Movie;
 import entity.Review;
 
 /**
- * The class for all action related to Reviews
- * @author
+ * The class for all action related to Reviews, review controller
+ * @author JunRong
  *
  */
 public class ReviewController {
