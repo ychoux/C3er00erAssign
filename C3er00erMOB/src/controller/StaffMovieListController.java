@@ -12,7 +12,7 @@ import entity.Review;
 /**
  * This class is for CRUD functions related to Movies
  * 
- * @author
+ * @author JunRong
  *
  */
 public class StaffMovieListController {
