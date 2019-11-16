@@ -179,7 +179,7 @@ public class SlotManager {
 	
 	/**
 	 * The function to remove multiple slots
-	 * @param slotID	The List of slot IDs
+	 * @param slotIDs	The List of slot IDs
 	 */
 	public void removeSlots(List<String> slotIDs) {
 		slotIDs.replaceAll(String::toUpperCase);

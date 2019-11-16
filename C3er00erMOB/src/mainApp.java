@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 /**
  * The class to run the whole application
- * @author 
+ * @author null
  *
  */
 public class mainApp {

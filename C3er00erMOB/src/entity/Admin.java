@@ -35,7 +35,7 @@ public class Admin {
 	 * @param username		This is parsed in to set the username
 	 * @param password		This is parsed in to set the password
 	 * @param salt			This is parsed in to set the salt
-	 * @param accesslevel	This is parsed in to set the access level
+	 * @param accessLevel	This is parsed in to set the access level
 	 */
 	public Admin(String username, String password,String salt, int accessLevel) {
 		this.username=username;

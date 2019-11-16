@@ -257,7 +257,7 @@ public class AdminController {
 	/**
 	 * The function is get a particular user from the admin.csv file
 	 * 
-	 * @param username The name of the user to get admin object from the list of
+	 * @param userName The name of the user to get admin object from the list of
 	 *                 admin users
 	 * @return An admin object of the user
 	 */

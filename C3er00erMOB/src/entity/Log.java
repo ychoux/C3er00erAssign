@@ -26,7 +26,7 @@ public class Log {
 	 */
 	public int loglvl;
 	/**
-	 * This string is used for the log object to store the date & time of log
+	 * This string is used for the log object to store the date and time of log
 	 * occurrence
 	 */
 	public String datetime;

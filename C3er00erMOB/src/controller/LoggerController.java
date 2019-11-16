@@ -139,7 +139,7 @@ public class LoggerController {
 	/**
 	 * The function helps update the log.csv file with a new log entry
 	 * 
-	 * @param newlog A new log entry
+	 * @param newLog A new log entry
 	 */
 	public void UpdateLogCSV(Log newLog) {
 		List<Log> logList = this.getLogList();

@@ -105,8 +105,7 @@ public class TicketManager {
 	 * 		- mm is the minute
 	 * 		- ss is the second
 	 * Automatically change the availability of seats to not available after adding the ticket
-	 * @param price		The price of ticket, in double
-	 * @param slot		The slot
+	 * @param slotID	The slot ID
 	 * @param seats		The seats booked, a list of seat IDs
 	 * @param types		The type of tickets, a list of TicketType
 	 * 					If 3 adult tickets are booked, the list should be [ADULT, ADULT, ADULT]
