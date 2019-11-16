@@ -8,13 +8,36 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Class used to manage Users
+ * @author kaishern
+ */
 public class CustomerController {
 
+    /**
+     * Path to csv file saving the users & details
+     */
     private static final String USERFILE = "src/data/user.csv";
+
+    /**
+     * List containing all the users
+     */
     private List<Customer> customerlst = new ArrayList<>();
+
+    /**
+     * Specific customer after login in
+     */
     private Customer cus=null;
+
+    /**
+     * Header of csv file, stored as an array of String
+     */
     private String[] header;
 
+    /**
+     * Constructor of the class
+     * Loads all users from CSV and store in customerlst
+     */
     public CustomerController() {
         try {
 
@@ -47,6 +70,12 @@ public class CustomerController {
         }
     }
 
+    /**
+     * Function to verify the users using username and phone number, setting cus to this user if matches
+     * @param username Username of user
+     * @param tel_no Phone number of user
+     * @return Customer if verified true, else null
+     */
     public Customer userVeri(String username, int tel_no){
             cus = null;
             for (Customer cust : customerlst){
@@ -59,12 +88,23 @@ public class CustomerController {
             return null;
     }
 
+    /**
+     * Function to add a new user to the record
+     * @param username New user's username
+     * @param name New user's name
+     * @param mail New user's mail
+     * @param tel_no New user's phone number
+     */
     public void addUser(String username,String name, String mail,int tel_no){
         Customer new_cus = new Customer(username.toUpperCase(),name.toUpperCase(),mail.toUpperCase(),tel_no,new ArrayList<>());
         customerlst.add(new_cus);
         this.saveToCSV();
     }
 
+    /**
+     * Function to update record when the user book tickets
+     * @param cus Customer to be updated
+     */
     public void update_user(Customer cus) {
         try{
         for (Customer cust : customerlst) {
@@ -78,6 +118,9 @@ public class CustomerController {
         }catch (Exception e){System.out.println("Fail to update in user");}
     }
 
+    /**
+     * Function to print out the Customer's details
+     */
     public void print(){
         System.out.println("Name " + cus.getName());
         System.out.println("Mail " + cus.getEmail());
@@ -101,6 +144,10 @@ public class CustomerController {
 
     }
 
+    /**
+     * Function to print booked ticket detail
+     * @param index Index of the chosen ticket
+     */
     private void checkTic(int index)
     {try{
         String ticID = cus.getTicket().get(index-1);
@@ -108,10 +155,18 @@ public class CustomerController {
     }catch (Exception e){}
     }
 
+    /**
+     * Function that return the whole customerlist
+     * @return Customer list
+     */
     public List<Customer> getCustomerlst() {
         return customerlst;
     }
 
+    /**
+     * Fucntion to save back all the user details to csv
+     * @return A boolean that indicates whether the operation is successful
+     */
     public boolean saveToCSV() {
 
         try {
@@ -143,6 +198,10 @@ public class CustomerController {
         }
     }
 
+    /**
+     * Function to automatically save all user details back to CSV file upon exit
+     * of application
+     */
     private void autoSave() {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run(){
@@ -151,12 +210,17 @@ public class CustomerController {
         });
     }
 
+    /**
+     * Function used to test this class
+     * Not used in real application
+     * @param args
+     */
     public static void main(String[] args) {
-//        CustomerController cc = new CustomerController();
-//        Customer css = cc.userVeri("abc",135790);
-//        css.addticket("JOK000120191106220743");
-//        cc.update_user(css);
-//        cc.print();
+        CustomerController cc = new CustomerController();
+        Customer css = cc.userVeri("abc",135790);
+        css.addticket("JOK000120191106220743");
+        cc.update_user(css);
+        cc.print();
     }
 }
 

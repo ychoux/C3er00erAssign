@@ -13,7 +13,16 @@ import java.util.List;
 import java.util.Scanner;
 
 
+/**
+ * The class to manage functionality user wanted to use
+ * @author kaishern
+ */
 public class customerApp {
+
+
+    /**
+     * The function to manage functionality user wanted to use
+     */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String dummy = "";

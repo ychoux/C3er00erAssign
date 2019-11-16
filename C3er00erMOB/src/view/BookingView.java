@@ -12,22 +12,35 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * This is the class for booking process flow
+ * @author kaishern
+ */
 public class BookingView {
+    /**
+     * The instance of BookingView object, used as singleton
+     */
     private static BookingView INSTANCE = new BookingView();
+
+    /**
+     * A list to store all available slots for a chosen movie
+     */
     private List<Slot> result;
+
+    /**
+     * Function to get the instance of BookingFlow object
+     * @return The BookingView object
+     */
     public static BookingView getInstance() {
         return INSTANCE;
     }
 
-    public List<Slot> getResult() {
-        return result;
-    }
-
-    public void setResult(List<Slot> result) {
-        this.result = result;
-    }
-
-    public List<Slot>  viewAvailableSlot(String title) {
+    /**
+     * Function to print out all the slot availabe
+     * @param title Title of movie to printout
+     * @return The Result containing all the slots available
+     */
+    private List<Slot>  viewAvailableSlot(String title) {
         List<Slot> result;
         result = SlotManager.getInstance().getMovieSlots(title);
         for (Slot s : result) {
@@ -37,11 +50,21 @@ public class BookingView {
         return result;
     }
 
-    public void planofcineplex(Slot slot){
+    /**
+     * Function to print out the seating plan of chosen slot
+     * @param slot Slot to printout the seating plan
+     */
+    private void planofcineplex(Slot slot){
         slot.getCinema().getSeating_plan().printSeatingPlan(slot.getBookings());
     }
 
 
+    /**
+     * View page for movie booking
+     * @param movieDetailList List containing all the movies and their details
+     * @param cus The specific Customer after login
+     * @return The Customer with updated ticket booked
+     */
     public Customer booking_flow (List<Movie> movieDetailList, Customer cus) {
         int stage = 0; //Flow stage
         Scanner sc = new Scanner(System.in);
