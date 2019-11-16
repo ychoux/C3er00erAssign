@@ -10,7 +10,7 @@ import entity.Review;
 
 /**
  * This class is to handle printing of movielist and review
- * @author
+ * @author gengtat
  *
  */
 public class PrintMovieList {
