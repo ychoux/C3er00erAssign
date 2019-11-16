@@ -14,7 +14,8 @@ import login.AdminSession;
 import login.SecurityFunc;
 
 /**
- * The class for all actions related to Superadmin settings
+ * The class for all actions related to Super-admin settings
+ * 
  * @author JIAYING
  *
  */
@@ -23,31 +24,31 @@ public class AdminController {
 	/**
 	 * The path to the CSV file that stores all the admin users
 	 */
-	//private static String ADMINFILE="src/data/admin.csv";
-	private static String ADMINFILE="data/admin.csv";
-	
+	// private static String ADMINFILE="src/data/admin.csv";
+	private static final String ADMINFILE = "data/admin.csv";
+
 	public AdminController() {
 
 	}
 
 	/**
-	 * The function is fetch all the users inside the admin.csv file and compile them into a list
+	 * The function is fetch all the users inside the admin.csv file and compile
+	 * them into a list
+	 * 
 	 * @return Return a list of admin users
 	 */
-	public List<Admin> getAdminUsers(){
+	public List<Admin> getAdminUsers() {
 		List<Admin> adminList = new ArrayList<>();
 		BufferedReader br = null;
 		String line = "";
-		Admin admintmp;
+		Admin adminTmp;
 		try {
 			br = new BufferedReader(new FileReader(ADMINFILE));
 			while ((line = br.readLine()) != null) {
 				String[] user = line.split(",");
-				if(!user[0].equals("Name")) {
-					// Debug line
-					// System.out.println("Username: "+user[0]+" Password: "+user[1]+" Salt: "+user[2]);
-					admintmp=new Admin(user[0],user[1],user[2],Integer.parseInt(user[3]));
-					adminList.add(admintmp);
+				if (!user[0].equals("Name")) {
+					adminTmp = new Admin(user[0], user[1], user[2], Integer.parseInt(user[3]));
+					adminList.add(adminTmp);
 				}
 			}
 
@@ -59,8 +60,10 @@ public class AdminController {
 
 	/**
 	 * The function is to update the admin.csv file
-	 * @param adminList 	A list of updated admin
-	 * @return 				A boolean variable that indicates whether the operation is successful or not
+	 * 
+	 * @param adminList A list of updated admin
+	 * @return A boolean variable that indicates whether the operation is successful
+	 *         or not
 	 */
 	public boolean updateAdminCSV(List<Admin> adminList) {
 		FileWriter csvWriter;
@@ -83,7 +86,7 @@ public class AdminController {
 				sb.append(',');
 				sb.append(admtmp.salt);
 				sb.append(',');
-				sb.append(Integer.toString(admtmp.AccessLevel));
+				sb.append(Integer.toString(admtmp.accesslevel));
 				sb.append(',');
 				sb.append('\n');
 				csvWriter.append(sb.toString());
@@ -95,6 +98,7 @@ public class AdminController {
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			LoggerController.getInstance().LogErrorEntry("admin", "Error in saving/opening Admin.csv");
 			return false;
 		}
 
@@ -102,35 +106,38 @@ public class AdminController {
 
 	/**
 	 * The function is to update user password
-	 * @param admSess 		An admin session of the identity of user
-	 * @return				A boolean variable that indicates whether the operation is successful or not
+	 * 
+	 * @param admSess An admin session of the identity of user
+	 * @return A boolean variable that indicates whether the operation is successful
+	 *         or not
 	 */
 	public boolean updateAdminUserPassword(AdminSession admSess) {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter current password: ");
-		String currpassword = sc.next();
-		Admin adtmp=this.getAdminUser(admSess.getUsername());
-		if(admSess.authenticatePassword(currpassword,adtmp)) {
-			for(;;) {
+		String currPassword = sc.next();
+		Admin adtmp = this.getAdminUser(admSess.getUsername());
+		if (admSess.authenticatePassword(currPassword, adtmp)) {
+			for (;;) {
 				System.out.println("Enter new password: ");
-				String newpassword = sc.next();
+				String newPassword = sc.next();
 				System.out.println("Confirm new password: ");
-				String newcfmpassword = sc.next();
-				if(newpassword.equals(newcfmpassword)) {
+				String newCfmPassword = sc.next();
+				if (newPassword.equals(newCfmPassword)) {
 					// Generate new salt
 					String newSalt = Base64.getEncoder().encodeToString(SecurityFunc.getNextSalt());
 
 					// Newly hashed password
-					String newPassword= SecurityFunc.hash(newpassword.toCharArray(),Base64.getDecoder().decode(newSalt));
+					String newPasswordHash = SecurityFunc.hash(newPassword.toCharArray(),
+							Base64.getDecoder().decode(newSalt));
 
 					// update admin user password & salt
-					adtmp.password = newPassword;
+					adtmp.password = newPasswordHash;
 					adtmp.salt = newSalt;
 
-					List<Admin> adminList=this.getAdminUsers();
-					for(Admin a : adminList) {
-						if(a.username.equals(admSess.getUsername())) {
-							a.password = newPassword;
+					List<Admin> adminList = this.getAdminUsers();
+					for (Admin a : adminList) {
+						if (a.username.equals(admSess.getUsername())) {
+							a.password = newPasswordHash;
 							a.salt = newSalt;
 							break;
 						}
@@ -140,7 +147,7 @@ public class AdminController {
 					this.updateAdminCSV(adminList);
 					System.out.println("Password updated!");
 					return true;
-				}else {
+				} else {
 					System.out.println("Passwords did not match!");
 					System.out.println("Please try again.");
 				}
@@ -152,57 +159,56 @@ public class AdminController {
 
 	/**
 	 * The function is to lock users that failed to login multiple times
-	 * @param username 	The name of the user is parsed in to be locked
+	 * 
+	 * @param username The name of the user is parsed in to be locked
 	 */
 	public void lockAdminUser(String username) {
-		List<Admin> adminList=getAdminUsers();
-		for(Admin a : adminList) {
-			if(a.username.equals(username)) {
-				// Set to NOACCESS 
-				a.AccessLevel=0;
-
+		List<Admin> adminList = getAdminUsers();
+		for (Admin adminObj : adminList) {
+			if (adminObj.username.equals(username)) {
+				// Set to NOACCESS
+				adminObj.accesslevel = 0;
 			}
 		}
-		// update csv file
+		// update CSV file
 		updateAdminCSV(adminList);
 	}
 
 	/**
 	 * The function is to delete users
-	 * @return	A boolean variable to see if user was deleted successfully
+	 * 
+	 * @return A boolean variable to see if user was deleted successfully
 	 */
 	public boolean deleteAdminUser() {
 		Scanner sc = new Scanner(System.in);
-		List<Admin> adminList=getAdminUsers();
-		for(Admin a : adminList) {
+		List<Admin> adminList = getAdminUsers();
+		for (Admin adminObj : adminList) {
 			System.out.println("===========");
-			printUserDetails(a);
+			printUserDetails(adminObj);
 			System.out.println("===========");
 		}
 		System.out.println("Enter username to remove: ");
 		String removeUsername = sc.next();
 		System.out.println("Are you sure? (Y/N)");
 		char cfm = sc.next().charAt(0);
-		if(cfm == 'Y' || cfm == 'y'){
-			int indexRemove=-1;
-			for(int i=0;i<adminList.size();i++) {
-				if(adminList.get(i).username.equals(removeUsername))
-					indexRemove=i;
+		if (cfm == 'Y' || cfm == 'y') {
+			int indexRemove = -1;
+			for (int i = 0; i < adminList.size(); i++) {
+				if (adminList.get(i).username.equals(removeUsername))
+					indexRemove = i;
 			}
-			if(indexRemove!=-1) {
+			if (indexRemove != -1) {
 				adminList.remove(indexRemove);
-			}
-			else {
+			} else {
 				System.out.println("No such user!");
 				return false;
 			}
-			if(updateAdminCSV(adminList)) {
+			if (updateAdminCSV(adminList)) {
 				return true;
-			}
-			else {
+			} else {
 				return false;
 			}
-		}else {
+		} else {
 			System.out.println("Task abort..........");
 			return false;
 		}
@@ -210,54 +216,56 @@ public class AdminController {
 
 	/**
 	 * The function is to unlock users
+	 * 
 	 * @return A boolean variable to see if user was unlocked successfully
 	 */
 	public boolean unlockAdminUser() {
-		Scanner sc = new Scanner (System.in);
-		List<Admin> adminList=getAdminUsers();
+		Scanner sc = new Scanner(System.in);
+		List<Admin> adminList = getAdminUsers();
 		boolean check = true;
-		for(Admin a : adminList) {
-			if(a.AccessLevel==0) {
-				printUserDetails(a);
-			}
-			else {
+		for (Admin adminObj : adminList) {
+			if (adminObj.accesslevel == 0) {
+				printUserDetails(adminObj);
+			} else {
 				check = false;
 			}
 		}
-		if(check) {
+
+		if (check) {
 			System.out.println("Choose user to unlock: ");
-			String unlockUsername = sc.next();
+			String unlockUserName = sc.next();
 			System.out.println("Are you sure? (Y/N)");
 			char cfm = sc.next().charAt(0);
-			if(cfm == 'Y' || cfm == 'y'){
-				for(int i=0;i<adminList.size();i++) {
-					if(adminList.get(i).username.equals(unlockUsername)) {
-						adminList.get(i).AccessLevel=1;
-						if(updateAdminCSV(adminList)) {
+			if (cfm == 'Y' || cfm == 'y') {
+				for (int i = 0; i < adminList.size(); i++) {
+					if (adminList.get(i).username.equals(unlockUserName)) {
+						adminList.get(i).accesslevel = 1;
+						if (updateAdminCSV(adminList)) {
 							return true;
 						}
 					}
 				}
 			}
 			return false;
-		}
-		else {
+		} else {
 			System.out.println("No user to unlock!");
 			System.out.println("Task abort..........");
 			return false;
 		}
 	}
-	
+
 	/**
 	 * The function is get a particular user from the admin.csv file
-	 * @param username	 	The name of the user to get admin object from the list of admin users
-	 * @return 				An admin object of the user
+	 * 
+	 * @param username The name of the user to get admin object from the list of
+	 *                 admin users
+	 * @return An admin object of the user
 	 */
-	public Admin getAdminUser(String username) {
-		List<Admin> adminList=getAdminUsers();
-		for(Admin a : adminList) {
-			if(a.username.equals(username)) {
-				return a;
+	public Admin getAdminUser(String userName) {
+		List<Admin> adminList = getAdminUsers();
+		for (Admin adminObj : adminList) {
+			if (adminObj.username.equals(userName)) {
+				return adminObj;
 			}
 		}
 		return null;
@@ -265,39 +273,41 @@ public class AdminController {
 
 	/**
 	 * The function is to make a new admin user
-	 * @return 	A boolean variable to see if the creation of user was successful
+	 * 
+	 * @return A boolean variable to see if the creation of user was successful
 	 */
 	public boolean makeAdminUser() {
-		Scanner sc = new Scanner (System.in);
+		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter username: ");
-		String uname=sc.next();
+		String uname = sc.next();
 		System.out.println("Enter accesslevel(0-2)");
-		int accesslevel=sc.nextInt();
+		int accesslevel = sc.nextInt();
 		System.out.println("Enter password");
-		String password=sc.next();
-		
-		Admin adtmp=new Admin();
-		adtmp.username=uname;
-		String salt=Base64.getEncoder().encodeToString(SecurityFunc.getNextSalt());
-		adtmp.password=SecurityFunc.hash(password.toCharArray(),Base64.getDecoder().decode(salt));
-		adtmp.salt=salt;
-		adtmp.AccessLevel=accesslevel;
-		
-		List<Admin> adminList=this.getAdminUsers();
+		String password = sc.next();
+
+		Admin adtmp = new Admin();
+		adtmp.username = uname;
+		String salt = Base64.getEncoder().encodeToString(SecurityFunc.getNextSalt());
+		adtmp.password = SecurityFunc.hash(password.toCharArray(), Base64.getDecoder().decode(salt));
+		adtmp.salt = salt;
+		adtmp.accesslevel = accesslevel;
+
+		List<Admin> adminList = this.getAdminUsers();
 		adminList.add(adtmp);
-		if(updateAdminCSV(adminList))
+		if (updateAdminCSV(adminList))
 			return true;
 		return false;
 	}
 
 	/**
 	 * The function is solely for debugging only
-	 * @param a 	An admin object for printing of details
+	 * 
+	 * @param adminObj An admin object for printing of details
 	 */
-	public void printUserDetails(Admin a) {
-		System.out.println("Username: "+a.username);
-		System.out.println("Password: "+a.password);
-		System.out.println("Salt: "+a.salt);
-		System.out.println("AccessLevel: "+a.AccessLevel);
+	public void printUserDetails(Admin adminObj) {
+		System.out.println("Username: " + adminObj.username);
+		System.out.println("Password: " + adminObj.password);
+		System.out.println("Salt: " + adminObj.salt);
+		System.out.println("AccessLevel: " + adminObj.accesslevel);
 	}
 }

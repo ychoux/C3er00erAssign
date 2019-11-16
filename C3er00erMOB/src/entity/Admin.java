@@ -22,7 +22,7 @@ public class Admin {
 	/**
 	 * This int is used for the admin object to store the access level
 	 */
-	public int AccessLevel;
+	public int accesslevel;
 	
 	/**
 	 * This is a default constructor for this file
@@ -37,11 +37,11 @@ public class Admin {
 	 * @param salt			This is parsed in to set the salt
 	 * @param accesslevel	This is parsed in to set the access level
 	 */
-	public Admin(String username, String password,String salt, int accesslevel) {
+	public Admin(String username, String password,String salt, int accessLevel) {
 		this.username=username;
 		this.password=password;
 		this.salt=salt;
-		this.AccessLevel=accesslevel;
+		this.accesslevel=accessLevel;
 	}
 	
 }

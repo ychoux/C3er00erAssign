@@ -12,14 +12,17 @@ import javax.crypto.spec.PBEKeySpec;
 
 /**
  * This class is made to house the security methods for password hashing
+ * 
  * @author JIAYING
  *
  */
 public class SecurityFunc {
-	
+
 	/**
-	 * This function is used to generate a random salt byte to use for password hashing
-	 * @return	
+	 * This function is used to generate a random salt byte to use for password
+	 * hashing
+	 * 
+	 * @return
 	 */
 	public static byte[] getNextSalt() {
 		Random RANDOM = new SecureRandom();
@@ -27,12 +30,14 @@ public class SecurityFunc {
 		RANDOM.nextBytes(salt);
 		return salt;
 	}
-	
+
 	/**
-	 * This function is to take in the password and generated hash to perform password hashing
-	 * @param password	This is the char[] equivalent of the user's password
-	 * @param salt		This is the randomly generated salt
-	 * @return			The hashed password
+	 * This function is to take in the password and generated hash to perform
+	 * password hashing
+	 * 
+	 * @param password This is the char[] equivalent of the user's password
+	 * @param salt     This is the randomly generated salt
+	 * @return The hashed password
 	 */
 	public static String hash(char[] password, byte[] salt) {
 		PBEKeySpec spec = new PBEKeySpec(password, salt, 10000, 512);

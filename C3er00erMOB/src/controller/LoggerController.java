@@ -1,4 +1,5 @@
 package controller;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -11,6 +12,7 @@ import entity.Log;
 
 /**
  * This class is for creating and reading logs entries
+ * 
  * @author JIAYING
  *
  */
@@ -24,69 +26,75 @@ public class LoggerController {
 	/**
 	 * The path to the CSV file that stores all the admin users
 	 */
-	//private static String LOGFILE="src/data/log.csv";
-	private static String LOGFILE="data/log.csv";
-	
+	// private static String LOGFILE="src/data/log.csv";
+	private static final String LOGFILE = "data/log.csv";
+
 	/**
 	 * The constructor for this class
 	 */
 	private LoggerController() {
 
 	}
-	
+
 	/**
 	 * The function to get the instance of LoggerController object
-	 * @return 	a LoggerController object
+	 * 
+	 * @return a LoggerController object
 	 */
 	public static LoggerController getInstance() {
-        return INSTANCE;
-    }
+		return INSTANCE;
+	}
 
 	/**
 	 * The function is used to generate a normal log entry
-	 * @param username		User that triggered this log event
-	 * @param description 	Description of what happen
+	 * 
+	 * @param username    User that triggered this log event
+	 * @param description Description of what happen
 	 */
-	public void LogNormalEntry(String username,String description) {
-		Log normLog = new Log(username,description,0);
+	public void LogNormalEntry(String username, String description) {
+		Log normLog = new Log(username, description, 0);
 		this.UpdateLogCSV(normLog);
 	}
 
 	/**
 	 * The function is used to generate a security log entry
-	 * @param username		User that triggered this log event
-	 * @param description 	Description of what happen
+	 * 
+	 * @param username    User that triggered this log event
+	 * @param description Description of what happen
 	 */
-	public void LogSecurityEntry(String username,String description) {
-		Log secLog = new Log(username,description,1);
+	public void LogSecurityEntry(String username, String description) {
+		Log secLog = new Log(username, description, 1);
 		this.UpdateLogCSV(secLog);
 	}
 
 	/**
 	 * The function is used to generate a change log entry
-	 * @param username		User that triggered this log event
-	 * @param description 	Description of what happen
+	 * 
+	 * @param username    User that triggered this log event
+	 * @param description Description of what happen
 	 */
-	public void LogChangeEntry(String username,String description) {
-		Log changeLog = new Log(username,description,2);
+	public void LogChangeEntry(String username, String description) {
+		Log changeLog = new Log(username, description, 2);
 		this.UpdateLogCSV(changeLog);
 	}
 
 	/**
 	 * The function is used to generate a error log entry
-	 * @param username		User that triggered this log event
-	 * @param description 	Description of what happen
+	 * 
+	 * @param username    User that triggered this log event
+	 * @param description Description of what happen
 	 */
-	public void LogErrorEntry(String username,String description) {
-		Log errLog = new Log(username,description,3);
+	public void LogErrorEntry(String username, String description) {
+		Log errLog = new Log(username, description, 3);
 		this.UpdateLogCSV(errLog);
 	}
 
 	/**
 	 * The function is get all the logs that are stored in log.csv
+	 * 
 	 * @return A list of log entries from log.csv
 	 */
-	public List<Log> getLogList(){
+	public List<Log> getLogList() {
 		List<Log> logList = new ArrayList<>();
 		BufferedReader br = null;
 		String line = "";
@@ -95,8 +103,8 @@ public class LoggerController {
 			br = new BufferedReader(new FileReader(LOGFILE));
 			while ((line = br.readLine()) != null) {
 				String[] log = line.split(",");
-				if(!log[0].equals("username")) {
-					tmpLog=new Log(log[0],log[1],Integer.parseInt(log[2]),log[3]);
+				if (!log[0].equals("username")) {
+					tmpLog = new Log(log[0], log[1], Integer.parseInt(log[2]), log[3]);
 					logList.add(tmpLog);
 				}
 			}
@@ -106,30 +114,32 @@ public class LoggerController {
 		}
 		return logList;
 	}
-	
+
 	/**
 	 * The function acts as a search function to help filter wanted log entries
-	 * @param keyword 	A keyword that is used to filter the log entries
-	 * @return returns 	A list of filtered log entries from log.csv
+	 * 
+	 * @param keyword A keyword that is used to filter the log entries
+	 * @return returns A list of filtered log entries from log.csv
 	 */
-	public List<Log> getLogList(String keyword){
+	public List<Log> getLogList(String keyword) {
 		List<Log> logList = this.getLogList();
 		List<Log> fLogList = new ArrayList<>();
-		for(Log l : logList) {
-			if(Pattern.compile(Pattern.quote(keyword), Pattern.CASE_INSENSITIVE).matcher(l.username).find()
-					|| Pattern.compile(Pattern.quote(keyword), Pattern.CASE_INSENSITIVE).matcher(l.description).find()
-					|| l.datetime.contains(keyword) 
-					|| Integer.toString(l.loglvl).contains(keyword)) {
-				fLogList.add(l);
+		for (Log logObj : logList) {
+			if (Pattern.compile(Pattern.quote(keyword), Pattern.CASE_INSENSITIVE).matcher(logObj.username).find()
+					|| Pattern.compile(Pattern.quote(keyword), Pattern.CASE_INSENSITIVE).matcher(logObj.description)
+							.find()
+					|| logObj.datetime.contains(keyword) || Integer.toString(logObj.loglvl).contains(keyword)) {
+				fLogList.add(logObj);
 			}
 		}
-				
+
 		return fLogList;
 	}
-	
+
 	/**
 	 * The function helps update the log.csv file with a new log entry
-	 * @param newlog 	A new log entry
+	 * 
+	 * @param newlog A new log entry
 	 */
 	public void UpdateLogCSV(Log newLog) {
 		List<Log> logList = this.getLogList();
@@ -146,16 +156,15 @@ public class LoggerController {
 			csvWriter.append("datetime");
 			csvWriter.append("\n");
 
-			
-			for (Log l : logList) {
+			for (Log logObj : logList) {
 				StringBuilder sb = new StringBuilder();
-				sb.append(l.username);
+				sb.append(logObj.username);
 				sb.append(',');
-				sb.append(l.description);
+				sb.append(logObj.description);
 				sb.append(',');
-				sb.append(Integer.toString(l.loglvl));
+				sb.append(Integer.toString(logObj.loglvl));
 				sb.append(',');
-				sb.append(l.datetime);
+				sb.append(logObj.datetime);
 				sb.append(',');
 				sb.append('\n');
 				csvWriter.append(sb.toString());
@@ -165,7 +174,6 @@ public class LoggerController {
 			csvWriter.close();
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

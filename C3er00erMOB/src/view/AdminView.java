@@ -1,7 +1,6 @@
 package view;
 
 import java.text.DecimalFormat;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -30,7 +29,6 @@ public class AdminView {
 	 */
 	public static void movieSettings(AdminSession admSess, int choice) {
 		int option = 0;
-		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 		try {
 			if (choice == 0) {
@@ -215,7 +213,7 @@ public class AdminView {
 			System.out.println("Invalid input.");
 			phSetting(admSess, 0);
 		}
-		
+
 		switch (option) {
 		case 1:
 			StaffPriceController.staffShowPh();
@@ -400,42 +398,42 @@ public class AdminView {
 
 		switch (option) {
 		case 1:
-			for (Review r : rList) {
-				System.out.println("--------" + r.getMovieTitle() + "--------");
-				String[] noOfratings = r.getRating().split(";");
-				if (noOfratings.length > 1) {
+			for (Review reviewObj : rList) {
+				System.out.println("--------" + reviewObj.getMovieTitle() + "--------");
+				String[] noOfRatings = reviewObj.getRating().split(";");
+				if (noOfRatings.length > 1) {
 					System.out.print("All Ratings: [");
-					for(int i=1; i<noOfratings.length;i++) {
-						if(!noOfratings[i].isBlank()) {
-							System.out.print(noOfratings[i]);
+					for (int i = 1; i < noOfRatings.length; i++) {
+						if (!noOfRatings[i].isBlank()) {
+							System.out.print(noOfRatings[i]);
 						}
-						if(i<noOfratings.length-1) {
+						if (i < noOfRatings.length - 1) {
 							System.out.print(", ");
 						}
 					}
 					System.out.print("]\n");
-					
-					if (noOfratings.length < 1) {
+
+					if (noOfRatings.length < 1) {
 						System.out.println("Overall Rating: [NA]");
 					} else {
-						System.out.println("Overall Rating: [" + df.format(r.getOverallRating()) + "]");
+						System.out.println("Overall Rating: [" + df.format(reviewObj.getOverallRating()) + "]");
 					}
 				} else {
 					System.out.println("All Ratings: [No Ratings]");
 					System.out.println("Overall Rating: [No Overall Rating]");
 				}
-				String[] noOfreviews = r.getReview().split(";");
-				for(int i=1; i<noOfreviews.length;i++) {
-					if(noOfreviews[i].isBlank()) {
-						noOfreviews[i]="NA";
+				String[] noOfReviews = reviewObj.getReview().split(";");
+				for (int i = 1; i < noOfReviews.length; i++) {
+					if (noOfReviews[i].isBlank()) {
+						noOfReviews[i] = "NA";
 					}
 				}
-				
-				if (noOfreviews.length > 1) {
+
+				if (noOfReviews.length > 1) {
 					System.out.print("Reviews: [");
-					for(int i=1; i<noOfreviews.length;i++) {
-						System.out.print(noOfreviews[i]);
-						if(i<noOfreviews.length-1) {
+					for (int i = 1; i < noOfReviews.length; i++) {
+						System.out.print(noOfReviews[i]);
+						if (i < noOfReviews.length - 1) {
 							System.out.print(", ");
 						}
 					}
@@ -449,13 +447,13 @@ public class AdminView {
 		case 2:
 			System.out.println("=====Overall Ratings=====");
 			int i = 1;
-			for (Review r : rList) {
-				String[] noOfratings = r.getRating().split(";");
-				if(noOfratings.length<2) {
-					System.out.println(i + ". " + r.getMovieTitle() + " [Overall ratings: NA]");
-				}
-				else {
-					System.out.println(i + ". " + r.getMovieTitle() + " [Overall ratings:" + df.format(r.getOverallRating()) + "]");
+			for (Review reviewObj : rList) {
+				String[] noOfRatings = reviewObj.getRating().split(";");
+				if (noOfRatings.length < 2) {
+					System.out.println(i + ". " + reviewObj.getMovieTitle() + " [Overall ratings: NA]");
+				} else {
+					System.out.println(i + ". " + reviewObj.getMovieTitle() + " [Overall ratings:"
+							+ df.format(reviewObj.getOverallRating()) + "]");
 				}
 				i++;
 			}
@@ -497,10 +495,10 @@ public class AdminView {
 		case 1:
 			int j = 1;
 			TreeMap<Integer, String> movieList = new TreeMap<Integer, String>(Collections.reverseOrder());
-			for (Movie m : mList) {
-				if (!(m.getStatus().equals(MovieStatus.END_OF_SHOWING)
-						|| m.getStatus().equals(MovieStatus.UP_COMING))) {
-					movieList.put(m.getSales(), m.getMovieTitle());
+			for (Movie movieObj : mList) {
+				if (!(movieObj.getStatus().equals(MovieStatus.END_OF_SHOWING)
+						|| movieObj.getStatus().equals(MovieStatus.UP_COMING))) {
+					movieList.put(movieObj.getSales(), movieObj.getMovieTitle());
 				}
 			}
 			System.out.println("=====Top 5 Movies by Sales=====");
@@ -520,10 +518,10 @@ public class AdminView {
 
 		case 2:
 			TreeMap<Double, String> ratingList = new TreeMap<Double, String>(Collections.reverseOrder());
-			for (Review r : rList) {
-				String[] noOfratings = r.getRating().split(";");
-				if (noOfratings.length > 1) {
-					ratingList.put(r.getOverallRating(), r.getMovieTitle());
+			for (Review reviewObj : rList) {
+				String[] noOfRatings = reviewObj.getRating().split(";");
+				if (noOfRatings.length > 1) {
+					ratingList.put(reviewObj.getOverallRating(), reviewObj.getMovieTitle());
 				}
 			}
 			System.out.println("=====Top 5 Movies by Ratings=====");
@@ -545,7 +543,6 @@ public class AdminView {
 		}
 	}
 
-	
 	/**
 	 * This is the view page for user settings
 	 * 
@@ -573,8 +570,8 @@ public class AdminView {
 		switch (option) {
 		case 1:
 			List<Log> logList = LoggerController.getInstance().getLogList();
-			for (Log l : logList) {
-				System.out.println(l.username + " , " + l.description + " , " + l.loglvl + " , " + l.datetime);
+			for (Log logObj : logList) {
+				System.out.println(logObj.username + " , " + logObj.description + " , " + logObj.loglvl + " , " + logObj.datetime);
 			}
 			break;
 		case 2:
@@ -586,8 +583,8 @@ public class AdminView {
 
 				if (!keyword.equalsIgnoreCase("-1")) {
 					List<Log> fLogList = LoggerController.getInstance().getLogList(keyword);
-					for (Log l : fLogList) {
-						System.out.println(l.username + " , " + l.description + " , " + l.loglvl + " , " + l.datetime);
+					for (Log logObj : fLogList) {
+						System.out.println(logObj.username + " , " + logObj.description + " , " + logObj.loglvl + " , " + logObj.datetime);
 					}
 				} else {
 					break;
