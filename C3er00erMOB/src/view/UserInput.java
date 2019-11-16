@@ -14,7 +14,7 @@ import entity.MovieStatus;
 import entity.Review;
 /**
  * The class to handle related user interaction on movielist and review
- * @author
+ * @author gengtat
  *
  */
 public class UserInput {
