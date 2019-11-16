@@ -13,8 +13,8 @@ import entity.Movie;
 import entity.MovieStatus;
 
 /**
- * The class for all action related to movielist
- * @author
+ * The class for all action related to movielist, movie controller
+ * @author JunRong
  *
  */
 public class MovieListController {
