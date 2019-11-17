@@ -31,27 +31,14 @@ public class adminApp {
 			
 			Console console = System.console();
 	        if (console == null) {
-	            System.out.println("Couldn't get Console instance");
-	            System.exit(0);
-	        }
-	        char[] passwordArray = console.readPassword("Enter Password: ");
-	        //console.printf("Password entered was: %s%n", new String(passwordArray));
-			admSess = AdminSession.createSession(username, new String(passwordArray));
-			
-			/**
-			System.out.println("Enter Username: ");
-			String username = sc.nextLine();	
-			AdminSession admSess;
-			if(!username.equals("1")) {
-				System.out.println("Enter Password");
+	        	System.out.println("Enter Password");
 				String password= sc.nextLine();
 				admSess = AdminSession.createSession(username, password);
-			}
-			else {
-				System.out.println("Entering bypass.....");
-				admSess= AdminSession.createSession("jy", "P@ssw0rd!");
-			}**/
-			
+	        }
+	        else {
+	        	char[] passwordArray = console.readPassword("Enter Password: ");
+				admSess = AdminSession.createSession(username, new String(passwordArray));
+	        }
 
 			AdminController aCon=new AdminController();
 			if(admSess != null) {
